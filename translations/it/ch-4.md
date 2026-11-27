@@ -4,8 +4,8 @@
 Il bilancio deve essere gestito come un bilancio di ingegneria, non come una spesa astratta. La corretta metrica non è il costo per messaggio, ma:
 
 ```text
-coût total d'une tâche mergeable
-= coût modèle + temps humain + temps CI + retours review + reprises de bugs
+costo totale di un'attività pronta per il merge
+= costo del modello + tempo umano + tempo di CI + osservazioni in revisione + rilavorazioni per bug
 ```
 
 <!-- section: s-1 -->
@@ -57,14 +57,14 @@ Una cache di successo può ridurre il costo di autorizzazione **lettura** di get
 ## Anti-credito regole bruciate
 
 ```text
-- Ne donne jamais toute la repo par défaut.
-- Donne des chemins de fichiers et une hypothèse de zone concernée.
-- Coupe les logs à la première erreur utile.
-- Après 2 échecs identiques, stop : repasse en diagnostic humain/IDE.
-- Après 3 fichiers modifiés hors plan, stop : demande un nouveau plan.
-- Après 300 lignes de diff inattendues, stop : review manuelle avant suite.
-- Quand le contexte n'aide plus : `HANDOFF.md` explicite + session fraîche ; `/compact` n'est qu'un dernier recours.
-- Préfère rg, Sourcebot, IntelliJ, Metals ou scripts locaux aux longs dumps MCP.
+- Non fornire mai l'intero repository per impostazione predefinita.
+- Indica i percorsi dei file e un'ipotesi sull'area interessata.
+- Taglia i log al primo errore utile.
+- Dopo 2 fallimenti identici, fermati e torna alla diagnosi umana o tramite IDE.
+- Dopo 3 file modificati fuori piano, fermati e chiedi un nuovo piano.
+- Dopo 300 righe di diff inattese, fermati e chiedi una revisione manuale prima di continuare.
+- Quando il contesto non aiuta più, prepara un `HANDOFF.md` esplicito e apri una sessione nuova. Usa `/compact` solo in ultima istanza.
+- Preferisci rg, Sourcebot, IntelliJ, Metals o script locali alle lunghe estrazioni MCP.
 ```
 
 ** Risparmio su abbonamento doppio.** Stabilizza lo scrittore e il suo sforzo durante una traiettoria; i cambiamenti del modello possono interrompere la cache e aggiungere rilavoro.Un contesto fresco rimane volontario per il recensore indipendente o un'ipotesi contaminata. Non lanciare una revisione sistematica completa su ogni micro-patch o secondo passo sulla stessa PR. Deduce il follow-up da repo/PR/SHA/check/finding, preferisce un recupero eventi o un Heartbeat limitato quando il trucco CI Misura le quote consumate dal ruolo e dal compito (se esposte dal fornitore); distingue i crediti inclusi, i sovraccarichi e gli assegni API. Una quota ancora alta non è un motivo per aprire più biglietti.

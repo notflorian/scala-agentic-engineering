@@ -16,14 +16,14 @@ Bisogna distinguere tre modi di lavoro:
 Per un anziano ScalaL'obiettivo non è quindi "più di vibe coding", ma una **Ingegneria Agente Controlata ** :
 
 ```text
-spécification vérifiable
-→ contexte minimal mais suffisant
-→ plan
-→ permissions proportionnées
-→ exécution instrumentée
-→ compile et tests déterministes
-→ review indépendante
-→ validation humaine
+specifica verificabile
+→ contesto minimo ma sufficiente
+→ piano
+→ permessi proporzionati
+→ esecuzione monitorata
+→ compilazione e test deterministici
+→ revisione indipendente
+→ approvazione umana
 ```
 
 **Prova-diretta Agentic Engineering** di: le SDD fissare il contratto, l'ingegneria harness rende le sue restrizioni eseguibili, e le prove determinano se il cambiamento può progredire. Per ciascun requisito, associare una prova indipendente (test di comportamento, ispezione, benchmark o misura runtime), il SHA effettivamente validato e i rischi non coperti. Una affermazione dell'agente, una revisione senza prove o un semplice status verde non costituiscono un oracolo. Il ciclo si conclude dopo la validazione dell'artefatto distribuito, non semplicemente alla fusione (sezione 15B).
@@ -68,8 +68,8 @@ Conclusione: il livello di confine aumenta la superficie di possibili compiti, m
 Per un compito di codice, misurare il **Costo per cambiamento accettato** per la gestione della consegna, il **Costo per cambiamento stabilito e stabilito** (sezione 15b) non il tasso di successo brutto:
 
 ```text
-coût par changement accepté
-= tokens + latence + minutes humaines + CI + reprises + défauts échappés
+costo per modifica accettata
+= token + latenza + minuti di lavoro umano + CI + rilavorazioni + difetti sfuggiti
 ```
 
 Utilizza un'unità comune per accumulare questi costi (ad esempio euro con un costo orario esplicito), o mantiene i componenti separati. I tokens e i minuti non si aggiungono direttamente. Per il costo fino alla produzione, aggiunge la distribuzione, la validazione del runtime, rollback/hotfix e i difetti osservati durante una finestra fissata prima della misura. Non si considera stabile che un cambiamento abbia terminato questa finestra.
@@ -84,10 +84,10 @@ La valutazione METR è stata effettuata su 296 PR generati da agenti ha scoperto
 Per i compiti lunghi, SlopCodeBench osserva inoltre un accumulo di duplicazione, verbosità e erosione strutturale mentre i punti di controllo si arricchiscono. Un rapido richiesto di qualità riduce alcuni difetti all'inizio senza eliminare la loro crescita. Il buon regime di prova quindi accumula quattro barriere indipendenti:
 
 ```text
-contrat métier explicite
-→ reproduction qui échoue avant le patch
-→ tests déterministes, propriétés et mutation testing
-→ review du diff, de son scope et de sa maintenabilité par un humain responsable
+contratto di business esplicito
+→ riproduzione che fallisce prima della correzione
+→ test deterministici, proprietà e test di mutazione
+→ una persona responsabile rivede il diff, il perimetro e la manutenibilità
 ```
 
 I punti di riferimento servono alla routing e agli esperimenti; non devono mai diventare un permesso di autonomia o di fusione.
@@ -113,12 +113,12 @@ Gli studi empirici di 2026 su applicazioni veramente "vibe codificate" si trovan
 > interrompere, poiché nessuna immediata correzione duraturo.
 
 ```text
-Prototype vibe coding
-→ aucune donnée ou clé de production
-→ tests fonctionnels + sécurité + performance + maintenabilité
-→ lecture humaine du diff et des dépendances
-→ migration vers le workflow agentique contrôlé
-→ seulement ensuite : déploiement
+Prototipo in vibe coding
+→ nessun dato o chiave di produzione
+→ test funzionali + sicurezza + prestazioni + manutenibilità
+→ revisione umana del diff e delle dipendenze
+→ passaggio al flusso agentico controllato
+→ solo allora: distribuzione
 ```
 
 Una sessione di codifica vibe non dovrebbe mai spingere direttamente nella produzione, anche quando la dimostrazione sembra funzionale. **Cambiamento del regime di prova**Non è solo un passo successivo del gatto.

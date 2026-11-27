@@ -4,11 +4,11 @@
 For the current workflow, ** no local gateway is required**:OpenRouter serves only as an exit door to backup models. Creates a dedicated key, sets an expense limit on the account side and explicitly selects the model to be tested.
 
 ```text
-Claude Code / Codex bloqués
-→ préparer un reproducer minimal
+Claude Code / Codex blocked
+→ prepare a minimal reproducer
 → OpenRouter
-→ choisir volontairement GLM / Kimi / Gemini / Grok
-→ conserver le nom du modèle et du provider dans le journal de tâche
+→ deliberately choose GLM / Kimi / Gemini / Grok
+→ record the model and provider names in the task log
 ```
 
 The principle is deliberately simple: **OpenRouter does not become the normal path of development**. Claude Code, Codex, Qwen local, GitHub Copilot and JetBrains AI continue to use their native surfaces.
@@ -58,11 +58,11 @@ The client then keeps an OpenAI-compatible endpoint without introducing an addit
 For this guide:
 
 ```text
-Provider fallback pour le même modèle
-→ autorisé
+Provider fallback for the same model
+→ allowed
 
-Fallback automatique vers un autre modèle
-→ désactivé par défaut
+Automatic fallback to a different model
+→ disabled by default
 ```
 
 The change of provision improves availability without changing the nature of the analysis. An automatic change of model on the contrary blurs the objective sought: consciously obtain an opinion from another family of models.
@@ -73,24 +73,24 @@ The change of provision improves availability without changing the nature of the
 OpenRouter aggregates several providers whose policies may differ. For professional code:
 
 ```text
-- envoyer le minimum de contexte nécessaire ;
-- préférer un reproducer, une stack trace et les fichiers strictement concernés ;
-- ne jamais envoyer le repository entier par défaut ;
-- anonymiser les données métier et secrets ;
-- choisir explicitement les providers compatibles avec les exigences du projet ;
-- garder les parties les plus sensibles en local ou chez les fournisseurs directs déjà approuvés.
+- send the minimum context needed
+- prefer a reproducer, a stack trace, and only the files directly involved
+- never send the entire repository by default
+- anonymize business data and secrets
+- explicitly choose providers compatible with project requirements
+- keep the most sensitive parts local or with already-approved direct providers.
 ```
 
 <!-- section: s-4 -->
 ## What OpenRouter should not replace
 
 ```text
-Claude Code        → agent principal raisonnement/debug + reviewer croisé via abonnement Claude
-Codex              → agent principal d'exécution + reviewer croisé via abonnement ChatGPT
-Qwen local         → modèle local direct
-GitHub Copilot     → workflow GitHub
-JetBrains AI       → assistance IDE
-OpenRouter         → escalade exceptionnelle vers d'autres modèles
+Claude Code        → primary reasoning/debugging agent + cross-reviewer via Claude subscription
+Codex              → primary implementation agent + cross-reviewer via ChatGPT subscription
+Local Qwen         → local model directly
+GitHub Copilot     → GitHub workflow
+JetBrains AI       → IDE assistance
+OpenRouter         → exceptional escalation to other models
 ```
 
 This separation avoids turning a simple emergency door into a new layer of infrastructure to maintain.

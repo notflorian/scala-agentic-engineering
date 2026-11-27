@@ -18,27 +18,27 @@
 ## To be explicitly requested
 
 ```text
-Avant de modifier du Scala :
-- explique les types impliqués
-- indique les implicits/givens utilisés
-- identifie les effets de bord
-- vérifie les tests existants
-- conserve les signatures publiques
-- ne change pas la sérialisation JSON sans test
+Before changing Scala code:
+- explain the types involved
+- identify the implicits/givens in use
+- identify side effects
+- check existing tests
+- preserve public signatures
+- avoid changes to JSON serialization without a test
 ```
 
 <!-- section: s-3 -->
 ## Post-diff Scala checklist
 
 ```text
-- Le code compile-t-il vraiment ?
-- Les imports sont-ils corrects ?
-- Les implicits/givens restent-ils résolus ?
-- Les types d'erreur sont-ils préservés ?
-- Les Futures/IO/Effects ne bloquent pas ?
-- La sérialisation JSON est inchangée ?
-- Les tests couvrent-ils le comportement métier ?
-- Le diff est-il minimal ?
+- Does the code really compile?
+- Are the imports correct?
+- Do implicits/givens still resolve?
+- Are error types preserved?
+- Are Futures/IO/Effects non-blocking?
+- Is JSON serialization unchanged?
+- Do tests cover the business behavior?
+- Is the diff minimal?
 ```
 
 <!-- section: s-4 -->
@@ -47,9 +47,9 @@ Avant de modifier du Scala :
 For repetitive syntax rewrites (syntax migration) Scala 2 → 3, systematic replacement of API depreciated, reorganisation of imports), **scalafix is deterministic where a LLM is probabilistic** : a rule applies identically on 500 files, without hallucination or forgetfulness. Good role sharing:
 
 ```text
-LLM (Claude) : écrire ou adapter la règle scalafix
-scalafix : appliquer la transformation sur toute la base
-LLM : traiter les cas que la règle n'a pas pu couvrir
+LLM (Claude): write or adapt the scalafix rule
+scalafix: apply the transformation across the codebase
+LLM: handle cases the rule could not cover
 ```
 
 It is the same logic that "deterministic safeguards beat textual instructions," applied to refactors.
@@ -89,8 +89,8 @@ The promptness to give LLM is not "migrating logger calls" but: *"write a rule s
 Models LLM very often mix the two syntaxes or reinvent complex macros.
 
 ```text
-- Utilise la syntaxe stricte Scala 3 (indentation optionnelle, enums, extensions).
-- Interdiction stricte de créer des Macros (inline, quoted) sans validation humaine préalable. Préfère toujours des fonctions standards.
+- Use strict Scala 3 syntax (optional indentation, enums, extensions).
+- Never create macros (inline, quoted) without prior human approval. Always prefer standard functions.
 ```
 
 <!-- section: s-6 -->
@@ -101,14 +101,14 @@ Models do not only invent version numbers: they invent **names of entire artifac
 Derivative rules to be applied at the repo level:
 
 ```text
-- tout nouvel artefact dans build.sbt doit exister sur Maven Central AVANT l'écriture
-  (vérification réseau, pas mémoire du modèle) ;
-- pour toute dépendance inconnue : exiger une date de première publication et un éditeur
-  avec un historique établi ;
-- commiter les lockfiles (coursier / dependencyLock) et vérifier les hashes en CI ;
-- toute installation initiée par un agent hors allowlist → revue humaine avant exécution ;
-- ne jamais laisser un agent résoudre les dépendances (sbt update) avec un build modifié
-  sans diff relu.
+- every new artifact in build.sbt must exist on Maven Central BEFORE writing the change
+  (verify over the network rather than relying on model memory)
+- for every unknown dependency, require a first publication date and a publisher
+  with an established track record
+- commit lockfiles (coursier / dependencyLock) and check hashes in CI
+- any agent-initiated installation outside the allowlist → human review before execution
+- never let an agent resolve dependencies (sbt update) with a modified build
+  until the diff has been reviewed.
 ```
 
 This is the supply-chain version of the rule "check versions via Context7 / Maven Central" of section 3: the name itself is a unreliable data.

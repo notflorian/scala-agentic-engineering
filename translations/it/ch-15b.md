@@ -4,13 +4,13 @@
 La fusione non è la fine delle prove: per un codice commerciale in produzione, si utilizza una catena di validazione proporzionata al rischio; non trasforma gli agenti in operatori di produzione.
 
 ```text
-spec + REQ/acceptance evidence
-→ implementation gate (scope, compilation, tests)
-→ review gate (independent findings, final PR head)
-→ integration gate (CI on the actual merge candidate)
-→ release gate (immutable artifact, staging, security)
-→ production gate (authorized deployment, progressive rollout)
-→ runtime verification (SLO, regressions, rollback)
+specifica + evidenze sui requisiti e criteri di accettazione
+→ controllo dell’implementazione (perimetro, compilazione, test)
+→ controllo della revisione (rilievi indipendenti, SHA finale della PR)
+→ controllo di integrazione (CI sul candidato effettivo al merge)
+→ controllo di rilascio (artefatto immutabile, staging, sicurezza)
+→ controllo di produzione (distribuzione autorizzata, rollout progressivo)
+→ verifica in esercizio (SLO, regressioni, rollback)
 ```
 
 **Rilasciare il gate.** Costruisci una volta che l'oggetto commit viene consegnato, testa questo artefatto, identificalo da digeritivo immutabile (immagine OIC, JAR, distribuzione) e promuoverlo senza ricostruirlo tra staging e produzione. Mantiene la sorgente SHA, digest, build/dependance versioni, risultati CI e, a seconda del progetto, SBOM, scansioni e prove di provenienza. L'identità di distribuzione è diversa dallo scrittore e dall'arbitro CI nessun segreto di produzione in agenti; autorizzazioni temporanee e ambiente protetto da cancello umano o politica di rilascio.
@@ -33,11 +33,11 @@ Strumento di log strutturato, metrico e tracciato (OpenTelemetry se adattato). C
 ### Definizione di produzione side impegnati
 
 ```text
-- PR et candidat d'intégration validés.
-- Artefact immuable identifié, testé et promu par le pipeline autorisé.
-- Staging et smoke tests passants ; rollback / récupération testés selon risque.
-- Canary ou rollout approuvé ; aucune alerte ou régression au-delà des seuils.
-- Fenêtre d'observation terminée ; métriques et exceptions documentées.
+- PR e candidato all’integrazione validati.
+- Artefatto immutabile identificato, testato e promosso dalla pipeline autorizzata.
+- Staging e smoke test superati; rollback e ripristino testati secondo il rischio.
+- Canary o rollout approvato; nessuna anomalia o regressione oltre le soglie.
+- Finestra di osservazione conclusa; metriche ed eccezioni documentate.
 ```
 
 Il primo stato è "già pronto", il secondo "deployed", l'ultimo "stabile". Misurare questi stati separatamente piuttosto che attribuire il successo a un commit verde o a una recensione.

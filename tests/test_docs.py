@@ -10,10 +10,23 @@ class DocumentationTest(unittest.TestCase):
         self.assertEqual([part.chapter for part in parse_source(text)], ["home", "ch-1", "ch-1a", "ch-1a"])
         self.assertEqual("".join(part.text for part in parse_source(text)), text)
 
-    def test_quoted_fences_are_literal(self):
+    def test_quoted_text_fences_accept_localized_prose(self):
         source = "# Guide\n# 1. Chapter\n> ```text\n> # 2. Example\n> ```\n"
         self.assertEqual(len(parse_source(source)), 2)
-        self.assertNotEqual(signature(source), signature(source.replace("Example", "Modified")))
+        self.assertEqual(signature(source), signature(source.replace("Example", "Modified")))
+        self.assertNotEqual(signature(source), signature(source.replace("> ```text", "```text").replace("> ```\n", "```\n")))
+
+    def test_text_fences_preserve_technical_literals(self):
+        fr = "```text\nBudget : 17 % ; vérifier `run` sur https://example.com/a\n```\n"
+        en = "```text\nBudget: 17 %; check `run` at https://example.com/a\n```\n"
+        self.assertEqual(signature(fr), signature(en))
+        for altered in (en.replace("17", "18"), en.replace("run", "stop"), en.replace("/a", "/b")):
+            self.assertNotEqual(signature(fr), signature(altered))
+
+    def test_plaintext_fences_can_hold_literal_commands(self):
+        source = "```plaintext\nsbt compile\n```\n"
+        self.assertNotEqual(signature(source), signature(source.replace("compile", "test")))
+
 
     def test_wrapped_inline_code_retains_its_literal_content(self):
         self.assertEqual(signature("Run `command -a\n-b`."), signature("Lancer `command -a -b`."))

@@ -4,8 +4,8 @@
 El presupuesto debe ser manejado como un presupuesto de ingeniería, no como un gasto abstracta de la IIA. La buena métrica no es el coste por mensaje, sino:
 
 ```text
-coût total d'une tâche mergeable
-= coût modèle + temps humain + temps CI + retours review + reprises de bugs
+coste total de una tarea apta para fusionar
+= coste del modelo + tiempo humano + tiempo de CI + observaciones en revisión + retrabajo por errores
 ```
 
 <!-- section: s-1 -->
@@ -58,14 +58,14 @@ Una caché exitosa puede reducir el costo de **lectura** de tokens de entrada a 
 ## Normas contra el crédito quemado
 
 ```text
-- Ne donne jamais toute la repo par défaut.
-- Donne des chemins de fichiers et une hypothèse de zone concernée.
-- Coupe les logs à la première erreur utile.
-- Après 2 échecs identiques, stop : repasse en diagnostic humain/IDE.
-- Après 3 fichiers modifiés hors plan, stop : demande un nouveau plan.
-- Après 300 lignes de diff inattendues, stop : review manuelle avant suite.
-- Quand le contexte n'aide plus : `HANDOFF.md` explicite + session fraîche ; `/compact` n'est qu'un dernier recours.
-- Préfère rg, Sourcebot, IntelliJ, Metals ou scripts locaux aux longs dumps MCP.
+- Nunca pases todo el repositorio por defecto.
+- Indica rutas de archivos y una hipótesis sobre el área afectada.
+- Recorta los logs en el primer error útil.
+- Después de 2 fallos idénticos, detente y vuelve al diagnóstico humano o con el IDE.
+- Después de 3 archivos modificados fuera del plan, detente y pide un plan nuevo.
+- Después de 300 líneas de diff imprevistas, detente y solicita una revisión manual antes de seguir.
+- Cuando el contexto deje de ayudar: `HANDOFF.md` explícito + sesión nueva. Usa `/compact` como último recurso.
+- Prefiere rg, Sourcebot, IntelliJ, Metals o scripts locales a los volcados extensos de MCP.
 ```
 
 **Ahorras en la doble suscripción.** Estabiliza el writer y su esfuerzo durante una trayectoria; los cambios de modelo pueden perturbar la caché y añadir rework. Un contexto fresco sigue siendo voluntario para el revisor independiente o una hipótesis contaminada. No lanza ni repaso exhaustivo sistemático sobre cada micro-patch, ni segundo steward sobre un mismo PR. Deduca el seguimiento por repo/PR/SHA/check/finding, privilegia una reanudación de eventos o un Heartbeat borné cuando la CI , y arréglalo en el checkpoint. Medición de los cupos consumidos por función y por tarea (cuando el proveedor lo expone); diferencia créditos incluidos, sobrecostos de pago y API. Una cuota todavía elevada no es motivo para abrir más tickets.

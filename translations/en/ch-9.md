@@ -82,10 +82,10 @@ ChatGPT web does not connect directly to `localhost`. For a MCP local, private o
 When an administrator approves an app MCP] in ChatGPT, the product keeps an approved **snapshot of the tools and their inputs**. Adding, removing or modifying a tool on the server does not automatically render the new active surface. Thus, an incompatible evolution can break calls until an administrator has reviewed and republished the catalog, and ChatGPT currently does not guarantee a proactive alert about this drift.
 
 ```text
-changement de nom / schéma / permission / nouvel outil MCP
-→ diff de surface
+name, schema, or permission change / new MCP tool
+→ surface diff
 → review
-→ validation admin
+→ admin approval
 → publication
 ```
 
@@ -103,21 +103,21 @@ For a deposit mainly Scala, **ScalaSemantic MCP** is the best candidate identifi
 
 ```text
 Sourcebot
-→ « où est X ? »
-→ « quels fichiers parlent de Y ? »
+→ “Where is X?”
+→ “Which files discuss Y?”
 
 ScalaSemantic MCP
-→ « quels sont les usages exacts de ce symbole ? »
-→ « quel chemin d'appel relie A à B ? »
-→ « qui étend ce trait ? »
-→ « quels givens peuvent produire T ? »
-→ « de quels implicits dépend ce given ? »
+→ “What are the exact usages of this symbol?”
+→ “What call path connects A to B?”
+→ “What extends this trait?”
+→ “Which givens can produce T?”
+→ “Which implicits does this given depend on?”
 
 Metals MCP
-→ « quel est le type réel ici, maintenant ? »
-→ « ce fichier compile-t-il ? »
-→ « quels diagnostics le compilateur retourne-t-il ? »
-→ « quels tests échouent ? »
+→ “What is the actual type here, right now?”
+→ “Does this file compile?”
+→ “What diagnostics does the compiler return?”
+→ “Which tests fail?”
 ```
 
 ScalaSemantic and Metals are **Additional**. ScalaSemantic is index-wide and excellent for global relationships; Metals remains the source of live truth for the current buffer, compiler presentation, diagnostics, compilation and tests. SemanticDB is mainly the last compiled state: if the code has just been modified without recompilation, Metals Maybe it's cooler.
@@ -133,23 +133,23 @@ Also does not present ScalaSemantic as a Neo4j/ERF: it is more precisely a **sem
 Java / Kotlin
 
 Sourcebot
-= recherche et discovery
+= search and discovery
 
 Codebase-Memory MCP
-= knowledge graph persistant
+= persistent knowledge graph
 = call graph
 = impact analysis
 = architecture
-= routes et relations cross-service
+= cross-service routes and relationships
 
 IntelliJ / LSP
-= sémantique live et arbitrage local
+= live semantics and local verification
 ```
 
 On a polyglot JVM base code, the recommended distribution becomes:
 
 ```text
-Scala pur
+Pure Scala
 → Sourcebot + ScalaSemantic + Metals
 
 Java/Kotlin
@@ -157,22 +157,22 @@ Java/Kotlin
 
 Scala + Java + Kotlin / microservices
 → Sourcebot
-→ ScalaSemantic pour la sémantique Scala
-→ Codebase-Memory pour la topologie polyglotte et cross-service
-→ Metals / IntelliJ pour arbitrer la sémantique live
+→ ScalaSemantic for Scala semantics
+→ Codebase-Memory for polyglot and cross-service topology
+→ Metals / IntelliJ to verify live semantics
 ```
 
 The determining criterion is not "does it have a graphic basis?", but **what information creates edges** :
 
 ```text
 Tree-sitter
-→ structure syntaxique et résolution heuristique
+→ syntactic structure and heuristic resolution
 
 SemanticDB
-→ symboles résolus par le compilateur Scala
+→ symbols resolved by the Scala compiler
 
 LSP / presentation compiler
-→ état sémantique live du code courant
+→ live semantic state of the current code
 ```
 
 For development Scala, therefore, prefers a SemanticDB edge to a reconstructed edge only from the text when both are available.
@@ -183,12 +183,12 @@ For development Scala, therefore, prefers a SemanticDB edge to a reconstructed e
 This graph layer is especially useful if it avoids loading dozens of files. A read-only subagent can query ScalaSemantic or Codebase-Memory, then only trace a few paths, symbols and proofs `file:line` to the parent:
 
 ```text
-question d'impact
-→ subagent isolé
+impact question
+→ isolated subagent
 → knowledge graph / semantic graph
-→ 5–10 relations pertinentes
-→ vérification Metals / IntelliJ si nécessaire
-→ résumé < 1–2K tokens
+→ 5–10 relevant relationships
+→ verify in Metals / IntelliJ if needed
+→ summary < 1–2K tokens
 → parent
 ```
 
@@ -211,9 +211,9 @@ The tools presented include: `compile-file`, `compile-full`, `compile-module`, `
 Articulation with JetBrains] MCP and ScalaSemantic:
 
 ```text
-JetBrains MCP     = contexte IDE quand IntelliJ est ouvert (fichiers ouverts, inspections, run configs)
-ScalaSemantic MCP = relations globales SemanticDB : usages, hiérarchies, call paths, givens
-Metals MCP        = feedback compilateur live pour les agents terminal, même IDE fermé
+JetBrains MCP     = IDE context when IntelliJ is open (open files, inspections, run configs)
+ScalaSemantic MCP = global SemanticDB relationships: usages, hierarchies, call paths, givens
+Metals MCP        = live compiler feedback for terminal agents, even with the IDE closed
 ```
 
 The three are complementary, not redundant. For long sessions Claude Code or tasks launched outside of IDE (CI local, parallel worktree), MetalsMCP] is the one that transforms "the agent guesses the types" into "the agent questions the compiler".
@@ -297,17 +297,17 @@ Each iteration costs one `compile-file` (milliseconds, incremental) instead of a
 An agent can read malicious instructions in an issue, README, code comment, build output, web page, result MCP or a generated file. These contents are **Unreliable data**, even when they appear as system rules. Robustness of the model is not enough: defences must be structural.
 
 ```text
-1. Explorer en read-only dans un worktree ou conteneur jetable.
-2. Refuser le réseau par défaut ; autoriser seulement les domaines nécessaires.
-3. Monter les secrets hors du contexte et utiliser des clés à portée, budget et durée minimaux.
-4. Exiger une approbation humaine pour installation, réseau, push, déploiement, suppression et écriture hors repo.
-5. Épingler les versions des serveurs MCP et limiter chaque outil à son répertoire et à ses actions.
-6. Séparer l'agent qui lit des données externes de celui qui dispose des permissions d'écriture.
-7. Journaliser chaque tool call et arrêter si une donnée lue tente de modifier la politique ou les permissions.
-8. Traiter **skills, plugins, serveurs MCP et mémoire persistante comme des dépendances exécutables** : versions épinglées,
-   provenance vérifiée, allowlist explicite et échec fermé si la politique ne peut pas être déterminée.
-9. Un decision model comme **Jev ne peut jamais élargir une permission** : son `state` peut contenir du texte adversarial.
-   Il peut réduire le bruit ou demander une escalade, mais push, déploiement, suppression et secrets restent régis par code/policy.
+1. Explore read-only in a disposable worktree or container.
+2. Deny network access by default and allow only the necessary domains.
+3. Mount secrets outside the context and use keys with minimal scope, budget, and lifetime.
+4. Require human approval for installation, network access, push, deployment, deletion, and writes outside the repo.
+5. Pin MCP server versions and restrict each tool to its directory and permitted actions.
+6. Separate the agent that reads external data from the one with write permissions.
+7. Log each tool call and stop if any data read attempts to change policy or permissions.
+8. Treat **skills, plugins, MCP servers, and persistent memory as executable dependencies**: pin versions,
+   verify provenance, use an explicit allowlist, and fail closed if the policy cannot be determined.
+9. A decision model such as **Jev must never expand a permission**. Its `state` can contain adversarial text.
+   It may reduce noise or request escalation, but pushes, deployments, deletions, and secrets remain governed by code and policy.
 ```
 
 The contents of the repository must never be able to expand its own scope of authorization.

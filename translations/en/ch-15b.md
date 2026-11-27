@@ -33,11 +33,11 @@ Structured, metric and trace log instrument (OpenTelemetry if adapted). Correct 
 ### Definition of production side
 
 ```text
-- PR et candidat d'intégration validés.
-- Artefact immuable identifié, testé et promu par le pipeline autorisé.
-- Staging et smoke tests passants ; rollback / récupération testés selon risque.
-- Canary ou rollout approuvé ; aucune alerte ou régression au-delà des seuils.
-- Fenêtre d'observation terminée ; métriques et exceptions documentées.
+- PR and integration candidate validated.
+- Immutable artifact identified, tested, and promoted by the authorized pipeline.
+- Staging and smoke tests passing. Rollback / recovery tested according to risk.
+- Canary or rollout approved, with no alerts or regressions exceeding thresholds.
+- Observation window completed, with metrics and exceptions documented.
 ```
 
 The first state is "merge-ready", the second "deployed", the last "stable". Measure these states separately rather than attribute success to a green commit or review.

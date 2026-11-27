@@ -18,27 +18,27 @@
 ## Por pedir explícitamente
 
 ```text
-Avant de modifier du Scala :
-- explique les types impliqués
-- indique les implicits/givens utilisés
-- identifie les effets de bord
-- vérifie les tests existants
-- conserve les signatures publiques
-- ne change pas la sérialisation JSON sans test
+Antes de modificar Scala:
+- explica los tipos implicados
+- indica los implicits/givens utilizados
+- identifica los efectos secundarios
+- comprueba las pruebas existentes
+- conserva las firmas públicas
+- exige una prueba para cualquier cambio en la serialización JSON
 ```
 
 <!-- section: s-3 -->
 ## Lista de comprobación de Scala después del diff
 
 ```text
-- Le code compile-t-il vraiment ?
-- Les imports sont-ils corrects ?
-- Les implicits/givens restent-ils résolus ?
-- Les types d'erreur sont-ils préservés ?
-- Les Futures/IO/Effects ne bloquent pas ?
-- La sérialisation JSON est inchangée ?
-- Les tests couvrent-ils le comportement métier ?
-- Le diff est-il minimal ?
+- ¿El código compila de verdad?
+- ¿Son correctos los imports?
+- ¿Se siguen resolviendo los implicits/givens?
+- ¿Se conservan los tipos de error?
+- ¿Los Futures/IO/Effects siguen siendo no bloqueantes?
+- ¿Se mantiene la serialización JSON?
+- ¿Las pruebas cubren el comportamiento de negocio?
+- ¿El diff es mínimo?
 ```
 
 <!-- section: s-4 -->
@@ -47,9 +47,9 @@ Avant de modifier du Scala :
 Para reescrituras sintáxicas repetitivas (migración de sintaxis Scala 2 → 3, sustitución sistemática de una API depreciada, reorganización de importaciones), **scalafix es determinista donde uno LLM es probabilista** : una regla se aplica de la misma manera en 500 archivos, sin alucinación ni olvido. El reparto correcto de los roles:
 
 ```text
-LLM (Claude) : écrire ou adapter la règle scalafix
-scalafix : appliquer la transformation sur toute la base
-LLM : traiter les cas que la règle n'a pas pu couvrir
+LLM (Claude): escribir o adaptar la regla scalafix
+scalafix: aplicar la transformación en toda la base de código
+LLM: encargarse de los casos que la regla no pudo cubrir
 ```
 
 Es la misma lógica que los guardias deterministas golpean las instrucciones textuales  la aplicación a los refactores.
@@ -89,8 +89,8 @@ El pronto a dar al LLM no es el migre de las llamadas de logger, pero: *"Escribi
 Los modelos LLM mezclan muy a menudo las dos sintaxis o reinventan macros complejas. Exige explícitamente:
 
 ```text
-- Utilise la syntaxe stricte Scala 3 (indentation optionnelle, enums, extensions).
-- Interdiction stricte de créer des Macros (inline, quoted) sans validation humaine préalable. Préfère toujours des fonctions standards.
+- Usa la sintaxis estricta de Scala 3 (indentación opcional, enums, extensiones).
+- Las macros (inline, quoted) requieren aprobación humana previa. Prefiere siempre funciones estándar.
 ```
 
 <!-- section: s-6 -->
@@ -101,14 +101,14 @@ Los modelos no sólo inventan números de versión: inventan **nombres de artefa
 Normas derivadas que se aplicarán en la reposición:
 
 ```text
-- tout nouvel artefact dans build.sbt doit exister sur Maven Central AVANT l'écriture
-  (vérification réseau, pas mémoire du modèle) ;
-- pour toute dépendance inconnue : exiger une date de première publication et un éditeur
-  avec un historique établi ;
-- commiter les lockfiles (coursier / dependencyLock) et vérifier les hashes en CI ;
-- toute installation initiée par un agent hors allowlist → revue humaine avant exécution ;
-- ne jamais laisser un agent résoudre les dépendances (sbt update) avec un build modifié
-  sans diff relu.
+- antes de añadir un artefacto a build.sbt, verifica que exista en Maven Central
+  (verificación mediante la red, sin confiar en la memoria del modelo);
+- para cualquier dependencia desconocida, exige la fecha de primera publicación y un editor
+  con trayectoria comprobada;
+- registra los lockfiles en un commit (coursier / dependencyLock) y verifica los hashes en CI;
+- toda instalación iniciada por un agente fuera de la allowlist → revisión humana antes de ejecutarla;
+- impide que el agente resuelva las dependencias (sbt update) con un build modificado
+  si el diff aún no se ha revisado.
 ```
 
 Esta es la versión de supply-chain de la regla de verificación de las versiones vía Context7 / Maven Central de la sección 3 : el nombre mismo es un dato no fiable.

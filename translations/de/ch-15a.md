@@ -7,10 +7,10 @@ Die CI ist der endgültige Richter, der das Leitprinzip bestimmt, sofern es an d
 ## Die vier gate spezifisch für die Prs-Agenten
 
 ```text
-1. Gate de gabarit et scope : diff base → candidat, fichiers protégés, taille et nombre de fichiers
-2. Gate de qualité de test : suites réellement exécutées + mutation score et mutants importants selon risque
-3. Gate de review : findings BLOCKING / REGRESSION_RISK vérifiés traités ou arbitrés humainement
-4. Gate de budget : tout job appelant un LLM a un timeout ET un plafond de coût
+1. Prüfung von Größe und Arbeitsumfang: Diff Basis → Kandidat, geschützte Dateien, Größe und Anzahl der Dateien
+2. Prüfung der Testqualität: tatsächlich ausgeführte Suites + Mutation Score und nach Risiko relevante Mutanten
+3. Review-Prüfung: verifizierte Befunde BLOCKING / REGRESSION_RISK bearbeitet oder menschlich entschieden
+4. Budgetprüfung: Jeder Job mit LLM-Aufruf hat ein Zeitlimit UND eine Kostenobergrenze
 ```
 
 Zwei zusätzliche Achsen, die nach der Basis der vier Gates zu betrachten sind:

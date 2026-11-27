@@ -4,28 +4,28 @@
 For a senior Scala developer, the aim is to maximize the following ratio. Writing code faster is secondary.
 
 ```text
-Changements utiles déployés et stables
+Useful changes deployed and stable
 ÷
-(diffs inutiles + retours review + bugs + crédits brûlés + temps humain)
+(unnecessary diffs + review feedback + bugs + credits spent + human time)
 ```
 
 The right mental model:
 
 ```text
-Toi = tech lead et arbitre final
-IntelliJ = vérité structurelle Scala/JVM et poste de contrôle
-JetBrains AI = assistance inline et actions IDE à faible friction
-Codex = agent principal d'exécution pour les issues standard + reviewer indépendant quand Claude écrit
-Claude Code = agent principal de raisonnement/debug/architecture + reviewer indépendant quand Codex écrit
-Qwen local = assistant économique
-GitHub Copilot = couche GitHub-native pour issues, PR et review automatique
-Aider = petit diff propre orienté Git
-MCP + Sourcebot + Context7 = contexte ciblé
-RTK + Headroom = réduction du bruit
-Jev = decision layer probabiliste pour classifier, scorer et router — jamais un coding model ni un gate critique seul
-GPT‑6 Luna / GPT‑6.2 Sol / GPT‑6.2 Astra = route Codex selon micro-boucle, agentique et frontier
-Haiku 5.5 / Sonnet 5.5 / Opus 5.5 / Fable 5.2 = route Claude selon volume, contrôle humain et autonomie
-Tests + Stryker4s + CI = juges finaux (déterministes)
+You = tech lead and final decision-maker
+IntelliJ = source of truth for Scala/JVM structure and control center
+JetBrains AI = inline assistance and low-friction IDE actions
+Codex = primary implementation agent for standard issues + independent reviewer when Claude writes
+Claude Code = primary reasoning, debugging, and architecture agent + independent reviewer when Codex writes
+Local Qwen = low-cost assistant
+GitHub Copilot = GitHub-native layer for issues, PRs, and automated review
+Aider = small, clean Git-focused diff
+MCP + Sourcebot + Context7 = targeted context
+RTK + Headroom = noise reduction
+Jev = probabilistic decision layer for classification, scoring, and routing — never the coding model or the only critical gate
+GPT‑6 Luna / GPT‑6.2 Sol / GPT‑6.2 Astra = Codex routing for micro-loops, agentic work, and frontier tasks
+Haiku 5.5 / Sonnet 5.5 / Opus 5.5 / Fable 5.2 = Claude routing by volume, human oversight, and autonomy
+Tests + Stryker4s + CI = final arbiters (deterministic)
 ```
 
 ---

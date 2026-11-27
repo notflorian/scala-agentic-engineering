@@ -7,16 +7,16 @@
 Prima dell'AI, scrivi o chiarisci:
 
 ```text
-Objectif :
-Comportement actuel :
-Comportement attendu :
-Contraintes métier :
-API publique à préserver :
-Fichiers probablement concernés :
-Tests ciblés :
-Validation harness :
-Risque :
-Critère d'acceptation :
+Obiettivo:
+Comportamento attuale:
+Comportamento atteso:
+Vincoli di business:
+API pubblica da preservare:
+File probabilmente coinvolti:
+Test mirati:
+Validazione nell’ambiente di esecuzione:
+Rischio:
+Criterio di accettazione:
 ```
 
 Numeri importanti requisiti di business e invarianti ([`REQ-01`], `REQ-02`, ecc.). Per ogni esigenza, dichiara la prova o la prova prevista prima dell'implementazione; un requisito senza oracolo deve essere esplicitamente contrassegnato e arbitrariato. Nella PR, combina il requisito, il comando/test, il risultato, convalidato SHA e i limiti di prova. La matrice di tracciabilità può rimanere molto breve per un biglietto banale.
@@ -157,16 +157,16 @@ Utilizzare in questo ordine:
 Prompt Qwen: anticipazione
 
 ```text
-Analyse ces fichiers et produis :
-- résumé du flux métier
-- classes et méthodes impliquées
-- invariants à préserver
-- tests existants
-- risques
-- ambiguïtés
-- prompt propre à donner à Claude Code
+Analizza questi file e fornisci:
+- riepilogo del flusso di business;
+- classi e metodi coinvolti;
+- invarianti da preservare;
+- test esistenti;
+- rischi;
+- ambiguità;
+- un prompt chiaro per Claude Code.
 
-Ne propose pas encore de patch.
+Attendi prima di proporre una patch.
 ```
 
 ---
@@ -177,21 +177,21 @@ Ne propose pas encore de patch.
 Scrittore di prompt (trasferimento)Codex] or Claude Code):
 
 ```text
-Tu es l'agent writer de cette tâche.
+Sei l’agente incaricato di scrivere il codice per questa attività.
 
-Objectif :
-[objectif]
+Obiettivo:
+[obiettivo]
 
-Contraintes :
-- diff minimal
-- pas de changement d'API publique sans validation explicite
-- préserver les comportements existants
-- ajouter ou adapter les tests
-- procéder par petites étapes
-- expliquer les risques
-- ne rien modifier avant validation
+Vincoli:
+- diff minimo;
+- nessuna modifica all’API pubblica senza approvazione esplicita;
+- preserva il comportamento esistente;
+- aggiungi o adatta i test;
+- procedi per piccoli passi;
+- spiega i rischi;
+- attendi l’approvazione prima di modificare i file.
 
-Commence par explorer le code et proposer un plan.
+Inizia esplorando il codice e proponendo un piano.
 ```
 
 Regola del documento: **Nessun piano, nessuna modalità di scrittura**. Il piano deve elencare i file da modificare, i file da lasciare vuoto, la strategia di prova, i rischi e la dimensione prevista del diff.
@@ -204,13 +204,13 @@ Regola del documento: **Nessun piano, nessuna modalità di scrittura**. Il piano
 Prompt: anticipare
 
 ```text
-Exécute uniquement l'étape 1.
-Ne touche pas aux autres étapes.
-Garde le diff minimal.
-Après modification, donne :
-- fichiers modifiés
-- raison de chaque changement
-- commande de test ciblée
+Esegui solo il passaggio 1.
+Lascia invariati gli altri passaggi.
+Mantieni il diff minimo.
+Dopo la modifica, indica:
+- i file modificati;
+- il motivo di ciascuna modifica;
+- il comando per eseguire i test mirati.
 ```
 
 Per favore. Scala, evitare i grandi refattori automatici. Richiedi lotti di correzione 30 à 300 Le linee di diff quando possibile. I ritorni sul campo e gli studi recenti sulle PR convergono a piccole, strette PR, più facile da leggere e meno inclini a guasto CI. A livello organizzativo, lo studio della distribuzione teorica Claude Code / Copilota CLI a Microsoft (arXiv, luglio) 2026, decine di migliaia di ingegneri) misure ~24% delle PR mescolate più tra gli adottivi — l'effetto è reale, ma si materializza in PRs arrivare *Recensione di:*, non in giganti diffs.
@@ -222,7 +222,7 @@ Per favore. Scala, evitare i grandi refattori automatici. Richiedi lotti di corr
 
 Agenti LLM sono noti per scrivere test "percorso felice" (test che passano ma non controllano casi di errore o limiti). Scala/SBT :
 
-```text
+```plaintext
 scalafmtCheckAll
 compile
 Test / compile
@@ -232,7 +232,7 @@ IntegrationTest / testOnly <TestCiblé>
 
 Poi solo se il rischio lo giustifica:
 
-```text
+```plaintext
 test
 IntegrationTest / test
 ```
@@ -262,7 +262,7 @@ La velocità del loop di prova di compilazione è la prima leva di produttività
 <!-- section: s-17 -->
 # .sbtopts — ottimizzato per l'attivazione di loop
 
-```text
+```plaintext
 -J-Xms2g
 -J-Xmx8g
 -J-XX:+UseZGC
@@ -303,7 +303,7 @@ Il trasporto locale è normalmente il default: **non espongono il server tempora
 
 Per i progetti Play Framework o multi-module:
 
-```text
+```plaintext
 sbt "project api" compile
 sbt "project api" "testOnly *DiscountServiceSpec"
 sbt "project integration" "testOnly *OrderFlowSpec"
@@ -335,19 +335,19 @@ Un test scritto dallo stesso agente dell'implementazione non è un oracolo indip
 Per un bugfix, mantenere la prova più proficua:
 
 ```text
-1. ajouter un test de reproduction minimal ;
-2. vérifier qu'il échoue sur le commit de base pour la bonne raison ;
-3. appliquer le patch ;
-4. vérifier que ce test puis la suite pertinente passent ;
-5. faire varier l'oracle : propriétés, cas limites, tests métamorphiques ou mutants ciblés ;
-6. faire relire le test avant l'implémentation lorsque le domaine est critique.
+1. aggiungi un test minimo di riproduzione;
+2. verifica che fallisca sul commit di base per il motivo previsto;
+3. applica la patch;
+4. verifica che passino questo test e poi la suite pertinente;
+5. varia l’oracolo: proprietà, casi limite, test metamorfici o mutanti mirati;
+6. fai rivedere il test prima dell’implementazione se il dominio è critico.
 ```
 
 Non impostare una soglia di mutazione universale che incoraggerebbe "giocare la metrica". Confronta il punteggio sul perimetro interessato, richiede una giustificazione per ogni mutante superstite maggiore ed è principalmente l'assunzione **delta di mutazione segna punteggio casuale**, regressioni sfuggite e ritorni di revisione. Un test che non poteva fallire prima che la patch non dimostra la correzione.
 
 **La fase di indurimento (Mutation Testing):** Una volta che l'IA ha scritto i test e sono verdi, convalida la loro robustezza con frequenza Stryker4s:
 
-```text
+```plaintext
 sbt "project api" stryker
 ```
 
@@ -388,14 +388,14 @@ Prima di dichiarare questo compito completato, eseguire e mostrare:
 Prompt: anticipare
 
 ```text
-Fais une review de ton propre diff avant de le transmettre au reviewer indépendant.
-Liste :
-- risques métier
-- cas limites
-- tests manquants
-- changements inutiles
-- fichiers à relire manuellement
-- hypothèses que tu as faites
+Rivedi il tuo diff prima di passarlo al revisore indipendente.
+Elenca:
+- rischi di business;
+- casi limite;
+- test mancanti;
+- modifiche inutili;
+- file da rileggere manualmente;
+- ipotesi che hai fatto.
 ```
 
 Questo passaggio spesso rimuove gli errori evidenti prima di una recensione esterna. **Non vale mai la pena approvare**: l'agente che ha scritto il diff condivide le stesse ipotesi della sua implementazione e non può costituire il cancello finale; lo scrittore può ripulire; un contesto fresco di distinzione **l'altra famiglia di modelli precedenti** deve fornire i suoi risultati indipendenti. L'uomo accetta.
@@ -408,32 +408,32 @@ Questo passaggio spesso rimuove gli errori evidenti prima di una recensione este
 Prompt reviewer: probabilità **Opus 5.5 Medioriente** se non fosse Codex ha scritto; **GPT‑6.2 Sol Medioriente** se Claude ha scritto. Andare in alto per una PR rischiosa e a Astra Light/Fable Low solo se la capacità aggiuntiva è giustificata:
 
 ```text
-Act as an independent senior Scala/JVM code reviewer.
+Agisci come revisore senior indipendente di codice Scala/JVM.
 
-Review the exact PR head SHA against its merge base, approved specification, acceptance criteria and AGENTS.md.
-Work in a fresh read-only session; do not modify the implementation. Do not rely on the writer's reasoning
-until you have formed your own assessment.
+Rivedi lo SHA esatto in testa alla PR confrontandolo con la base di merge, la specifica approvata, i criteri di accettazione e AGENTS.md.
+Lavora in una nuova sessione di sola lettura. Non modificare l’implementazione. Formula la tua valutazione
+prima di consultare il ragionamento dell’agente che ha scritto il codice.
 
-Prioritize functional correctness, preserved invariants, regressions, compatibility, test oracle quality,
-error handling, resource safety, concurrency, performance, security and scope violations.
+Dai priorità a correttezza funzionale, invarianti preservate, regressioni, compatibilità, qualità degli oracoli dei test,
+gestione degli errori, sicurezza delle risorse, concorrenza, prestazioni, sicurezza e violazioni del perimetro.
 
-For every actionable finding, provide severity, file/line, reviewed SHA, violated requirement or invariant,
-a concrete failure scenario or reproduction, the smallest plausible correction, and remaining uncertainty.
-Distinguish verified defects from hypotheses. Ignore stylistic preferences and unrelated refactoring.
-Do not invent findings. Return a concise verdict and evidence-backed findings only.
-Never approve or merge the PR yourself.
+Per ogni rilievo che richiede un intervento, indica gravità, file e riga, SHA esaminato, requisito o invariante violata,
+uno scenario concreto di errore o riproduzione, la correzione minima plausibile e l’incertezza residua.
+Distingui i difetti verificati dalle ipotesi. Ignora preferenze stilistiche e refactoring estranei.
+Presenta solo un giudizio conciso e rilievi fondati su evidenze. Non inventare rilievi.
+Non approvare né integrare la PR di tua iniziativa.
 ```
 
 Variante con classificazione di gravità macchina-funzionale — preferibile per smistamento e un cancello alimentato solo da risultati convalidati in modo indipendente (vedi l'esempio di decodifica digitato nella sezione casuale 12):
 
 ```text
-Classe chaque retour avec exactement un de ces labels :
-- BLOCKING        : bug métier, perte de données, faille, contrat public cassé
-- REGRESSION_RISK : comportement existant potentiellement altéré, cas limite non couvert
-- STYLE           : lisibilité, convention, nommage — jamais bloquant
-- OUT_OF_SCOPE    : amélioration valable mais hors ticket — à ignorer dans cette PR
+Assegna a ciascun rilievo esattamente una di queste etichette:
+- BLOCKING        : bug di business, perdita di dati, vulnerabilità o contratto pubblico violato
+- REGRESSION_RISK : comportamento esistente potenzialmente alterato o caso limite scoperto
+- STYLE           : leggibilità, convenzioni e nomi, mai bloccante
+- OUT_OF_SCOPE    : miglioramento valido ma fuori dal ticket, da ignorare in questa PR
 
-Retourne uniquement du JSON valide :
+Restituisci solo JSON valido:
 {
   "findings": [ { "severity": "...", "file": "...", "message": "..." } ],
   "summary": "..."
@@ -463,13 +463,13 @@ Il modello consigliato rimane: **uno scrittore, un recensore dell'altra famiglia
 Non chiedete mai al recensore di applicare automaticamente tutti i suoi suggerimenti. Selezioni utili ritorni, poi tornate all'originale **writer**:
 
 ```text
-Voici les retours de review que je valide :
-[liste]
+Approvo questi rilievi della revisione:
+[elenco]
 
-Corrige uniquement ces points.
-Ignore les suggestions optionnelles.
-Garde un diff minimal.
-Relance les tests ciblés.
+Correggi solo questi punti.
+Ignora i suggerimenti facoltativi.
+Mantieni il diff minimo.
+Esegui di nuovo i test mirati.
 ```
 
 **Interrompe la revisione quando i criteri sono verdi.** Un passaggio corretto dopo la revisione è il default; un secondo è giustificato solo da un ritrovamento `BLOCKING` / `REGRESSION_RISK` Non utilizzare un tipo di prompt "iterario" fino a quando non è perfetto: oltre il miglior checkpoint, l'agente spesso finisce per inventare cambiamenti per soddisfare la domanda e può degradare il diff.
@@ -484,27 +484,27 @@ Se deleghi la correzione post-PR a Codex (modalità Goal, Heartbeat o Cloud), `/
 Aggiungere regole di spegnimento esplicite, ridurre diffs inutili, cappi di correzione e crediti bruciati:
 
 ```text
-Stop immédiat si :
-- l'agent touche un fichier hors plan sans explication ;
-- l'agent modifie build.sbt, plugins.sbt, resolvers ou versions sans validation explicite ;
-- la même erreur de compilation revient 2 fois ;
-- les tests ciblés échouent 2 fois avec des causes différentes ;
-- le diff dépasse la taille annoncée ;
-- le correctif commence à changer l'architecture au lieu de résoudre le ticket.
-- l'agent tente une écriture destructrice, un push, un déploiement, un partage externe ou une action sur des secrets
-  qui n'étaient pas explicitement autorisés.
+Fermati subito se:
+- l’agente tocca un file fuori dal piano senza spiegazioni;
+- modifica build.sbt, plugins.sbt, resolver o versioni senza approvazione esplicita;
+- lo stesso errore di compilazione si ripete 2 volte;
+- i test mirati falliscono 2 volte per cause diverse;
+- il diff supera la dimensione prevista;
+- la correzione inizia a cambiare l’architettura invece di risolvere il ticket;
+- l’agente tenta un’operazione di scrittura distruttiva, un push, una distribuzione, una condivisione esterna o un’azione su segreti
+  senza autorizzazione esplicita.
 ```
 
 In questo caso, non riavviarlo. Chiedi invece:
 
 ```text
-Stop. Résume l'état exact :
-- fichiers modifiés
-- hypothèses faites
-- erreur actuelle
-- commandes exécutées
-- prochaine action minimale proposée
-Ne modifie rien.
+Fermati. Riassumi lo stato esatto:
+- file modificati;
+- ipotesi fatte;
+- errore attuale;
+- comandi eseguiti;
+- prossima azione minima proposta.
+Non apportare modifiche.
 ```
 
 > **Resuscitare senza pagare due volte per la stessa esplorazione.** Tre meccanismi Claude Code per sapere:
@@ -551,16 +551,16 @@ Il modo di cambiare API può salvare comandi, strumenti e sottoagenti, chiamare 
 Prima di installare o promuovere un Mod di Terze Parti:
 
 ```text
-1. Vérifier la source du marketplace et figer la version/commit quand c’est possible.
-2. Lire .claude-plugin/plugin.json, hooks/hooks.json, le module register.*, bin/ et .mcp.json éventuel.
+1. Verifica l’origine del marketplace e fissa la versione o il commit quando possibile.
+2. Leggi .claude-plugin/plugin.json, hooks/hooks.json, il modulo register.*, bin/ e .mcp.json se presente.
 3. claude plugin validate ./mon-mod
-   → inspecter en particulier les lignes hooks: et calls: sans exécuter le Mod.
+   → controlla in particolare le righe hooks: e calls: senza eseguire il Mod.
 4. claude --plugin-dir ./mon-mod plugin details <nom>
-   → vérifier l’inventaire réel des composants.
+   → verifica l’inventario effettivo dei componenti.
 5. claude plugin test ./mon-mod
-   → tests de hooks déterministes, sans session, login ni réseau.
-6. Si le plugin a des evals : claude plugin eval ... avant promotion.
-7. Premier essai avec --plugin-dir dans un worktree jetable ; --safe-mode comme voie de récupération.
+   → test deterministici degli hook senza sessione, login o rete.
+6. Se il plugin ha valutazioni, esegui claude plugin eval ... prima di promuoverlo.
+7. Prova prima --plugin-dir in un worktree temporaneo. Usa --safe-mode per il ripristino.
 ```
 
 Per un'organizzazione, il vero controllo deve vivere in **impostazioni gestite** (`allowManagedModsOnly`, ordine di plugin gestiti, casualità `disableAllHooks` in conformità con la politica) e nel Modenziale Integrato `cc-plugin-sec-default`, non nella buona volontà di un User Mod. Per il vostro uso personale, la regola equivalente è semplice: **built-in / codice personale audited > opaque community plugin aggiuntivi**, e nessun aggiornamento automatico di un Mod Sensitive senza rileggere la versione diff.

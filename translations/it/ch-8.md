@@ -4,16 +4,16 @@
 Aggiungi questi file o cartelle alla radice, mantenendo ** un posto di verità**: casuale
 
 ```text
-AGENTS.md                       # Source commune, courte, versionnée
-CLAUDE.md                       # Optionnel :Importe @AGENTS.md + règles Claude spécifiques
-GEMINI.md                       # Pointeur vers AGENTS.md ou symlink selon ton outil
-.github/copilot-instructions.md # Règles de review / coding agent GitHub Copilot, si utilisé
-.github/instructions/           # Règles Copilot path-specific si nécessaire
-.aiignore                       # Exclusions IA : secrets, gros artefacts, generated
-.claude/rules/scala.md          # Règles Claude path/scopes si utiles
+AGENTS.md                       # Fonte comune, breve e versionata
+CLAUDE.md                       # Facoltativo: importa @AGENTS.md e aggiunge regole specifiche per Claude
+GEMINI.md                       # Riferimento ad AGENTS.md o link simbolico, secondo lo strumento
+.github/copilot-instructions.md # Regole di revisione e per l’agente GitHub Copilot, se in uso
+.github/instructions/           # Regole Copilot per percorsi specifici, se necessario
+.aiignore                       # Esclusioni per l’IA: segreti, artefatti voluminosi, file generati
+.claude/rules/scala.md          # Regole Claude per percorsi o perimetri specifici, se utili
 .claude/rules/testing.md
 .claude/rules/security.md
-stryker4s.conf                  # Mutation testing
+stryker4s.conf                  # Test di mutazione
 docs/architecture.md
 docs/testing.md
 docs/review-checklist.md
@@ -52,13 +52,13 @@ Anche: il segreto **auto-memory automatica**Claude Code richiede una versione re
 ## Contenuto minimo di autorizzazione `AGENTS.md`
 
 ```text
-Build, test and formatting commands (exact commands)
-Non-obvious architecture boundaries and business invariants
-Public API / JSON / migration constraints
-Protected files and permitted write scope
-Scala conventions absent from existing documentation
-Stop conditions and definition of done
-Pointers to relevant docs and spec
+Comandi esatti per build, test e formattazione
+Confini architetturali e invarianti di business poco evidenti
+Vincoli su API pubblica, JSON e migrazioni
+File protetti e perimetro di scrittura consentito
+Convenzioni Scala assenti dalla documentazione attuale
+Condizioni di arresto e criteri di completamento
+Riferimenti alla documentazione e alla specifica pertinenti
 ```
 
 Scrivere queste regole ** per l'agente, non come documentazione umana**README, tutorial, l'elenco esaustivo dei moduli e dei confronti dei modelli rimangono in funzione dei percorsi, dei comandi, dei numeri e delle condizioni verificabili. `docs/`, caricato su richiesta.
@@ -71,11 +71,11 @@ Mantiene la matrice di sezione 3 in un documento di routing o profili utente Cod
 <!-- section: s-3 -->
 ## Contenuto minimo di autorizzazione `CLAUDE.md`
 
-```markdown
+```text
 @AGENTS.md
 
 ## Claude Code
-Use plan mode for risky multi-file changes.
+Usa la modalità di pianificazione per modifiche rischiose a più file.
 ```
 
 Muove le regole comuni dal vecchio meccanismo `CLAUDE.md` A proposito di: `AGENTS.md` Claude plan mode è una preferenza di imbracatura; le autorizzazioni effettive rimangono nella configurazione e sandbox.
@@ -143,13 +143,13 @@ Le regole per gli agenti sono volutamente specifiche — percorsi, comandi, modu
 Aggiungere `scripts/ai-rules-drift` ed eseguirlo dopo qualsiasi modifica di architettura/costruire, quindi almeno una volta alla settimana se il repository si muove molto:
 
 ```text
-Vérifier :
-- chaque chemin cité dans AGENTS.md / CLAUDE.md existe encore ;
-- chaque module sbt cité existe encore ;
-- chaque commande de compile/test/format est encore valide ;
-- aucun nom de DB, service, dossier ou script supprimé n'est encore référencé ;
-- les fichiers « interdits » correspondent encore aux vraies surfaces critiques ;
-- si CLAUDE.md existe, il importe ou complète toujours la source commune attendue.
+Verifica che:
+- ogni percorso citato in AGENTS.md / CLAUDE.md esista ancora;
+- ogni modulo sbt citato esista ancora;
+- ogni comando di compilazione, test o formattazione sia ancora valido;
+- non si citino più nomi di database, servizi, file o script rimossi;
+- i file protetti corrispondano ancora alle effettive aree critiche;
+- se esiste, CLAUDE.md importi o integri ancora la fonte comune prevista.
 ```
 
 Lo script può rimanere deterministico per semplici controlli (obiettivo`test -e`, moduli grep, controlli dovuti `--help`/dry-run) e non solo **reportage** Casi ambigui. Mai permettere all'agente che rileva la deriva di riscrivere e poi di autoapprovare le proprie regole persistenti: la regola diff si rivede come codice.

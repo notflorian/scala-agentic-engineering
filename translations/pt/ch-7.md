@@ -18,27 +18,27 @@
 ## Por pedir explicitamente.
 
 ```text
-Avant de modifier du Scala :
-- explique les types impliqués
-- indique les implicits/givens utilisés
-- identifie les effets de bord
-- vérifie les tests existants
-- conserve les signatures publiques
-- ne change pas la sérialisation JSON sans test
+Antes de alterar código Scala:
+- explique os tipos envolvidos
+- indique os implicits/givens usados
+- identifique os efeitos colaterais
+- verifique os testes existentes
+- preserve as assinaturas públicas
+- altere a serialização JSON somente com cobertura de teste
 ```
 
 <!-- section: s-3 -->
 ## Lista de verificação de Scala após o diff
 
 ```text
-- Le code compile-t-il vraiment ?
-- Les imports sont-ils corrects ?
-- Les implicits/givens restent-ils résolus ?
-- Les types d'erreur sont-ils préservés ?
-- Les Futures/IO/Effects ne bloquent pas ?
-- La sérialisation JSON est inchangée ?
-- Les tests couvrent-ils le comportement métier ?
-- Le diff est-il minimal ?
+- O código realmente compila?
+- Os imports estão corretos?
+- Os implicits/givens continuam sendo resolvidos?
+- Os tipos de erro foram preservados?
+- Futures/IO/Effects continuam sem bloqueio?
+- A serialização JSON permanece igual?
+- Os testes cobrem o comportamento de negócio?
+- O diff é mínimo?
 ```
 
 <!-- section: s-4 -->
@@ -47,9 +47,9 @@ Avant de modifier du Scala :
 Para reescritas sintáxicas repetitivas (migração de sintaxe Scala 2 → 3, substituição sistemática de uma API depreciada, reorganização de importações), **scalafix é determinista onde um LLM é probabilista**: uma regra aplica-se da mesma maneira em 500 arquivos, sem alucinação ou esquecimento.
 
 ```text
-LLM (Claude) : écrire ou adapter la règle scalafix
-scalafix : appliquer la transformation sur toute la base
-LLM : traiter les cas que la règle n'a pas pu couvrir
+LLM (Claude): escreva ou adapte a regra scalafix
+scalafix: aplique a transformação em toda a base de código
+LLM: trate os casos que a regra não conseguiu cobrir
 ```
 
 É a mesma lógica que os guardas deterministas batem as instruções textuais a aplicação aos refatores.
@@ -89,8 +89,8 @@ O breve a dar ao LLM não é o migre das chamadas de logger, mas: *"Escrever uma
 Os modelos LLM misturam muito frequentemente as duas sintaxes ou reinventam macros complexas. Exige explicitamente:
 
 ```text
-- Utilise la syntaxe stricte Scala 3 (indentation optionnelle, enums, extensions).
-- Interdiction stricte de créer des Macros (inline, quoted) sans validation humaine préalable. Préfère toujours des fonctions standards.
+- Use a sintaxe estrita do Scala 3 (indentação opcional, enums, extensões).
+- Crie macros (inline, quoted) somente com aprovação humana prévia. Prefira sempre funções comuns.
 ```
 
 <!-- section: s-6 -->
@@ -101,14 +101,14 @@ Os modelos não só inventam números de versão: inventam **Nomes de artefatos 
 Regras decorrentes da aplicação da reposição:
 
 ```text
-- tout nouvel artefact dans build.sbt doit exister sur Maven Central AVANT l'écriture
-  (vérification réseau, pas mémoire du modèle) ;
-- pour toute dépendance inconnue : exiger une date de première publication et un éditeur
-  avec un historique établi ;
-- commiter les lockfiles (coursier / dependencyLock) et vérifier les hashes en CI ;
-- toute installation initiée par un agent hors allowlist → revue humaine avant exécution ;
-- ne jamais laisser un agent résoudre les dépendances (sbt update) avec un build modifié
-  sans diff relu.
+- todo novo artefato em build.sbt deve existir no Maven Central ANTES de escrever a alteração
+  (confirme pela rede, sem depender da memória do modelo)
+- para toda dependência desconhecida, exija uma data de publicação inicial e um publicador
+  com histórico estabelecido
+- faça commit dos lockfiles (coursier / dependencyLock) e verifique os hashes na CI
+- instalação por agente fora da lista de permissões → revisão humana antes da execução
+- permita que um agente resolva dependências (sbt update) com um build modificado
+  somente após a revisão do diff.
 ```
 
 Esta é a versão do supply-chain da regra de verificação das versões via Context7 / Maven Central da secção 3 : o nome é um dado não confiável.
