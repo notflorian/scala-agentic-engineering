@@ -1,6 +1,6 @@
-# Glossaire de traduction
+# Translation glossary
 
-| Français | English | Español | Português | Italiano | Deutsch |
+| French | English | Spanish | Portuguese | Italian | German |
 | --- | --- | --- | --- | --- | --- |
 | ingénierie agentique | agentic engineering | ingeniería agéntica | engenharia agêntica | ingegneria agentica | agentenbasierte Softwareentwicklung |
 | ingénierie assistée par IA | AI-assisted engineering | ingeniería asistida por IA | engenharia assistida por IA | ingegneria assistita dall’IA | KI-gestützte Softwareentwicklung |
@@ -15,4 +15,4 @@
 | livraison | delivery | entrega | entrega | consegna | Auslieferung |
 | déploiement | deployment | despliegue | implantação | distribuzione | Bereitstellung |
 
-Conserver les noms de produits et de modèles, les identifiants, les chemins, les commandes et les clés de configuration. Garder les termes techniques consacrés comme `worktree`, `diff`, MCP et TDD. Dans les exemples, conserver les littéraux et les données d’entrée/sortie. Dans la prose, garder les signes, unités, intervalles, comparaisons et degrés d’incertitude du texte français.
+Preserve product and model names, identifiers, paths, commands, and configuration keys. Keep established technical terms such as `worktree`, `diff`, MCP, and TDD. Preserve literals and input/output data in examples. In prose, retain the signs, units, ranges, comparisons, and degrees of uncertainty in the French source.

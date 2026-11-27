@@ -1,10 +1,10 @@
 # Scala Agentic Engineering
 
-Documentation Jekyll et Just the Docs du [guide français](guide.md). L’accueil public ouvre la version anglaise. Les URL des chapitres suivent `/<lang>/ch-<numéro>/`, par exemple `/en/ch-7a/`. Les six préfixes sont `en`, `fr`, `es`, `pt`, `it` et `de`.
+A documentation site built with Jekyll and Just the Docs from the [French source guide](guide.md). The public home page opens the English version. Chapter URLs follow `/<lang>/ch-<number>/`, for example `/en/ch-7a/`. The six language prefixes are `en`, `fr`, `es`, `pt`, `it`, and `de`.
 
-## Aperçu local
+## Local preview
 
-Installer Ruby avec la version de [`.ruby-version`](.ruby-version), Bundler avec la version de [`Gemfile.lock`](Gemfile.lock), Python 3.10 ou plus récent et Node.js 20 ou plus récent.
+Install the Ruby version in [`.ruby-version`](.ruby-version), the Bundler version in [`Gemfile.lock`](Gemfile.lock), Python 3.10 or later, and Node.js 20 or later.
 
 ```sh
 bundle install
@@ -12,36 +12,36 @@ PAGES_URL=http://localhost:8000 PAGES_BASEURL='' scripts/build
 python3 -m http.server 8000 --directory _site
 ```
 
-Ouvrir [l’aperçu local](http://localhost:8000). Relancer `scripts/build` après édition. La commande exécute les tests, contrôle les traductions, construit avec `JEKYLL_ENV=production`, crée les index de recherche à partir du HTML et vérifie les pages rendues. En l’absence de variables `PAGES_URL` et `PAGES_BASEURL`, elle utilise l’URL du projet GitHub Pages.
+Open the [local preview](http://localhost:8000). Run `scripts/build` again after editing. The command runs the tests, checks translations, builds with `JEKYLL_ENV=production`, generates search indexes from the HTML, and validates the rendered pages. It defaults to the project's GitHub Pages URL when `PAGES_URL` and `PAGES_BASEURL` are unset.
 
-## Mettre à jour le guide
+## Update the guide
 
-1. Modifier [`guide.md`](guide.md). Les H1 numérotés qui suivent la séquence des chapitres ouvrent une page. Les sous-titres et les blocs clôturés restent dans leur chapitre.
-2. Lancer `python3 scripts/docs.py sync` si des titres ont été ajoutés. Lors d’un renommage, modifier d’abord la clé correspondante dans [`translations/sections.json`](translations/sections.json) en conservant sa valeur. Lors d’une suppression, conserver l’entrée afin de réserver son ancre.
-3. Lancer `python3 scripts/docs.py worklist`. Chaque ligne indique la langue, le chapitre, le statut et les identifiants à traiter. Les filtres `--lang de --chapter ch-7a` permettent d’attribuer une tâche précise.
-4. Mettre à jour `translations/<lang>/<chapitre>.md`. Conserver les marqueurs `<!-- section: ID -->` et leur ordre. Retirer les sections supprimées. Utiliser le [glossaire](translations/GLOSSARY.md) et vérifier les passages modifiés contre la source française.
-5. Enregistrer les sections relues avec `python3 scripts/docs.py record --lang de --chapter ch-7a --sections chapter s-1`. Omettre `--sections` pour enregistrer tout le chapitre et supprimer les entrées de manifeste des sections déjà retirées du fichier traduit. Si un chapitre entier disparaît, supprimer son Markdown et son manifeste dans chaque langue.
-6. Lancer `scripts/build` avant de proposer la modification. Les brouillons de traduction initiaux ont été produits localement et demandent une relecture technique et linguistique.
+1. Edit [`guide.md`](guide.md). Numbered H1 headings that follow the chapter sequence start new pages. Subheadings and fenced blocks stay in their chapter.
+2. Run `python3 scripts/docs.py sync` if you added headings. Before renaming a heading, update its key in [`translations/sections.json`](translations/sections.json) and keep its value. When removing a heading, keep the entry to reserve its anchor.
+3. Run `python3 scripts/docs.py worklist`. Each line lists the language, chapter, status, and section IDs to address. Use filters such as `--lang de --chapter ch-7a` to scope an assignment.
+4. Update `translations/<lang>/<chapter>.md`. Keep the `<!-- section: ID -->` markers in order and remove deleted sections. Use the [translation glossary](translations/GLOSSARY.md) and check revised passages against the French source.
+5. Record the reviewed sections with `python3 scripts/docs.py record --lang de --chapter ch-7a --sections chapter s-1`. Omit `--sections` to record the entire chapter and remove manifest entries for sections already deleted from the translated file. If an entire chapter is removed, delete its Markdown file and manifest in each translation.
+6. Run `scripts/build` before submitting the change. The initial translation drafts were generated locally and need technical and linguistic review.
 
-### Identifiants et manifestes
+### Identifiers and manifests
 
-`translations/sections.json` associe chaque titre français et son niveau à une ancre stable dans son chapitre. `next` est le prochain numéro disponible. Les ancres des titres principaux sont `guide` et `chapter`. Les sous-sections portent des identifiants `s-1`, `s-2`, etc., identiques dans les six langues.
+`translations/sections.json` maps each French heading and its level to a stable anchor within its chapter. `next` stores the next available number. The main heading anchors are `guide` and `chapter`. Subsections use IDs such as `s-1` and `s-2`, shared across all six languages.
 
-À côté de chaque chapitre traduit, le manifeste JSON associe chaque ID à `source_sha256` et `translation_sha256`. Les deux empreintes SHA-256 couvrent les octets UTF-8 de la section correspondante, sans le marqueur. La validation signale les sections manquantes, supprimées, obsolètes, modifiées sans enregistrement, hors ordre ou structurellement divergentes. Elle compare les blocs clôturés, le code en ligne, les destinations, les valeurs numériques, les titres, listes, citations et tableaux. La traduction et sa relecture se font en dehors de la CI.
+Alongside each translated chapter, a JSON manifest maps every section ID to `source_sha256` and `translation_sha256`. Each SHA-256 hash covers the UTF-8 bytes of the corresponding section, excluding its marker. Validation flags missing, deleted, outdated, unrecorded, out-of-order, and structurally mismatched sections. It compares fenced blocks, inline code, link destinations, numeric values, headings, lists, blockquotes, and tables. Translation and review take place outside CI.
 
-### Répartir les traductions entre Codex et Claude Code
+### Split translation work between Codex and Claude Code
 
-Depuis une branche qui contient le même état de `guide.md`, attribuer des couples langue/chapitre disjoints. Donner à chaque session les IDs du worklist, le glossaire et les conventions du manifeste. Par exemple :
+Start from a branch with a shared version of `guide.md` and assign distinct language and chapter pairs. Give each session its section IDs from the worklist, the glossary, and the manifest conventions. The following commands create separate worktrees.
 
 ```sh
 git worktree add -b docs/es-ch-7a ../scala-codex
 git worktree add -b docs/de-ch-7a ../scala-claude
 ```
 
-Ouvrir Codex dans `../scala-codex` et Claude Code dans `../scala-claude`. Demander à chaque session de modifier uniquement son Markdown et son manifeste, puis de contrôler son lot avec `worklist --lang … --chapter …`. Intégrer les deux branches et exécuter la validation complète sur leur résultat combiné.
+Open Codex in `../scala-codex` and Claude Code in `../scala-claude`. Ask each session to edit only its Markdown file and manifest, then check its assignment with `worklist --lang … --chapter …`. Integrate both branches and run the full validation on the combined result.
 
-## Publication GitHub Pages
+## Publish to GitHub Pages
 
-Avant publication, confirmer que le contenu, les attributions et les licences permettent sa diffusion. Dans les paramètres du dépôt, ouvrir **Pages**, puis choisir **GitHub Actions** comme source. Après intégration sur `main`, le workflow construit et valide le site puis déploie l’artefact dans l’environnement `github-pages`. Les pull requests exécutent la validation sans déploiement. Le code HTML de sortie reste hors du dépôt.
+Before publishing, confirm that the content, attributions, and licenses permit public distribution. In the repository settings, open **Pages** and choose **GitHub Actions** as the source. After changes land on `main`, the workflow builds and validates the site, then deploys the artifact to the `github-pages` environment. Pull requests run validation only. The generated HTML stays outside the repository.
 
-Un domaine personnalisé peut être configuré dans **Settings → Pages**. Le workflow lit l’origine et le préfixe effectifs de Pages. [Configuration officielle des workflows GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+Configure a custom domain under **Settings → Pages**. The workflow reads the active Pages origin and path prefix. [GitHub Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
