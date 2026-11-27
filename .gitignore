@@ -1,0 +1,9 @@
+/.bundle/
+/.generated/
+/.jekyll-cache/
+/.jekyll-metadata
+/_site/
+/vendor/bundle/
+__pycache__/
+.DS_Store
+/vendor/cache/

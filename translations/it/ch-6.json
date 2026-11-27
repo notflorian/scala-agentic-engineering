@@ -1,0 +1,10 @@
+{
+  "chapter": {
+    "source_sha256": "0202f56e7ad8183684ecf2ea3c128ed17db17d5c88d7fba13c182f15f5d1e255",
+    "translation_sha256": "32b19eeadd8c33c3ef53ae1fb5ecb23c1a089435fc285e6a42f63ba26e711fda"
+  },
+  "s-1": {
+    "source_sha256": "0a94b7a3c4a2fe9ca771cdc9c5b4d3b6e22a070a4694e597e6cff4d363782fe4",
+    "translation_sha256": "7300c69651fcab0f4e5e86db2448704967e207ffce10cb11ac6f74feedaad9e5"
+  }
+}

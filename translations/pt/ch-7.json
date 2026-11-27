@@ -1,0 +1,30 @@
+{
+  "chapter": {
+    "source_sha256": "e807d7716c5126bc5b7cce9683cbbea7b67ae76dcfe146df4c34dce00d887b98",
+    "translation_sha256": "f6637cacffa2a694b1ca9a78c873842c0d78ec60d026795f8e3e59c5f9a098bf"
+  },
+  "s-1": {
+    "source_sha256": "722f2cd3ff1c6320aa88c930dec1fc675064095cdf582dbe91a30d43129e4bc8",
+    "translation_sha256": "7860e38ed96351d0278a19c35accf8fb8d689c349a967cf49bf5be55233faf4b"
+  },
+  "s-2": {
+    "source_sha256": "3fcf94331d9144827ede2f4f0dbde1dd9c0d39dc6953836e3fa71c21be48c061",
+    "translation_sha256": "75ad5c9b7b774b71dd405562e8d5c0de56b898b9fe6ea47c4af3e1f4898e5086"
+  },
+  "s-3": {
+    "source_sha256": "b82f50b6cfb390aeef7f68cf9e1e6118b9d9a75924ac4c50a03b20787bd0ae9a",
+    "translation_sha256": "e79b59a852689aeeacc825141da0e74e967b8850c73ba9f696822bf8973ff10a"
+  },
+  "s-4": {
+    "source_sha256": "5fac5dfae4d814a7753fedce0187eba2ce3bfc388c86b64cd2c5cacf1d9c86d9",
+    "translation_sha256": "c3e06ca40242b374b8707eda8c1f99380bf8e90df2a5b8eed79db0fd66b4720a"
+  },
+  "s-5": {
+    "source_sha256": "b88fcc84c7f9200d1bada4d05a6a2d3ea1ad71cf3a96e9ffb941af31ecec16fe",
+    "translation_sha256": "fa50f6d10e90127b7d041ac627416be8de8994cea147dced68d1d1d6180e7877"
+  },
+  "s-6": {
+    "source_sha256": "d34dfbbbe31496f4915c00f12d49bd89c306043f4f5aad69f26b0f5752b247d9",
+    "translation_sha256": "06a8c5abffc0839f3288e8e46192878d25dbb58b4ffccc55e86cdea87d423869"
+  }
+}

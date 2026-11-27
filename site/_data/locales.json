@@ -1,0 +1,62 @@
+{
+  "en": {
+    "name": "English",
+    "description": "A guide to agentic engineering for senior Scala developers, covering model selection, workflows, testing, costs, and delivery.",
+    "chapter_description": "{chapter} · The senior Scala developer’s guide to agentic engineering.",
+    "chapters": "Chapters", "home": "Guide home", "contents": "On this page", "language": "Language",
+    "search": "Search English documentation", "no_results": "No results", "search_error": "Search is unavailable.",
+    "repository": "Repository", "source": "French source", "download": "Download Markdown", "skip": "Skip to content",
+    "previous": "Previous chapter", "next": "Next chapter", "copy": "Copy code", "copied": "Copied", "copy_error": "Could not copy the code.",
+    "theme": "Appearance", "system": "System", "light": "Light", "dark": "Dark"
+  },
+  "fr": {
+    "name": "Français",
+    "description": "Guide d’ingénierie agentique pour les développeurs Scala seniors. Choix des modèles, workflows, tests, coûts et livraison.",
+    "chapter_description": "{chapter} · Le guide d’ingénierie agentique pour les développeurs Scala seniors.",
+    "chapters": "Chapitres", "home": "Accueil du guide", "contents": "Sur cette page", "language": "Langue",
+    "search": "Rechercher dans la documentation française", "no_results": "Aucun résultat", "search_error": "La recherche est indisponible.",
+    "repository": "Dépôt", "source": "Source française", "download": "Télécharger le Markdown", "skip": "Aller au contenu",
+    "previous": "Chapitre précédent", "next": "Chapitre suivant", "copy": "Copier le code", "copied": "Copié", "copy_error": "Impossible de copier le code.",
+    "theme": "Apparence", "system": "Système", "light": "Clair", "dark": "Sombre"
+  },
+  "es": {
+    "name": "Español",
+    "description": "Guía de ingeniería agéntica para desarrolladores sénior de Scala. Modelos, flujos de trabajo, pruebas, costes y entrega.",
+    "chapter_description": "{chapter} · Guía de ingeniería agéntica para desarrolladores sénior de Scala.",
+    "chapters": "Capítulos", "home": "Inicio de la guía", "contents": "En esta página", "language": "Idioma",
+    "search": "Buscar en la documentación en español", "no_results": "No hay resultados", "search_error": "La búsqueda no está disponible.",
+    "repository": "Repositorio", "source": "Fuente en francés", "download": "Descargar Markdown", "skip": "Saltar al contenido",
+    "previous": "Capítulo anterior", "next": "Capítulo siguiente", "copy": "Copiar código", "copied": "Copiado", "copy_error": "No se pudo copiar el código.",
+    "theme": "Apariencia", "system": "Sistema", "light": "Claro", "dark": "Oscuro"
+  },
+  "pt": {
+    "name": "Português",
+    "description": "Guia de engenharia agêntica para profissionais seniores de Scala. Modelos, fluxos de trabalho, testes, custos e entrega.",
+    "chapter_description": "{chapter} · Guia de engenharia agêntica para profissionais seniores de Scala.",
+    "chapters": "Capítulos", "home": "Início do guia", "contents": "Nesta página", "language": "Idioma",
+    "search": "Pesquisar na documentação em português", "no_results": "Não foram encontrados resultados", "search_error": "A pesquisa está indisponível.",
+    "repository": "Repositório", "source": "Fonte em francês", "download": "Baixar Markdown", "skip": "Ir para o conteúdo",
+    "previous": "Capítulo anterior", "next": "Próximo capítulo", "copy": "Copiar código", "copied": "Copiado", "copy_error": "Não foi possível copiar o código.",
+    "theme": "Aparência", "system": "Sistema", "light": "Claro", "dark": "Escuro"
+  },
+  "it": {
+    "name": "Italiano",
+    "description": "Guida all’ingegneria agentica per sviluppatori Scala senior. Modelli, flussi di lavoro, test, costi e rilascio.",
+    "chapter_description": "{chapter} · Guida all’ingegneria agentica per sviluppatori Scala senior.",
+    "chapters": "Capitoli", "home": "Pagina iniziale della guida", "contents": "In questa pagina", "language": "Lingua",
+    "search": "Cerca nella documentazione in italiano", "no_results": "Nessun risultato", "search_error": "La ricerca non è disponibile.",
+    "repository": "Repository", "source": "Fonte in francese", "download": "Scarica Markdown", "skip": "Vai al contenuto",
+    "previous": "Capitolo precedente", "next": "Capitolo successivo", "copy": "Copia codice", "copied": "Copiato", "copy_error": "Impossibile copiare il codice.",
+    "theme": "Aspetto", "system": "Sistema", "light": "Chiaro", "dark": "Scuro"
+  },
+  "de": {
+    "name": "Deutsch",
+    "description": "Leitfaden für agentenbasierte Softwareentwicklung mit Scala für erfahrene Entwicklerinnen und Entwickler. Modelle, Arbeitsabläufe, Tests, Kosten und Auslieferung.",
+    "chapter_description": "{chapter} · Leitfaden für agentenbasierte Softwareentwicklung mit Scala.",
+    "chapters": "Kapitel", "home": "Startseite des Leitfadens", "contents": "Auf dieser Seite", "language": "Sprache",
+    "search": "Deutschsprachige Dokumentation durchsuchen", "no_results": "Keine Ergebnisse", "search_error": "Die Suche ist nicht verfügbar.",
+    "repository": "Repository", "source": "Französische Quelle", "download": "Markdown herunterladen", "skip": "Zum Inhalt springen",
+    "previous": "Vorheriges Kapitel", "next": "Nächstes Kapitel", "copy": "Code kopieren", "copied": "Kopiert", "copy_error": "Der Code konnte nicht kopiert werden.",
+    "theme": "Darstellung", "system": "System", "light": "Hell", "dark": "Dunkel"
+  }
+}
