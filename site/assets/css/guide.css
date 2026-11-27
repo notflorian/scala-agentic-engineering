@@ -35,7 +35,6 @@
   --small-size: .8125rem;
   --code-size: .84375rem;
   --prose-leading: 1.7;
-  --measure: 82ch;
   --space-1: .25rem;
   --space-2: .5rem;
   --space-3: .75rem;
@@ -519,10 +518,12 @@ details[open] > summary .small-icon { transform: rotate(180deg); }
 
 /* Editorial typography, tables and fenced code */
 .prose :is(h2, h3, h4, h5, h6) { margin-block: var(--space-6) var(--space-3); }
-.prose > :where(p, ul, ol, blockquote, dl, h1, h2, h3, h4, h5, h6) { max-width: var(--measure); }
 .prose > h1 { margin-block-end: var(--space-5); }
 .prose :where(p, ul, ol, dl, blockquote) { margin-block: 0 var(--space-4); }
-.prose :where(p, li, dd, blockquote) { overflow-wrap: anywhere; }
+.prose :where(p, li, dd, blockquote) {
+  overflow-wrap: anywhere;
+  text-align: justify;
+}
 .prose :where(ul, ol) { padding-inline-start: var(--space-5); }
 .prose li + li { margin-block-start: var(--space-1); }
 .prose li :where(ul, ol) { margin-block: var(--space-1) 0; }
@@ -768,7 +769,6 @@ html:has(#local-search[open]) { overflow: hidden; }
     .docs-footer, #local-search, .heading-permalink, .copy-button, .copy-status, .home-actions) { display: none; }
   .docs-shell, .docs-main.with-toc { display: block; }
   .reading-column { padding: 0; }
-  .prose > * { max-width: none; }
   .prose :is(h1, h2, h3, h4, h5, h6) { break-after: avoid; }
   .prose .table-wrapper, .prose pre, .prose .highlighter-rouge pre.highlight { overflow: visible; }
   .prose table:has(tr > :nth-child(4)) { min-width: 0; }
