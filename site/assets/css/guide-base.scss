@@ -1,0 +1,8 @@
+---
+---
+// The guide uses the theme's reset and table styles with its own layout and controls.
+@import "support/support";
+@import "vendor/normalize.scss/normalize";
+
+$table-background-color: var(--page);
+@import "tables";

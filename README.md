@@ -14,6 +14,12 @@ python3 -m http.server 8000 --directory _site
 
 Open the [local preview](http://localhost:8000). Run `scripts/build` again after editing. The command runs the tests, checks translations, builds with `JEKYLL_ENV=production`, generates search indexes from the HTML, and validates the rendered pages. It defaults to the project's GitHub Pages URL when `PAGES_URL` and `PAGES_BASEURL` are unset.
 
+## Site presentation
+
+The guide layout and its includes render the handbook from the generated chapter catalog. Update chapter groups and homepage topic destinations in [`site/_data/navigation.json`](site/_data/navigation.json), and add interface copy in all six languages in [`site/_data/locales.json`](site/_data/locales.json). The build checks group order, topic destinations, pagination, and localized controls.
+
+The site uses its own navigation, search dialog, heading permalinks, and code-copy controls. Just the Docs provides the theme’s reset, table styles, and HTML table wrappers. The guide stylesheet defines the color tokens and Rouge highlighting for both appearances. The search indexes are still generated from the rendered editorial content and fetched on demand.
+
 ## Update the guide
 
 1. Edit [`guide.md`](guide.md). Numbered H1 headings that follow the chapter sequence start new pages. Subheadings and fenced blocks stay in their chapter.

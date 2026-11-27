@@ -1,0 +1,43 @@
+<header class="docs-header">
+  <div class="header-inner">
+    <a class="brand" href="{{ chapters.first.url | relative_url }}">
+      <img src="{{ '/assets/images/mark.svg' | relative_url }}" alt="" width="32" height="32">
+      <span>{{ site.title | escape }}</span>
+    </a>
+    <div class="header-tools">
+      <button type="button" class="toolbar-control search-trigger" id="search-trigger" aria-haspopup="dialog"
+        aria-label="{{ labels.search | escape }}" aria-keyshortcuts="Control+k Meta+k" hidden>
+        {% include guide-icon.html name="search" %}
+        <span>{{ labels.search_short | escape }}</span>
+        <kbd aria-hidden="true"></kbd>
+      </button>
+      <details class="language-picker" id="language-picker">
+        <summary class="toolbar-control" title="{{ labels.language | escape }}">
+          {% include guide-icon.html name="globe" %}
+          <span class="sr-only">{{ labels.language | escape }}</span>
+          <span class="current-language">{{ labels.name | escape }}</span>
+          {% include guide-icon.html name="chevron" class="small-icon" %}
+        </summary>
+        <nav class="locale-nav" aria-label="{{ labels.language | escape }}">
+          {% for locale in site.data.locales -%}
+            {% assign code = locale | first -%}
+            {% assign peer = site.data.chapters[code] | where: "id", page.translation_key | first -%}
+            <a lang="{{ code }}" hreflang="{{ code }}" href="{{ peer.url | relative_url }}"{% if code == page.lang %} aria-current="page"{% endif %}>{{ locale.last.name | escape }}</a>
+          {% endfor -%}
+        </nav>
+      </details>
+      <div class="theme-control" id="theme-control" hidden>
+        {% include guide-icon.html name="theme" %}
+        <label class="sr-only" for="theme">{{ labels.theme | escape }}</label>
+        <select id="theme" title="{{ labels.theme | escape }}">
+          <option value="system">{{ labels.system | escape }}</option>
+          <option value="light">{{ labels.light | escape }}</option>
+          <option value="dark">{{ labels.dark | escape }}</option>
+        </select>
+      </div>
+      <a class="toolbar-control github-link" href="{{ site.repository_url }}" aria-label="{{ labels.repository | escape }} · GitHub" title="GitHub">
+        {% include guide-icon.html name="github" %}
+      </a>
+    </div>
+  </div>
+</header>
