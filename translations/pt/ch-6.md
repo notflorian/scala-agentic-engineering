@@ -4,7 +4,7 @@
 Para uma regra profissional importante, reveja o fluxo de trabalho:
 
 ```text
-Spec → tests générés → tests validés humainement → implémentation → tests verts → review
+Especificação → testes gerados → testes validados por uma pessoa → implementação → testes passando → revisão
 ```
 
 Para as tarefas críticas, separa também os autores: Claude (ou Codex) prepara os testes desde o commit de base e a spec, o humano valida o oráculo e depois o outro agente implementa. O writer não enfraquece estas afirmações; se um oráculo for errado, correção explicitamente arbitrada antes de retomar. Uma nova sessão de revisão independente inspecciona os casos-limite do SHA final. Para os microcorretivos, mantém um ciclo mais curto.
@@ -12,35 +12,35 @@ Para as tarefas críticas, separa também os autores: Claude (ou Codex) prepara 
 Prompt teste engineer independente:
 
 ```text
-Act as an independent test engineer. Read the approved specification, AGENTS.md and existing contracts.
-Work from the base commit without inspecting any proposed implementation.
-Design the smallest tests covering acceptance criteria, boundaries, failures and preserved invariants.
-Map each test to a requirement; prefer observable behavior and property-based tests where meaningful.
-For a bugfix, demonstrate the reproduction fails on the base commit for the expected reason.
-Do not modify production code, existing assertions, build configuration or CI.
-Do not derive expected results from the implementation under test.
-Report uncovered requirements, ambiguous contracts, exact commands and execution results.
-Stop for human approval of the oracle before handing the tests to the implementation agent.
+Atue como engenheiro de testes independente. Leia a especificação aprovada, o AGENTS.md e os contratos existentes.
+Parta do commit-base sem examinar nenhuma implementação proposta.
+Projete os menores testes que cubram os critérios de aceitação, os limites, as falhas e as invariantes preservadas.
+Relacione cada teste a um requisito. Prefira comportamentos observáveis e testes baseados em propriedades quando fizer sentido.
+Para uma correção, demonstre que a reprodução falha no commit-base pelo motivo esperado.
+Não modifique código de produção, asserções existentes, configuração de build ou CI.
+Não derive os resultados esperados a partir da implementação sob teste.
+Relate requisitos sem cobertura, contratos ambíguos, comandos exatos e resultados da execução.
+Pare e aguarde a aprovação humana do oráculo antes de entregar os testes ao agente de implementação.
 ```
 
 
 Prompt:
 
 ```text
-À partir de cette règle métier, écris d'abord les tests.
-Ne modifie pas encore le code de production.
-Les tests doivent couvrir :
-- cas nominal
-- cas limite
-- non-régression
-- comportement existant à préserver
+Comece escrevendo testes para esta regra de negócio.
+Deixe o código de produção como está por enquanto.
+Os testes precisam cobrir:
+- caso normal
+- caso-limite
+- prevenção de regressões
+- comportamento existente a preservar
 ```
 
 Você só está lendo os testes.
 
 ```text
-Implémente le minimum de code pour faire passer ces tests.
-Ne modifie pas les contrats publics.
+Implemente o mínimo de código necessário para os testes passarem.
+Preserve os contratos públicos.
 ```
 
 Este pattern é um dos mais confiáveis para fazer trabalhar um agente em ciclo controlado, desde que a validação local seja interrompida por uma CI independente. **bugfix**, pede também um *bug-reproduction teste* : deve falhar no commit de início, reproduzir o defeito observado e depois passar com o adesivo. Um teste adicionado após o adesivo sem prova de que não funcionava antes traz muito menos informações.
@@ -48,8 +48,8 @@ Este pattern é um dos mais confiáveis para fazer trabalhar um agente em ciclo 
 Para Scala, requer **Property-Based Testing** para a lógica complexa:
 
 ```text
-À partir de cette règle métier, écris d'abord les tests en utilisant ScalaCheck (Property-based testing).
-Ne te contente pas de tests unitaires classiques. Définis les générateurs (Gen) pour éprouver toutes les limites du domaine.
+Comece escrevendo testes para esta regra de negócio com ScalaCheck (testes baseados em propriedades).
+Vá além dos testes unitários convencionais. Defina geradores (Gen) que exercitem todos os limites do domínio.
 ```
 
 ---

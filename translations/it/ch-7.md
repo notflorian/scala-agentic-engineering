@@ -18,27 +18,27 @@
 ## Per essere esplicitamente richiesto
 
 ```text
-Avant de modifier du Scala :
-- explique les types impliqués
-- indique les implicits/givens utilisés
-- identifie les effets de bord
-- vérifie les tests existants
-- conserve les signatures publiques
-- ne change pas la sérialisation JSON sans test
+Prima di modificare codice Scala:
+- spiega i tipi coinvolti;
+- individua gli implicits/givens in uso;
+- individua gli effetti collaterali;
+- verifica i test esistenti;
+- preserva le firme pubbliche;
+- evita modifiche alla serializzazione JSON senza un test.
 ```
 
 <!-- section: s-3 -->
 ## Checklist Scala dopo il diff
 
 ```text
-- Le code compile-t-il vraiment ?
-- Les imports sont-ils corrects ?
-- Les implicits/givens restent-ils résolus ?
-- Les types d'erreur sont-ils préservés ?
-- Les Futures/IO/Effects ne bloquent pas ?
-- La sérialisation JSON est inchangée ?
-- Les tests couvrent-ils le comportement métier ?
-- Le diff est-il minimal ?
+- Il codice compila davvero?
+- Gli import sono corretti?
+- Gli implicits/givens si risolvono ancora?
+- I tipi di errore sono preservati?
+- Futures/IO/Effects sono non bloccanti?
+- La serializzazione JSON è invariata?
+- I test coprono il comportamento di business?
+- Il diff è minimo?
 ```
 
 <!-- section: s-4 -->
@@ -47,9 +47,9 @@ Avant de modifier du Scala :
 Per riscritture di sintassi ripetitiva (syntax migrazione) Scala 2 → 3, sostituzione sistematica della sostituzione API depreciated, riorganizzazione delle importazioni), **scalafix è deterministico dove un'operazione LLM è probabilità di aumento** : una regola si applica identicamente su richiesta 500 file, senza allucinazione o dimenticanza. Buona condivisione di ruolo:
 
 ```text
-LLM (Claude) : écrire ou adapter la règle scalafix
-scalafix : appliquer la transformation sur toute la base
-LLM : traiter les cas que la règle n'a pas pu couvrir
+LLM (Claude): scrivi o adatta la regola scalafix
+scalafix: applica la trasformazione all’intero codice
+LLM: gestisci i casi che la regola non copre
 ```
 
 E' la stessa logica che "le salvaguardie deterministe battono le istruzioni testuali", applicate ai refactors.
@@ -89,8 +89,8 @@ La prontezza di dare vuoto LLM non è "migrare le chiamate dei logger" ma: *"scr
 Modelli su misura LLM molto spesso mescolare le due sintassi o reinventare macro complesse.
 
 ```text
-- Utilise la syntaxe stricte Scala 3 (indentation optionnelle, enums, extensions).
-- Interdiction stricte de créer des Macros (inline, quoted) sans validation humaine préalable. Préfère toujours des fonctions standards.
+- Usa la sintassi rigorosa di Scala 3 (indentazione opzionale, enum, estensioni).
+- Non creare macro (inline, quoted) senza previa approvazione umana. Preferisci sempre le funzioni standard.
 ```
 
 <!-- section: s-6 -->
@@ -101,14 +101,14 @@ I modelli non solo inventano i numeri di versione: inventiscono **nomi di artefa
 Regole derivative da applicare al livello del repo:
 
 ```text
-- tout nouvel artefact dans build.sbt doit exister sur Maven Central AVANT l'écriture
-  (vérification réseau, pas mémoire du modèle) ;
-- pour toute dépendance inconnue : exiger une date de première publication et un éditeur
-  avec un historique établi ;
-- commiter les lockfiles (coursier / dependencyLock) et vérifier les hashes en CI ;
-- toute installation initiée par un agent hors allowlist → revue humaine avant exécution ;
-- ne jamais laisser un agent résoudre les dépendances (sbt update) avec un build modifié
-  sans diff relu.
+- prima di scrivere in build.sbt, verifica che ogni nuovo artefatto esista su Maven Central
+  (verifica in rete, senza affidarti alla memoria del modello);
+- per ogni dipendenza sconosciuta, esigi una data di prima pubblicazione e un autore
+  con una reputazione documentata;
+- includi i lockfile nei commit (coursier / dependencyLock) e verifica gli hash in CI;
+- installazione avviata da un agente fuori dall’allowlist → revisione umana prima dell’esecuzione;
+- non lasciare che un agente risolva le dipendenze (sbt update) con un build modificato
+  prima di aver rivisto il diff.
 ```
 
 Questa è la versione della regola "check version via Context7 / Maven Central" della sezione 3: il nome stesso è un dato inaffidabile.

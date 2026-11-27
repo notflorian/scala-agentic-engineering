@@ -7,10 +7,10 @@ CI è il giudice deterministico finale del principio guida — a condizione che 
 ## Le quattro PR porte specifiche
 
 ```text
-1. Gate de gabarit et scope : diff base → candidat, fichiers protégés, taille et nombre de fichiers
-2. Gate de qualité de test : suites réellement exécutées + mutation score et mutants importants selon risque
-3. Gate de review : findings BLOCKING / REGRESSION_RISK vérifiés traités ou arbitrés humainement
-4. Gate de budget : tout job appelant un LLM a un timeout ET un plafond de coût
+1. Controllo di limiti e perimetro: diff base → candidato, file protetti, dimensione e numero di file
+2. Controllo della qualità dei test: suite effettivamente eseguite + punteggio di mutazione e mutanti importanti in funzione del rischio
+3. Controllo della revisione: rilievi BLOCKING / REGRESSION_RISK verificati, risolti o valutati da una persona
+4. Controllo del budget: ogni job che chiama un LLM ha un timeout E un tetto di spesa
 ```
 
 Due assi complementari da considerare una volta che le quattro porte sono in posizione:

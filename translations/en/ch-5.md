@@ -7,16 +7,16 @@
 Before AI, you write or clarify:
 
 ```text
-Objectif :
-Comportement actuel :
-Comportement attendu :
-Contraintes métier :
-API publique à préserver :
-Fichiers probablement concernés :
-Tests ciblés :
-Validation harness :
-Risque :
-Critère d'acceptation :
+Goal:
+Current behavior:
+Expected behavior:
+Business constraints:
+Public API to preserve:
+Likely affected files:
+Targeted tests:
+Validation harness:
+Risk:
+Acceptance criterion:
 ```
 
 Numbers important business requirements and invariants ([`REQ-01`], `REQ-02`, etc.). For each requirement, declares the test or proof expected before implementation; a requirement without oracle must be explicitly marked uncovered and arbitrated. In the PR, combines requirement, command/test, result, validated SHA and limits of proof. The traceability matrix may remain very short for a trivial ticket.
@@ -157,16 +157,16 @@ Use in this order:
 Prompt Qwen:
 
 ```text
-Analyse ces fichiers et produis :
-- résumé du flux métier
-- classes et méthodes impliquées
-- invariants à préserver
-- tests existants
-- risques
-- ambiguïtés
-- prompt propre à donner à Claude Code
+Analyze these files and produce:
+- summary of the business flow
+- classes and methods involved
+- invariants to preserve
+- existing tests
+- risks
+- ambiguities
+- a clear prompt for Claude Code
 
-Ne propose pas encore de patch.
+Do not propose a patch yet.
 ```
 
 ---
@@ -177,21 +177,21 @@ Ne propose pas encore de patch.
 Prompt writer (Codex] or Claude Code):
 
 ```text
-Tu es l'agent writer de cette tâche.
+You are the writer agent for this task.
 
-Objectif :
-[objectif]
+Goal:
+[goal]
 
-Contraintes :
-- diff minimal
-- pas de changement d'API publique sans validation explicite
-- préserver les comportements existants
-- ajouter ou adapter les tests
-- procéder par petites étapes
-- expliquer les risques
-- ne rien modifier avant validation
+Constraints:
+- minimal diff
+- no public API changes without explicit approval
+- preserve existing behaviors
+- add or adapt tests
+- proceed in small steps
+- explain risks
+- make no changes before approval
 
-Commence par explorer le code et proposer un plan.
+Start by exploring the code and proposing a plan.
 ```
 
 Document rule: **No plan, no write mode**. The plan must list the files to be modified, the files to be left blank, the test strategy, the risks and the expected size of the diff.
@@ -204,13 +204,13 @@ Document rule: **No plan, no write mode**. The plan must list the files to be mo
 Prompt:
 
 ```text
-Exécute uniquement l'étape 1.
-Ne touche pas aux autres étapes.
-Garde le diff minimal.
-Après modification, donne :
-- fichiers modifiés
-- raison de chaque changement
-- commande de test ciblée
+Execute step 1 only.
+Leave the other steps alone.
+Keep the diff minimal.
+After the edit, provide:
+- files changed
+- reason for each change
+- targeted test command
 ```
 
 For Scala, avoid the large automatic refactors. Request lots of 30 à 300 Diff lines when possible. Field returns and recent studies on the PRs converge to small, narrow PRs, easier to read and less prone to failure CI. At the organizational level, the study of deployment Claude Code / Copilot CLI at Microsoft (arXiv, July) 2026, tens of thousands of engineers) measures ~24% of PRs mixed more among adopters — the effect is real, but it materializes in PRs *Reviewable*, not in giant diffs.
@@ -222,7 +222,7 @@ For Scala, avoid the large automatic refactors. Request lots of 30 à 300 Diff l
 
 Agents LLM are known to write "happy path" tests (tests that pass but do not check error cases or limits). Scala/SBT :
 
-```text
+```plaintext
 scalafmtCheckAll
 compile
 Test / compile
@@ -232,7 +232,7 @@ IntegrationTest / testOnly <TestCiblé>
 
 Then only if the risk justifies it:
 
-```text
+```plaintext
 test
 IntegrationTest / test
 ```
@@ -262,7 +262,7 @@ The speed of the compile-test loop is the first agent productivity lever. Config
 <!-- section: s-17 -->
 # .sbtopts — optimised for activating loops
 
-```text
+```plaintext
 -J-Xms2g
 -J-Xmx8g
 -J-XX:+UseZGC
@@ -303,7 +303,7 @@ Local transport is normally the default: **does not expose the server sbt in TCP
 
 For Play Framework or multi-module projects:
 
-```text
+```plaintext
 sbt "project api" compile
 sbt "project api" "testOnly *DiscountServiceSpec"
 sbt "project integration" "testOnly *OrderFlowSpec"
@@ -335,19 +335,19 @@ A test written by the same agent as the implementation is not an independent ora
 For a bugfix, keep the most profitable proof:
 
 ```text
-1. ajouter un test de reproduction minimal ;
-2. vérifier qu'il échoue sur le commit de base pour la bonne raison ;
-3. appliquer le patch ;
-4. vérifier que ce test puis la suite pertinente passent ;
-5. faire varier l'oracle : propriétés, cas limites, tests métamorphiques ou mutants ciblés ;
-6. faire relire le test avant l'implémentation lorsque le domaine est critique.
+1. add a minimal reproduction test
+2. verify that it fails on the base commit for the expected reason
+3. apply the patch
+4. verify that this test and then the relevant suite pass
+5. vary the oracle: properties, edge cases, metamorphic tests, or targeted mutants
+6. have the test reviewed before implementation when the domain is critical.
 ```
 
 Do not set a universal mutation threshold that would encourage "play the metric." Compares the score on the affected perimeter, requires a justification for each major surviving mutant and is mainly the **delta of mutation score**, escaped regressions and review returns. A test that could not fail before the patch does not prove the fix.
 
 **The Hardening Stage (Mutation Testing):** Once the AI has written the tests and they are green, validates their robustness with Stryker4s:
 
-```text
+```plaintext
 sbt "project api" stryker
 ```
 
@@ -388,14 +388,14 @@ Before declaring this task completed, perform and show:
 Prompt:
 
 ```text
-Fais une review de ton propre diff avant de le transmettre au reviewer indépendant.
-Liste :
-- risques métier
-- cas limites
-- tests manquants
-- changements inutiles
-- fichiers à relire manuellement
-- hypothèses que tu as faites
+Review your own diff before handing it to the independent reviewer.
+List:
+- business risks
+- edge cases
+- missing tests
+- unnecessary changes
+- files to review manually
+- assumptions you made
 ```
 
 This step often removes obvious errors before external review. **It is never worth approval**: the agent who wrote the diff shares the same assumptions as its implementation and cannot constitute the final gate. The writer can clean up; a fresh context of **the other family of models** must provide his independent findings. Human agrees.
@@ -427,13 +427,13 @@ Never approve or merge the PR yourself.
 Variant with machine-operational severity classification — preferred for sorting and a gate powered only by independently validated findings (see the example of decoding typed in section 12):
 
 ```text
-Classe chaque retour avec exactement un de ces labels :
-- BLOCKING        : bug métier, perte de données, faille, contrat public cassé
-- REGRESSION_RISK : comportement existant potentiellement altéré, cas limite non couvert
-- STYLE           : lisibilité, convention, nommage — jamais bloquant
-- OUT_OF_SCOPE    : amélioration valable mais hors ticket — à ignorer dans cette PR
+Classify each finding with exactly one of these labels:
+- BLOCKING        : business logic bug, data loss, vulnerability, or broken public contract
+- REGRESSION_RISK : potentially altered existing behavior or uncovered edge case
+- STYLE           : readability, convention, naming — never blocking
+- OUT_OF_SCOPE    : valid improvement outside the ticket — ignore it in this PR
 
-Retourne uniquement du JSON valide :
+Return only valid JSON:
 {
   "findings": [ { "severity": "...", "file": "...", "message": "..." } ],
   "summary": "..."
@@ -463,13 +463,13 @@ The recommended pattern remains: **a writer, a reviewer of the other family**. C
 You never ask the reviewer to automatically apply all his suggestions. You select useful returns, then you go back to the original **writer**:
 
 ```text
-Voici les retours de review que je valide :
-[liste]
+I approve these review findings:
+[list]
 
-Corrige uniquement ces points.
-Ignore les suggestions optionnelles.
-Garde un diff minimal.
-Relance les tests ciblés.
+Address only these points.
+Ignore optional suggestions.
+Keep the diff minimal.
+Rerun the targeted tests.
 ```
 
 **Stops the revision when the criteria are green.** A corrective pass after review is the default; a second is only justified by a finding `BLOCKING` / `REGRESSION_RISK` Do not use a "iterary" type of prompt until it is perfect: beyond the best checkpoint, the agent often ends up inventing changes to satisfy the demand and can degrade the diff.
@@ -484,27 +484,27 @@ If you delegate the post-PR correction to Codex (Goal mode, Heartbeat or Cloud),
 Add explicit shutdown rules, reduce unnecessary diffs, correction loops and burned credits:
 
 ```text
-Stop immédiat si :
-- l'agent touche un fichier hors plan sans explication ;
-- l'agent modifie build.sbt, plugins.sbt, resolvers ou versions sans validation explicite ;
-- la même erreur de compilation revient 2 fois ;
-- les tests ciblés échouent 2 fois avec des causes différentes ;
-- le diff dépasse la taille annoncée ;
-- le correctif commence à changer l'architecture au lieu de résoudre le ticket.
-- l'agent tente une écriture destructrice, un push, un déploiement, un partage externe ou une action sur des secrets
-  qui n'étaient pas explicitement autorisés.
+Stop immediately if:
+- the agent touches an unplanned file without explanation
+- the agent modifies build.sbt, plugins.sbt, resolvers, or versions without explicit approval
+- the same compilation error recurs 2 times
+- targeted tests fail 2 times for different reasons
+- the diff exceeds the announced size
+- the fix starts to change the architecture rather than solve the ticket
+- the agent attempts a destructive write, push, deployment, external share, or action involving secrets
+  that was not explicitly authorized.
 ```
 
 In this case, don't restart it. Ask instead:
 
 ```text
-Stop. Résume l'état exact :
-- fichiers modifiés
-- hypothèses faites
-- erreur actuelle
-- commandes exécutées
-- prochaine action minimale proposée
-Ne modifie rien.
+Stop. Summarize the exact state:
+- changed files
+- assumptions made
+- current error
+- commands run
+- proposed minimal next action
+Make no changes.
 ```
 
 > **Resuscitate without paying twice for the same exploration.** Three mechanisms Claude Code to know:
@@ -551,16 +551,16 @@ The Mods API can save commands, tools and subagents, call a template, read the s
 Before installing or promoting a Third Party Mod:
 
 ```text
-1. Vérifier la source du marketplace et figer la version/commit quand c’est possible.
-2. Lire .claude-plugin/plugin.json, hooks/hooks.json, le module register.*, bin/ et .mcp.json éventuel.
+1. Verify the marketplace source and pin the version or commit when possible.
+2. Read .claude-plugin/plugin.json, hooks/hooks.json, the register.* module, bin/, and .mcp.json if present.
 3. claude plugin validate ./mon-mod
-   → inspecter en particulier les lignes hooks: et calls: sans exécuter le Mod.
+   → inspect the hooks: and calls: lines in particular without executing the Mod.
 4. claude --plugin-dir ./mon-mod plugin details <nom>
-   → vérifier l’inventaire réel des composants.
+   → verify the actual component inventory.
 5. claude plugin test ./mon-mod
-   → tests de hooks déterministes, sans session, login ni réseau.
-6. Si le plugin a des evals : claude plugin eval ... avant promotion.
-7. Premier essai avec --plugin-dir dans un worktree jetable ; --safe-mode comme voie de récupération.
+   → deterministic hook tests without a session, login, or network.
+6. If the plugin has evaluations, run claude plugin eval ... before promotion.
+7. First try --plugin-dir in a disposable worktree. Use --safe-mode for recovery.
 ```
 
 For an organization, real control must live in the **managed settings** (`allowManagedModsOnly`, order of managed plugins, `disableAllHooks` in accordance with policy) and in the Integrated Mod `cc-plugin-sec-default`, not in the good will of a User Mod. For your solo use, the equivalent rule is simple: **built-ins / personal code audited > opaque community plugin**, and no automatic update of a Sensitive Mod without rereading the version diff.

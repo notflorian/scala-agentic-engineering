@@ -16,14 +16,14 @@ Hay que distinguir tres modos de trabajo:
 Para un senior Scala, el objetivo no es, por lo tanto, más vibe coding, sino un **Ingeniería de agentes controlada ** :
 
 ```text
-spécification vérifiable
-→ contexte minimal mais suffisant
+especificación verificable
+→ contexto mínimo pero suficiente
 → plan
-→ permissions proportionnées
-→ exécution instrumentée
-→ compile et tests déterministes
-→ review indépendante
-→ validation humaine
+→ permisos proporcionales
+→ ejecución instrumentada
+→ compilación y pruebas deterministas
+→ revisión independiente
+→ validación humana
 ```
 
 **Evidence-driven agentic engineering**: SDD fija el contrato, el arness engineering hace que sus limitaciones sean ejecutables, y las pruebas determinan si el cambio puede avanzar. Para cada requisito, combina una prueba independiente (prueba de comportamiento, inspección, benchmark o medida runtime), el SHA realmente validado y los riesgos no cubiertos. Una afirmación del agente, una revisión sin prueba o un mero estatus verde no constituyen un oráculo. El ciclo termina después de la validación del artefacto desplegado, no simplemente en la merge (sección 15B).
@@ -68,8 +68,8 @@ Conclusión: el nivel fronterizo aumenta la superficie de posibles tareas, pero 
 Para una tarea de código, mida el **costo por cambio aceptado** ; para pilotar la entrega, el **costo por cambio desplegado y estable** (sección 15B), no la tasa bruta de éxito:
 
 ```text
-coût par changement accepté
-= tokens + latence + minutes humaines + CI + reprises + défauts échappés
+coste por cambio aceptado
+= tokens + latencia + minutos de trabajo humano + CI + retrabajo + defectos no detectados
 ```
 
 Usa una unidad común para agregar estos costes (por ejemplo, euros con un coste por hora explícito), o mantiene los componentes separados. Los tokens y los minutos no suben directamente. Para el coste hasta la producción, añade despliegue, validación runtime, rollback/hotfix y defectos observados durante una ventana fijada antes de la medición. Sólo cuenta como estable un cambio que haya terminado esta ventana.
@@ -84,10 +84,10 @@ Evaluación de la METR 296 PRs generados por agentes constató que el grado SWE-
 En las tareas largas, SlopCodeBench observa además una acumulación de duplicación, verbosidad y erosión estructural a medida que los checkpoints se encadenan. Un rápido demandando calidad reduce algunos defectos al principio sin eliminar su crecimiento. El buen régimen de prueba acumula, por lo tanto, cuatro barreras independientes:
 
 ```text
-contrat métier explicite
-→ reproduction qui échoue avant le patch
-→ tests déterministes, propriétés et mutation testing
-→ review du diff, de son scope et de sa maintenabilité par un humain responsable
+contrato de negocio explícito
+→ reproducción que falla antes del parche
+→ pruebas deterministas, propiedades y pruebas de mutación
+→ revisión del diff, de su alcance y de su mantenibilidad por una persona responsable
 ```
 
 Las puntuaciones de benchmark sirven para el enrutamiento y los experimentos; nunca deben convertirse en un permiso de autonomía o de merge.
@@ -113,12 +113,12 @@ Los estudios empíricos de 2026 sobre aplicaciones realmente ?vb codificadas ? �
 > interrumpir, ya que ningún prompt los corrige de forma duradera.
 
 ```text
-Prototype vibe coding
-→ aucune donnée ou clé de production
-→ tests fonctionnels + sécurité + performance + maintenabilité
-→ lecture humaine du diff et des dépendances
-→ migration vers le workflow agentique contrôlé
-→ seulement ensuite : déploiement
+Prototipo con vibe coding
+→ sin datos ni claves de producción
+→ pruebas funcionales + seguridad + rendimiento + mantenibilidad
+→ revisión humana del diff y las dependencias
+→ migración al flujo agéntico controlado
+→ solo entonces: despliegue
 ```
 
 Una sesión de vibe coding nunca debe crecer directamente en producción, incluso cuando la demostración parece funcional. La frontera de producción es un **cambio de régimen de prueba**, no un paso más del gato.

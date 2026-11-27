@@ -4,8 +4,8 @@
 O orçamento deve ser gerido como um orçamento de engenharia, não como uma despesa abstrata da IIA. A boa métrica não é o custo por mensagem, mas sim:
 
 ```text
-coût total d'une tâche mergeable
-= coût modèle + temps humain + temps CI + retours review + reprises de bugs
+custo total de uma tarefa pronta para o merge
+= custo do modelo + tempo humano + tempo de CI + achados de revisão + retrabalho por bugs
 ```
 
 <!-- section: s-1 -->
@@ -58,14 +58,14 @@ Uma 'cache' bem-sucedida pode reduzir o custo de ' **leitura** de Tokens de entr
 ## Regras contra o crédito queimado
 
 ```text
-- Ne donne jamais toute la repo par défaut.
-- Donne des chemins de fichiers et une hypothèse de zone concernée.
-- Coupe les logs à la première erreur utile.
-- Après 2 échecs identiques, stop : repasse en diagnostic humain/IDE.
-- Après 3 fichiers modifiés hors plan, stop : demande un nouveau plan.
-- Après 300 lignes de diff inattendues, stop : review manuelle avant suite.
-- Quand le contexte n'aide plus : `HANDOFF.md` explicite + session fraîche ; `/compact` n'est qu'un dernier recours.
-- Préfère rg, Sourcebot, IntelliJ, Metals ou scripts locaux aux longs dumps MCP.
+- Nunca forneça o repositório inteiro por padrão.
+- Forneça caminhos de arquivos e uma hipótese sobre a área afetada.
+- Corte os logs no primeiro erro útil.
+- Após 2 falhas idênticas, pare e retome o diagnóstico humano ou pela IDE.
+- Após 3 arquivos alterados fora do plano, pare e peça um novo plano.
+- Após 300 linhas inesperadas no diff, pare para revisão manual antes de continuar.
+- Quando o contexto deixar de ajudar, escreva um `HANDOFF.md` explícito e abra uma nova sessão. Use `/compact` apenas como último recurso.
+- Prefira rg, Sourcebot, IntelliJ, Metals ou scripts locais a grandes despejos de MCP.
 ```
 
 **Ahorras na dupla assinatura.** Estabiliza o writer e o seu esforço durante uma trajetória; as mudanças de modelo podem perturbar a cache e adicionar rework. Um contexto fresco continua a ser voluntário para o revisor independente ou uma hipótese contaminada. Não lança nem revisão exaustiva sistemática sobre cada micro-patch, nem segundo steward sobre um mesmo PR. Deduca o seguimento por repo/PR/SHA/check/finding, privilegia uma retomada de eventos ou um Heartbeat borné quando a CI , e arréglalo no checkpoint. Medição das cotas consumidos por função e por tarefa (quando o fornecedor o expõe); diferença créditos incluídos, sobrecostos de pagamento e API. Uma quota ainda elevada não é motivo para abrir mais tickets.

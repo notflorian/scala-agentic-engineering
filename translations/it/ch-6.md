@@ -4,7 +4,7 @@
 Per un'importante regola d'impresa, invertire il flusso di lavoro:
 
 ```text
-Spec → tests générés → tests validés humainement → implémentation → tests verts → review
+Specifica → test generati → test validati da una persona → implementazione → test passati → revisione
 ```
 
 Per i compiti critici, separare anche gli autori: Claude (o Codex]) prepara i test dal commit di base e spec, l'uomo convalida l'oracolo, poi l'altro agente implementa. Lo scrittore non indebolisce queste affermazioni; se un oracolo è sbagliato, la correzione esplicitamente arbitraria prima di riprendere. Una nuova sessione di revisione indipendente ispeziona i casi limite del SHA finale.
@@ -12,35 +12,35 @@ Per i compiti critici, separare anche gli autori: Claude (o Codex]) prepara i te
 Prompt test engineer indipendente:
 
 ```text
-Act as an independent test engineer. Read the approved specification, AGENTS.md and existing contracts.
-Work from the base commit without inspecting any proposed implementation.
-Design the smallest tests covering acceptance criteria, boundaries, failures and preserved invariants.
-Map each test to a requirement; prefer observable behavior and property-based tests where meaningful.
-For a bugfix, demonstrate the reproduction fails on the base commit for the expected reason.
-Do not modify production code, existing assertions, build configuration or CI.
-Do not derive expected results from the implementation under test.
-Report uncovered requirements, ambiguous contracts, exact commands and execution results.
-Stop for human approval of the oracle before handing the tests to the implementation agent.
+Agisci come ingegnere di test indipendente. Leggi la specifica approvata, AGENTS.md e i contratti esistenti.
+Parti dal commit di base senza esaminare implementazioni proposte.
+Progetta i test minimi per coprire criteri di accettazione, casi limite, errori e invarianti da preservare.
+Associa ogni test a un requisito. Preferisci comportamenti osservabili e test basati su proprietà quando opportuno.
+Per la correzione di un bug, dimostra che la riproduzione fallisce sul commit di base per il motivo previsto.
+Non modificare codice di produzione, asserzioni esistenti, configurazione di build o CI.
+Non ricavare i risultati attesi dall’implementazione sotto test.
+Riporta requisiti scoperti, contratti ambigui, comandi esatti e risultati di esecuzione.
+Fermati e attendi l’approvazione umana dell’oracolo prima di passare i test all’agente incaricato dell’implementazione.
 ```
 
 
 Prompt: anticipare
 
 ```text
-À partir de cette règle métier, écris d'abord les tests.
-Ne modifie pas encore le code de production.
-Les tests doivent couvrir :
-- cas nominal
-- cas limite
-- non-régression
-- comportement existant à préserver
+Partendo da questa regola di business, scrivi prima i test.
+Attendi prima di modificare il codice di produzione.
+I test devono coprire:
+- caso nominale;
+- caso limite;
+- assenza di regressioni;
+- comportamento esistente da preservare.
 ```
 
 Stai rileggendo i test.
 
 ```text
-Implémente le minimum de code pour faire passer ces tests.
-Ne modifie pas les contrats publics.
+Implementa il minimo codice necessario per far passare questi test.
+Preserva i contratti pubblici.
 ```
 
 Questo modello è uno dei più affidabili per avere un lavoro di agente di loop controllato, a condizione che la convalida locale sia raddoppiata da un determinato CI indipendente. **bugfix:**, richieste in aggiunta una percentuale *bug-reproduzione test precedenti* : deve fallire sul commit originale, riprodurre il difetto osservato, quindi passare con la patch. Un test aggiunto dopo la patch senza la prova che ha fallito prima porta molto meno informazioni.
@@ -48,8 +48,8 @@ Questo modello è uno dei più affidabili per avere un lavoro di agente di loop 
 Per Scala, richiede **Property-Based Testing** per logica complessa:
 
 ```text
-À partir de cette règle métier, écris d'abord les tests en utilisant ScalaCheck (Property-based testing).
-Ne te contente pas de tests unitaires classiques. Définis les générateurs (Gen) pour éprouver toutes les limites du domaine.
+Per questa regola di business, scrivi prima i test con ScalaCheck (property-based testing).
+Vai oltre i test unitari tradizionali. Definisci generatori (Gen) per esplorare tutti i casi limite del dominio.
 ```
 
 ---

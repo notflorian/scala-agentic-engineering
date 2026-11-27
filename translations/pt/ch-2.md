@@ -57,18 +57,18 @@ IntelliJ IDEA
 ├── JetBrains AI
 │   ├── Code Completion
 │   ├── Next Edit Suggestions
-│   └── AI Actions / petites transformations
-├── Claude Code officiel
-│   ├── plugin JetBrains / CLI
+│   └── AI Actions / pequenas transformações
+├── Claude Code oficial
+│   ├── plugin do JetBrains / CLI
 │   └── Claude Code Desktop
-│       → abonnement Claude Max, agent principal sur raisonnement/debug/architecture
+│       → assinatura Claude Max, agente principal de raciocínio, depuração e arquitetura
 ├── Codex
-│   ├── agent ACP dans AI Chat
+│   ├── agente ACP no AI Chat
 │   ├── ChatGPT Desktop / CLI
-│   └── compte ChatGPT/OpenAI
-│       → agent principal sur issues standard / reviewer croisé quand Claude écrit
+│   └── conta ChatGPT/OpenAI
+│       → agente principal em issues padrão / revisor independente quando Claude implementa
 └── GitHub Copilot
-    └── couche GitHub-native : issues, PR, review automatique, CI
+    └── camada nativa do GitHub para issues, PR, revisão automática e CI
 ```
 
 **ACP Não substitui as integrações oficiais.** Para Claude, guarda **Claude Code oficial** Como principal caminho quando você quer aproveitar a assinatura Claude Max: o plugin JetBrains, o CLI e o cartão de código de Claude Desktop compartilham o mesmo harness Claude Code e suas regras (`AGENTS.md` em Fallback ou `CLAUDE.md`O que é permissão, hooks, MCPe as habilidades). Claude Code Desktop adiciona várias sessões isoladas por worktrees, revisão visual de diffs, terminal/editor integrados e rastreamento de PR. ACP principalmente, a interação que permite a IntelliJ para acolher vários agentes em uma UI comum.

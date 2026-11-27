@@ -7,10 +7,10 @@ CI is the final deterministic judge of the guiding principle — provided that i
 ## The four PRs specific gates
 
 ```text
-1. Gate de gabarit et scope : diff base → candidat, fichiers protégés, taille et nombre de fichiers
-2. Gate de qualité de test : suites réellement exécutées + mutation score et mutants importants selon risque
-3. Gate de review : findings BLOCKING / REGRESSION_RISK vérifiés traités ou arbitrés humainement
-4. Gate de budget : tout job appelant un LLM a un timeout ET un plafond de coût
+1. Size and scope gate: base → candidate diff, protected files, diff size, and number of files
+2. Test quality gate: actual suites run + mutation score and important mutants according to risk
+3. Review gate: verified BLOCKING / REGRESSION_RISK findings resolved or decided by a human
+4. Budget gate: every job that calls an LLM has both a timeout AND a cost cap
 ```
 
 Two complementary axes to consider once the four gates are in place:

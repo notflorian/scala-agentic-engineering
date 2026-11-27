@@ -35,6 +35,8 @@ The site uses its own navigation, search dialog, heading permalinks, and code-co
 
 Alongside each translated chapter, a JSON manifest maps every section ID to `source_sha256` and `translation_sha256`. Each SHA-256 hash covers the UTF-8 bytes of the corresponding section, excluding its marker. Validation flags missing, deleted, outdated, unrecorded, out-of-order, and structurally mismatched sections. It compares fenced blocks, inline code, link destinations, numeric values, headings, lists, blockquotes, and tables. Translation and review take place outside CI.
 
+Use a `text` fence for prose, including prompts, diagrams, and checklists. Translate its contents while preserving formatting, inline literals, links, and numbers. Use a language-specific fence for code and commands, or `plaintext` for literal unhighlighted snippets. Keep those blocks identical in all languages.
+
 ### Split translation work between Codex and Claude Code
 
 Start from a branch with a shared version of `guide.md` and assign distinct language and chapter pairs. Give each session its section IDs from the worklist, the glossary, and the manifest conventions. The following commands create separate worktrees.

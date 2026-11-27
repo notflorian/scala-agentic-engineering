@@ -5,25 +5,25 @@
 ## Einfache Regel
 
 ```text
-Qwen / Haiku préparent et filtrent.
-Micro-dev sous fort contrôle humain → GPT‑6 Luna High ou Sonnet 5.5 Medium.
-Agentic coding end-to-end → GPT‑6.2 Sol Medium ou Opus 5.5 Medium.
-Debugging / architecture difficiles → Opus 5.5 High ou GPT‑6.2 Sol High.
-Frontier ponctuel → GPT‑6.2 Astra Light ou Fable 5.2 Low avant de pousser aveuglément l'effort du modèle inférieur au maximum.
-Un seul writer par worktree.
-L'autre famille de modèles reviewe ou challenge, elle ne duplique pas automatiquement toute la trajectoire.
-Ultra / multi-agent uniquement lorsque les sous-problèmes sont réellement indépendants.
-IntelliJ valide.
-Toi, tu décides.
+Qwen / Haiku bereiten vor und filtern.
+Kleine Entwicklungsaufgaben unter enger menschlicher Kontrolle → GPT‑6 Luna High oder Sonnet 5.5 Medium.
+Durchgängige agentenbasierte Entwicklung → GPT‑6.2 Sol Medium oder Opus 5.5 Medium.
+Schwieriges Debugging / anspruchsvolle Architektur → Opus 5.5 High oder GPT‑6.2 Sol High.
+Punktueller Frontier-Einsatz → GPT‑6.2 Astra Light oder Fable 5.2 Low, bevor du den Aufwand beim schwächeren Modell blind maximierst.
+Nur ein implementierender Agent pro Worktree.
+Die andere Modellfamilie prüft oder hinterfragt das Ergebnis, ohne automatisch den gesamten Ablauf zu wiederholen.
+Ultra / mehrere Agenten nur bei wirklich unabhängigen Teilproblemen.
+IntelliJ validiert.
+Du entscheidest.
 ```
 
 Das Routing sollte die [**Kosten der abgeschlossenen Aufgabe[** minimieren, nicht den Preis des ersten Aufrufs:
 
 ```text
-charge totale attendue
-= découverte + implémentation + vérification
-+ probabilité de reprise × coût de reprise
-+ coût de coordination
+Erwarteter Gesamtaufwand
+= Erkundung + Implementierung + Überprüfung
++ Wahrscheinlichkeit der Nacharbeit × Kosten der Nacharbeit
++ Koordinationsaufwand
 ```
 
 Ein teureres Modell kann daher der beste Kauf sein, wenn es eine schlechte Erforschung, mehrere unnötige Diffs und Schleifen von CI verhindert. Im Gegensatz dazu macht eine Mikro-Schleife, die von einem Senior gesteuert wird, Luna, Sonnet oder Haiku dominierend, sobald der Fehler innerhalb weniger Minuten erkannt wird.
@@ -82,10 +82,10 @@ Ein teureres Modell kann daher der beste Kauf sein, wenn es eine schlechte Erfor
 > chargées, mais elles n'offrent pas la même marge opérationnelle.
 >
 > ```text
-> Q4_K_M  → défaut « marge maximale » : IDE, sbt et plusieurs JVM restent confortables.
-> Q5_K_M  → défaut recommandé : meilleur compromis qualité / mémoire sur cette machine.
-> Q6_K    → option haute qualité : viable si les autres applications restent raisonnables.
-> Q8_0    → option d'évaluation : possible, mais marge réduite et bénéfice à prouver face à Q5/Q6.
+> Q4_K_M  → Standardeinstellung mit maximaler Reserve: IDE, sbt und mehrere JVMs laufen weiterhin problemlos.
+> Q5_K_M  → empfohlene Standardeinstellung: bester Kompromiss zwischen Qualität und Speicherbedarf auf diesem Rechner.
+> Q6_K    → Option für höhere Qualität: praktikabel, wenn die anderen Anwendungen wenig Ressourcen beanspruchen.
+> Q8_0    → Evaluierungsoption: möglich, aber mit weniger Reserve. Der Vorteil gegenüber Q5/Q6 muss sich erst zeigen.
 > ```
 >
 > Die offizielle Dokumentation Qwen verwendet gerade **Q5_K_M** in seinem Beispiel `llama.cpp`, mit `-c 40960`, und nicht die
@@ -221,10 +221,10 @@ Ein teureres Modell kann daher der beste Kauf sein, wenn es eine schlechte Erfor
 > durch Anthropic über FrontierCode ** verallgemeinert sich nicht** auf andere Harnesen. Praktische Folge:
 >
 > ```text
-> Opus 5.5 High insuffisant (capacité)        → Fable 5.2 avant Opus 5.5 Max, à mesurer sur le benchmark Scala privé
-> Décision difficile ponctuelle (advisor)     → Fable 5.2 low/medium
-> Mission longue autonome                     → Fable 5.2 high (low/medium finissent plus souvent le tour trop tôt)
-> Tâche bornée, bug UI/front, review courante → Opus 5.5 ou Sonnet 5.5 restent les meilleurs achats
+> Opus 5.5 High reicht von der Leistungsfähigkeit her nicht aus → Fable 5.2 vor Opus 5.5 Max, im privaten Scala-Benchmark messen
+> Punktuelle schwierige Entscheidung (Beratung) → Fable 5.2 low/medium
+> Langer autonomer Auftrag → Fable 5.2 high (low/medium beenden den Turn häufiger zu früh)
+> Klar abgegrenzte Aufgabe, UI-/Frontend-Bug oder routinemäßiges Review → Opus 5.5 oder Sonnet 5.5 bleiben wirtschaftlicher
 > ```
 >
 > **Breaking changes da Fable 5.1** (im offiziellen Migrationsleitfaden überprüft):
@@ -388,13 +388,13 @@ Astra fügt den Bediensteten drei besonders nützliche Fähigkeiten hinzu:
 
 ```text
 async tool calling
-→ continuer à raisonner ou appeler d'autres outils pendant qu'un outil lent s'exécute
+→ während eines langsamen Toolaufrufs weiter analysieren oder andere Tools aufrufen
 
 mid-turn steering
-→ ajouter une contrainte ou changer de direction sans redémarrer toute la mission
+→ eine Vorgabe ergänzen oder den Kurs ändern, ohne den ganzen Auftrag neu zu starten
 
 configuration updates
-→ changer l'effort en cours de trajectoire sans casser inutilement le préfixe de cache
+→ den Reasoning-Aufwand während der Ausführung ändern, ohne den Cache-Präfix unnötig zu verwerfen
 ```
 
 Für ein agentielles Backend, bevorzugt die **Responses API** : Tool calling Astra ist die Referenzfläche. Astra akzeptiert nicht `reasoning.effort = none`, noch die benutzerdefinierten Einstellungen `temperature` / `top_p` Die als unvereinbar dokumentierten Dokumente. **Fast-Modus** API kann bis zu ~ gehen ~2× schneller für **2× Standardpreis** ; es hat keine Latenz SLA und darf nicht zum Mangel einer langen Mission werden.
@@ -439,15 +439,15 @@ Astra veröffentlicht auch eine sehr gute lange Erinnerung auf MRCR v2 : **100 %
 Für diesen Leitfaden wird die robuste Schlussfolgerung wie folgt:
 
 ```text
-GPT‑6 Luna High = micro-dev et workers Codex sous contrôle humain fort.
-GPT‑6.2 Sol Medium = défaut Codex pour l'agentic coding end-to-end.
-GPT‑6.2 Sol High = feature complexe, migration et reprise difficile.
-GPT‑6.2 Astra Light = escalade de capacité avant de pousser mécaniquement Sol à l'effort extrême.
-Sonnet 5.5 Medium = micro-dev Claude et tâches agentiques bien spécifiées.
-Opus 5.5 Medium = défaut Claude pour l'agentic coding autonome.
-Opus 5.5 High = architecture, debugging et refactor difficiles.
-Fable 5.2 Low = escalade frontier quand Opus High reste insuffisant.
-Astra vs Fable = décider au coût par changement accepté, pas au prix par token.
+GPT‑6 Luna High = kleine Entwicklungsaufgaben und Codex-Worker unter enger menschlicher Kontrolle.
+GPT‑6.2 Sol Medium = Codex-Standard für durchgängige agentenbasierte Entwicklung.
+GPT‑6.2 Sol High = komplexe Features, Migrationen und schwierige Korrekturen.
+GPT‑6.2 Astra Light = bei mangelnder Leistungsfähigkeit eskalieren, bevor du den Aufwand bei Sol pauschal maximierst.
+Sonnet 5.5 Medium = kleine Entwicklungsaufgaben für Claude und klar spezifizierte agentenbasierte Aufgaben.
+Opus 5.5 Medium = Claude-Standard für autonome agentenbasierte Entwicklung.
+Opus 5.5 High = anspruchsvolle Architektur, schwieriges Debugging und Refactoring.
+Fable 5.2 Low = Eskalation auf ein Frontier-Modell, wenn Opus High weiterhin nicht ausreicht.
+Astra oder Fable = nach Kosten pro akzeptierter Änderung entscheiden, nicht nach Preis pro Token.
 ```
 
 <!-- section: s-10 -->
@@ -475,27 +475,27 @@ Vergleicht das **Modell in seinem tatsächlichen Harness**, nicht eine einzelne 
 Praktische Routing-Regel:
 
 ```text
-Micro-dev interactif, humain dans la boucle
-→ GPT‑6 Luna High ou Sonnet 5.5 Medium
+Interaktive kleine Entwicklungsaufgaben mit menschlicher Kontrolle
+→ GPT‑6 Luna High oder Sonnet 5.5 Medium
 
-Issue standard end-to-end
+Standard-Issue von Anfang bis Ende
 → GPT‑6.2 Sol Medium
-→ Opus 5.5 Medium en review indépendante
+→ Opus 5.5 Medium für das unabhängige Review
 
-Architecture / root cause / refactor difficile
+Schwierige Architektur, Ursachenanalyse oder Refactoring
 → Opus 5.5 High
-→ GPT‑6.2 Sol Medium/High pour challenger
+→ GPT‑6.2 Sol Medium/High als Gegenprüfung
 
-Sol High insuffisant par limite de capacité
-→ GPT‑6.2 Astra Light puis Medium si nécessaire
+Sol High ist von der Leistungsfähigkeit her unzureichend
+→ GPT‑6.2 Astra Light, bei Bedarf Medium
 
-Opus High insuffisant par limite de capacité
-→ Fable 5.2 Low puis Medium si nécessaire
+Opus High ist von der Leistungsfähigkeit her unzureichend
+→ Fable 5.2 Low, bei Bedarf Medium
 
-Même tâche vraiment frontier, choix Astra vs Fable
-→ deux worktrees / même spec / mêmes tests
-→ comparer coût total + minutes humaines + qualité du diff
-→ humain arbitre
+Dieselbe echte Frontier-Aufgabe, Wahl zwischen Astra und Fable
+→ zwei Worktrees / gleiche Spezifikation / gleiche Tests
+→ Gesamtkosten + menschliche Arbeitsminuten + Qualität des Diffs vergleichen
+→ menschliche Entscheidung
 ```
 
 Legt kein permanentes Paar mehr fest  Claude writer / Codex review      .]**Der Writer wählt sich nach Aufgabenart**: Sol 6.2 besitzt in der Regel den Standardausgang ; Opus 5.5 besitzt die Architektur, das Debugging und die vom Urteil dominierten Refactors. Die andere Familie dient als unabhängiges Rezensions- oder Herausfordereren. Die Duplizierung der beiden kompletten Bahnen ist nur für ein Bake-off oder eine wirklich grenzende Entscheidung gerechtfertigt.
@@ -518,18 +518,18 @@ Seit Mitte2026, hat sich eine dritte Familie nebenAnthropic undOpenAI : Modelle 
 #### Wo sie in die *Ton* Routing
 
 ```text
-✅ Review de volume et triage à faible enjeu   → GLM‑5.2 (High) : tarif token très inférieur à Opus, mais coût par tâche à mesurer
-✅ Extraction, classification, PR summaries bulk → GLM‑5.2 ou Kimi K3, en batch, quand le volume rend Sonnet/Terra cher
-✅ Génération frontend / maquette web           → Kimi K3 (#1 Frontend Code Arena) si tu sors du périmètre Scala pur
-✅ Second avis open-weight indépendant          → un modèle d'une 3e « école » d'entraînement casse les angles morts communs Claude/GPT
-✅ Code sensible / air-gapped / souveraineté     → GLM‑5.2 en self-host (poids MIT) : rien ne sort de ton infra
+✅ Reviews in großer Zahl und Triage mit geringem Risiko → GLM‑5.2 (High): deutlich günstiger pro Token als Opus, Kosten pro Aufgabe aber messen
+✅ Extraktion, Klassifizierung und viele PR-Zusammenfassungen → GLM‑5.2 oder Kimi K3, im Batchbetrieb, wenn Sonnet/Terra bei hohem Volumen zu teuer werden
+✅ Frontend-Erstellung / Web-Mock-up → Kimi K3 (#1 Frontend Code Arena), wenn du über reines Scala hinausgehst
+✅ Unabhängige Zweitmeinung eines Open-Weight-Modells → ein Modell aus einer 3. Trainingsfamilie hilft gegen gemeinsame blinde Flecken von Claude/GPT
+✅ Sensibler Code / isolierter Betrieb / Datensouveränität → GLM‑5.2 selbst hosten (MIT-lizenzierte Gewichte): Nichts verlässt deine Infrastruktur
 ```
 
 ```text
-❌ Driver quotidien Scala à la place de Sonnet 5.5 : capable, mais tu perds l'écosystème (Claude Code, subagents, Metals MCP mûrs)
-❌ Tâche interactive courte sur Kimi K3 en effort max : latence et verbosité, mauvais achat ; utiliser low/high
-❌ Décision d'architecture critique en solo : garde Opus/Fable ou un vrai second avis Sol ; l'open-weight y reste un challenger, pas l'arbitre
-❌ « Remplacer » Qwen local : mauvaise catégorie (voir piège ci-dessus)
+❌ Scala-Alltagsmodell als Ersatz für Sonnet 5.5: leistungsfähig, aber du verlierst das Ökosystem (Claude Code, Subagenten, ausgereiftes Metals MCP)
+❌ Kurze interaktive Aufgabe mit maximalem Aufwand auf Kimi K3: Latenz und Ausführlichkeit machen das unrentabel. low/high verwenden
+❌ Kritische Architekturentscheidung mit nur einem Modell: Bei Opus/Fable bleiben oder eine echte Zweitmeinung von Sol einholen. Das Open-Weight-Modell bleibt eine Gegenstimme und entscheidet nicht allein
+❌ Qwen lokal „ersetzen“: falsche Kategorie (siehe Stolperfalle oben)
 ```
 
 <!-- section: s-13 -->
@@ -556,11 +556,11 @@ Wenn GLM ein Werkzeug wird, das jede Woche verwendet wird oder einen messbaren G
 Vergleicht nicht nur die endgültigen Antworten. Benutzt mindestens **15 private Aufgaben[**, die nie veröffentlicht wurden, aufgeteilt auf:
 
 ```text
-3 bugs Scala 3 subtils : givens, implicits, variance, types opaques
-3 évolutions Play / Tapir / Pekko sur 3 à 8 fichiers
-3 tâches Spark / concurrence / performance
-3 reviews de PR avec défauts injectés connus
-3 tâches de tests : ScalaTest, ScalaCheck, mutation testing
+3 schwer erkennbare Scala-3-Bugs: Givens, Implicits, Varianz, opake Typen
+3 Weiterentwicklungen in Play / Tapir / Pekko über 3 bis 8 Dateien
+3 Aufgaben zu Spark / Nebenläufigkeit / Performance
+3 PR-Reviews mit bekannten, gezielt eingebauten Fehlern
+3 Testaufgaben: ScalaTest, ScalaCheck, Mutation Testing
 ```
 
 Protokoll: Auch commit, auch worktree initial, gleiche Werkzeuge, gleiche Zeitlimit, gleiches Netzwerk, gleiches Kontextpaket, gleiche Stoppkriterien und **drei Wiederholungen pro Auftrag**. Kimi muss separat getestet werden `high` und `max`; GLM in `High` und `Max`. Wenn die Gurte nicht identisch sein können, veröffentlicht zwei Matrizen und weist die Abweichung nicht allein auf das Modell zurück.
@@ -568,14 +568,14 @@ Protokoll: Auch commit, auch worktree initial, gleiche Werkzeuge, gleiche Zeitli
 Verbindliche Maßnahmen:
 
 ```text
-- tâche acceptée par les tests et la review humaine ;
-- compilation, tests ciblés, mutation score ;
-- défauts de sécurité ou de contrat détectés ;
-- lignes ajoutées / supprimées et fichiers touchés ;
-- nombre de reprises, tool calls et boucles identiques ;
-- tokens input, cache, reasoning et output ;
-- coût API total, latence et minutes humaines jusqu'au merge ;
-- taux de réussite pass@1 et stabilité sur trois runs.
+- Aufgabe durch Tests und menschliches Review akzeptiert
+- Kompilierung, gezielte Tests, Mutation Score
+- erkannte Sicherheitsmängel oder Vertragsverletzungen
+- hinzugefügte / entfernte Zeilen und betroffene Dateien
+- Anzahl der Anläufe, Toolaufrufe und wiederkehrenden Schleifen
+- Tokens für Eingabe, Cache, Reasoning und Ausgabe
+- API-Gesamtkosten, Latenz und menschliche Arbeitsminuten bis zum Merge
+- Erfolgsquote pass@1 und Stabilität über drei Durchläufe.
 ```
 
 Adopte GLM oder Kimi auf einem Stream nur, wenn es die Kosten pro akzeptierter Änderung reduziert ** ohne** Verschleierung der Watches. Ein höherer Editor-Score, aber mehr menschliche Korrekturen ist eine Regression, kein Gewinn.
@@ -589,20 +589,20 @@ Adopte GLM oder Kimi auf einem Stream nur, wenn es die Kosten pro akzeptierter �
 Fable 5.2 Zweimal Opus 5.5 von token ($8/$40 gegen $4/$20). Anthropic empfiehlt, mit **Opus 5.5 `medium`**, nach `high`, dann buchen Fable 5.2 , die noch nicht ausreichend sind oder den richtigen langen Horizont erreichen. Für eine Eskalation der Kapazität, testet **Fable `low`** bevor Sie systematisch Opus zu drücken `Extra`/`Max` :
 
 ```text
-✅ Migration complète d'un framework (Play 2 → 3, Pekko, Spark upgrade)
-✅ Session autonome multi-heures / multi-jours sans supervision
-✅ Refactor cross-modules sur > 10 fichiers interdépendants
-✅ Débogage d'un bug métier dont la cause est très loin du symptôme
-✅ Décision architecturale sans "bonne réponse évidente" après essai Opus 5.5 High
-✅ Tâche où tu paierais sinon un senior engineer une demi-journée
+✅ Vollständige Migration eines Frameworks (Play 2 → 3, Pekko, Spark-Upgrade)
+✅ Autonome Sitzung über mehrere Stunden oder Tage ohne Aufsicht
+✅ Modulübergreifendes Refactoring in > 10 voneinander abhängigen Dateien
+✅ Debugging eines fachlichen Fehlers, dessen Ursache weit vom sichtbaren Symptom entfernt ist
+✅ Architekturentscheidung ohne „offensichtlich richtige Antwort“ nach einem Versuch mit Opus 5.5 High
+✅ Aufgabe, für die du sonst einen halben Tag Arbeitszeit eines Senior Engineers bezahlen würdest
 ```
 
 ```text
-❌ Tâche bien scoped et bornée : Sonnet 5.5 ou Opus 5.5 sont de meilleurs achats
-❌ Revue de diff ou PR summary : overkill, coût inutile
-❌ Génération de boilerplate ou de fixtures : Qwen ou Haiku suffisent
-❌ One-liner ou patch ciblé : Luna High, Sonnet 5.5 Medium ou Aider
-❌ Tâche dure mais interactive avec toi dans la boucle : Opus 5.5 Medium/High suffit généralement
+❌ Klar abgegrenzte Aufgabe: Sonnet 5.5 oder Opus 5.5 sind wirtschaftlicher
+❌ Diff-Review oder PR-Zusammenfassung: unverhältnismäßig und unnötig teuer
+❌ Boilerplate oder Fixtures erzeugen: Qwen oder Haiku reichen aus
+❌ Einzeiler oder gezielter Patch: Luna High, Sonnet 5.5 Medium oder Aider
+❌ Schwierige, aber interaktive Aufgabe mit menschlicher Kontrolle: Opus 5.5 Medium/High reicht meist aus
 ```
 
 > **Positionierung 5.2.** Anthropic empfiehlt die Aufbewahrung **Opus 5.5 als Ausgangspunkt** für die meisten
@@ -628,28 +628,28 @@ Fünf spezifische Hebel:
 Missionsraum Fable 5.2:
 
 ```text
-# MISSION (statique — ne pas modifier en cours de session)
-Objectif : [migration / refactor précis]
-Non-objectifs : [ce qui est explicitement hors scope]
-Invariants : API publiques, contrats JSON, comportements listés dans AGENTS.md
-Durée max : [N heures] — Coût max : [N USD] — Diff max par jalon : [N lignes]
+# AUFTRAG (statisch — während der Sitzung nicht ändern)
+Ziel: [konkrete Migration / konkretes Refactoring]
+Nicht-Ziele: [was ausdrücklich außerhalb des Umfangs liegt]
+Invarianten: öffentliche APIs, JSON-Verträge, in AGENTS.md aufgeführtes Verhalten
+Maximale Laufzeit: [N Stunden] — Maximale Kosten: [N USD] — Maximaler Diff je Meilenstein: [N Zeilen]
 
-# RÈGLES D'ARRÊT (statique)
-Stop et rapport immédiat si :
-- un invariant doit être violé pour avancer ;
-- le même jalon échoue 2 fois pour des causes différentes ;
-- build.sbt, migration DB ou contrat public doit changer ;
-- l'estimation de durée restante dépasse 2x l'estimation initiale.
+# ABBRUCHREGELN (statisch)
+Sofort stoppen und Bericht erstatten, wenn:
+- du nur vorankommst, indem du eine Invariante verletzt;
+- derselbe Meilenstein 2 Mal aus unterschiedlichen Gründen scheitert;
+- build.sbt, eine DB-Migration oder ein öffentlicher Vertrag geändert werden muss;
+- die geschätzte Restdauer mehr als 2x so hoch ist wie die ursprüngliche Schätzung.
 
-# PROTOCOLE (statique)
-1. Lire AGENTS.md et MIGRATION_STATE.md.
-2. Traiter UN jalon : plan court → diff → compile → tests ciblés.
-3. Mettre à jour MIGRATION_STATE.md et committer le jalon.
-4. Rapport de progression : jalon terminé, jalons restants, risques nouveaux, écart au plan.
-5. Reprendre en 2.
+# ABLAUF (statisch)
+1. AGENTS.md und MIGRATION_STATE.md lesen.
+2. EINEN Meilenstein bearbeiten: kurzer Plan → Diff → Kompilierung → gezielte Tests.
+3. MIGRATION_STATE.md aktualisieren und den Meilenstein committen.
+4. Fortschrittsbericht: abgeschlossener Meilenstein, verbleibende Meilensteine, neue Risiken, Abweichung vom Plan.
+5. Bei 2. fortsetzen.
 
-# ÉTAT (dynamique — joindre la version courante de MIGRATION_STATE.md)
-[état]
+# STATUS (dynamisch — aktuelle Fassung von MIGRATION_STATE.md beifügen)
+[Status]
 ```
 
 > **Kontinuität Fable 5.2.** Nicht still eine Sitzung zurücksetzen: Fable 5.1 und Opus 5.5 nicht wiedergeben
@@ -668,19 +668,19 @@ Stop et rapport immédiat si :
 Es ist das **Fehler Claude Code für den autonomen agentic coding**. Seine Standardanstrengung ist `medium`, was das Routing im Vergleich zu Opus ändert 5 : beginnt mit `medium`, steigen Sie zu `high` wenn die Aufgabe schwierig ist, dann verwendet `Extra` (`xhigh`) oder `Max` wenn die Dauer oder die Werte dies rechtfertigen.
 
 ```text
-✅ Issue complète quand Claude possède la trajectoire exploration → patch → tests
-✅ Architecture, migration et plan multi-modules
-✅ Root cause éloignée du symptôme, implicits/givens/effets difficiles
-✅ Gros refactor où la cohérence globale domine la simple édition
-✅ Review indépendante d'une PR écrite par Codex
-✅ Orchestration de sous-agents read-heavy avec contexte isolé
+✅ Vollständige Bearbeitung eines Issues, wenn Claude den gesamten Ablauf steuert: Erkundung → Patch → Tests
+✅ Architektur, Migration und Planung über mehrere Module
+✅ Vom Symptom weit entfernte Ursache, schwierige Implicits/Givens/Effekte
+✅ Umfangreiches Refactoring, bei dem die Stimmigkeit des Gesamtsystems wichtiger ist als einzelne Änderungen
+✅ Unabhängiges Review eines von Codex erstellten PRs
+✅ Koordination lesender Subagenten mit isoliertem Kontext
 ```
 
 ```text
-medium → défaut agentique
-high   → debugging / architecture / long-horizon difficile
-Extra  → >30 min et chaîne réellement longue ; pas pour une simple tâche "importante"
-Max    → exceptionnel, qualité absolue prioritaire et gain mesuré
+medium → Standardeinstellung für agentenbasierte Arbeit
+high   → schwieriges Debugging, anspruchsvolle Architektur oder langwierige Aufgaben
+Extra  → >30 min und wirklich aufwendige Abfolge; nicht für eine lediglich „wichtige“ Aufgabe
+Max    → Ausnahmefall mit höchster Priorität für Qualität und nachgewiesenem Nutzen
 ```
 
 <!-- section: s-21 -->
@@ -689,19 +689,19 @@ Max    → exceptionnel, qualité absolue prioritaire et gain mesuré
 Die beste Wahl Claude, wenn **der Senior hält die Hand stark** oder wenn die agentische Aufgabe genau angegeben ist. Anthropic empfiehlt ausdrücklich `medium` für den agentischen Coding und den Multistep-Einsatz gut eingerahmter Werkzeuge, dann `high` für längere oder schwierige Aufgaben.
 
 ```text
-✅ Petit bug reproductible
-✅ Refactor local bien scoped
-✅ Tests métier et property-based tests ciblés
-✅ Stack trace → diagnostic → correctif
-✅ Feature claire dont l'architecture est déjà décidée
-✅ Worker d'implémentation derrière un plan humain ou Opus
+✅ Kleiner reproduzierbarer Fehler
+✅ Klar abgegrenztes lokales Refactoring
+✅ Gezielte fachliche Tests und Eigenschaftstests
+✅ Stacktrace → Diagnose → Korrektur
+✅ Klar umrissenes Feature, dessen Architektur bereits feststeht
+✅ Implementierungs-Worker nach einem Plan eines Menschen oder von Opus
 ```
 
 ```text
-low    → transformation simple / latence prioritaire
-medium → défaut micro-dev et agentic coding bien spécifié
-high   → tâche plus longue ou plus difficile
-Extra / Max → seulement si tes evals montrent un gain ; sinon passer à Opus 5.5
+low    → einfache Transformation / geringe Latenz hat Vorrang
+medium → Standard für kleine Entwicklungsaufgaben und klar spezifizierte agentenbasierte Entwicklung
+high   → längere oder anspruchsvollere Aufgabe
+Extra / Max → nur bei nachgewiesenem Vorteil in deinen Evaluierungen; sonst auf Opus 5.5 wechseln
 ```
 
 Die wirtschaftliche Regel ist daher nicht mehr ✓ Sonnet mit maximaler Anstrengung vor Opus     ✓. Wenn Sonnet High für eine Kapazitätsgrenze fehlschlägt, **Opus Medium[** ist oft ein besserer Kauf als ein verlängerter Sonnet Extra/Max.
@@ -712,12 +712,12 @@ Die wirtschaftliche Regel ist daher nicht mehr ✓ Sonnet mit maximaler Anstreng
 Systemisch für Aufgaben *hohe Häufigkeit und geringes Risiko[*:
 
 ```text
-✅ Sous-agents de lecture ou extraction à faible risque (sortie vérifiable)
-✅ Résumés de logs, PR summaries rapides
-✅ Classification et routage
-✅ Éditions ciblées < 20 lignes
-✅ Génération de messages de commit
-✅ Appels répétitifs à faible risque, si le benchmark confirme le gain
+✅ Lesende Subagenten oder Extraktion mit geringem Risiko (überprüfbare Ausgabe)
+✅ Log-Zusammenfassungen und schnelle PR-Zusammenfassungen
+✅ Klassifizierung und Routing
+✅ Gezielte Änderungen < 20 Zeilen
+✅ Commit-Nachrichten verfassen
+✅ Wiederholte Aufrufe mit geringem Risiko, wenn der Benchmark den Vorteil bestätigt
 ```
 
 > **Haiku 5.5 ersetzt Haiku 4.5 Wie Worker Claude.** Es kostet **$0.10/$0.50** wie der Schnelle
@@ -734,10 +734,10 @@ Systemisch für Aufgaben *hohe Häufigkeit und geringes Risiko[*:
 ### Wenn **GPT‑6 Luna**
 
 ```text
-✅ Micro-dev : modification locale dont tu contrôles la direction
-✅ Tests simples, fixtures, boilerplate, renommages et transformations mécaniques
-✅ Recherche d'occurrences, résumés, logs et PR summaries
-✅ Worker/subagent dont la sortie est vérifiée immédiatement
+✅ Kleine Entwicklungsaufgabe: lokale Änderung, deren Ausrichtung du steuerst
+✅ Einfache Tests, Fixtures, Boilerplate, Umbenennungen und mechanische Transformationen
+✅ Fundstellen, Zusammenfassungen, Logs und PR-Zusammenfassungen
+✅ Worker/Subagent, dessen Ausgabe direkt überprüft wird
 ```
 
 OpenAI empfiehlt, Luna bei [**]High** zu beginnen. Versuche nicht, Luna in einen Agenten zu verwandeln, der mit Extra High grenzt: Wenn die Aufgabe zweideutig oder konzeptuell wird, geht man auf Sol 6.2 um, anstatt lange Wiederholungen auf einem zu kleinen Modell zu bezahlen.
@@ -746,29 +746,29 @@ OpenAI empfiehlt, Luna bei [**]High** zu beginnen. Versuche nicht, Luna in einen
 ### Wenn **GPT‑6.2 Sol**
 
 ```text
-✅ Issue standard complète : découverte → implémentation → tests → PR
-✅ Feature multi-fichiers et bug non trivial
-✅ Review indépendante d'une PR écrite par Claude
-✅ Migration bornée, compatibilité et refactor transversal
-✅ Second avis sérieux sur une architecture proposée par Opus
+✅ Vollständiges Standard-Issue: Erkundung → Implementierung → Tests → PR
+✅ Feature über mehrere Dateien oder nicht trivialer Fehler
+✅ Unabhängiges Review eines von Claude erstellten PRs
+✅ Abgegrenzte Migration, Kompatibilität und übergreifendes Refactoring
+✅ Fundierte Zweitmeinung zu einer von Opus vorgeschlagenen Architektur
 ```
 
 ```text
-Light       → issue très bien spécifiée, patch local, reproduction claire
-Medium      → défaut agentique quotidien
-High        → feature complexe, root cause difficile, migration, beaucoup de cas limites
-Extra High  → capacité suffisante mais besoin réel de davantage d'analyse/vérification
-Ultra       → uniquement si le travail se décompose en investigations indépendantes
+Light       → klar spezifiziertes Issue, lokaler Patch, eindeutige Reproduktion
+Medium      → täglicher Standard für agentenbasierte Aufgaben
+High        → komplexes Feature, schwer auffindbare Ursache, Migration, viele Grenzfälle
+Extra High  → Modell ist leistungsfähig genug, aber weitere Analyse oder Überprüfung ist wirklich nötig
+Ultra       → nur wenn sich die Arbeit in unabhängige Untersuchungen aufteilen lässt
 ```
 
 <!-- section: s-25 -->
 ### Wenn **GPT‑6.2 Astra**
 
 ```text
-✅ Sol High échoue parce que la capacité/jugement manque, pas parce que le contexte est pollué
-✅ Sécurité, auth, contrat critique ou décision où une mauvaise direction coûte plusieurs reprises
-✅ Workflow end-to-end très ambigu avec nombreux outils / computer use
-✅ Reviewer frontier ponctuel sur une décision à fort impact
+✅ Sol High scheitert an Leistungsfähigkeit oder Urteilsvermögen und nicht an überladenem Kontext
+✅ Sicherheit, Authentifizierung, kritischer Vertrag oder Entscheidung, bei der ein falscher Ansatz mehrere Korrekturrunden kostet
+✅ Durchgängiger, sehr uneindeutiger Workflow mit vielen Tools / Computer Use
+✅ Punktuelle Prüfung einer weitreichenden Entscheidung mit einem Frontier-Modell
 ```
 
 Beginnt mit **Astra Light**. Für eine Aufgabe, die wirklich grenzt, kann Astra Light insgesamt weniger kosten als ein extra High Sol, gefolgt von einer Erholung, weil es einen schlechten Kurs verhindert. Monte to Medium/High nur, wenn nötig; Extra High/Ultra bleiben außergewöhnlich.
@@ -777,18 +777,18 @@ Beginnt mit **Astra Light**. Für eine Aufgabe, die wirklich grenzt, kann Astra 
 ### Wann wird es angewendet? **Modus `ultra` in ChatGPT Work / Codex**
 
 ```text
-✅ Cartographie codebase-scale d'une application legacy
-✅ Migration multi-modules en worktree dédié
-✅ Audit architecture + tests + sécurité + performance en parallèle
-✅ Décomposition d'un refactor en micro-PRs
-✅ Mission où plusieurs sous-analyses indépendantes apportent une vraie valeur
+✅ Untersuchung einer Legacy-Anwendung über die gesamte Codebasis hinweg
+✅ Migration über mehrere Module in einem eigenen Worktree
+✅ Architektur, Tests, Sicherheit und Performance parallel prüfen
+✅ Refactoring in kleine PRs unterteilen
+✅ Auftrag, bei dem unabhängige Teilanalysen einen echten Mehrwert bringen
 ```
 
 ```text
-❌ One-shot “réécris proprement”
-❌ Tâche interactive courte
-❌ Repo mal testé sans limite de diff
-❌ Modification directe de fichiers critiques sans plan validé
+❌ Einmalanweisung wie „Schreib das sauber um“
+❌ Kurze interaktive Aufgabe
+❌ Schwach getestetes Repository ohne Diff-Grenze
+❌ Direkte Änderung kritischer Dateien ohne validierten Plan
 ```
 
 In diesem Unterabschnitt bezeichnet `ultra` den [**Multiagent-Orchestrierungsmodus des Produkts** und nicht den Aufwand [`ultra`, den einige SDK [Codex jetzt darstellen. Es ist geeignet für unabhängige Komponenten ; vermeide ihn, wenn die Agenten im selben mutbaren Zustand schreiben oder wenn nur eine langsame Operation die Aufgabe beherrscht. Bei einer legacy-Anwendung beginnt die Kartierung, die Erstellung eines Schuldregisters, die Erstellung von Charakterisierungstests und die Aufteilung in Mikro-PRs. Beginnt nicht mit dem Schreiben von Code.
@@ -796,64 +796,64 @@ In diesem Unterabschnitt bezeichnet `ultra` den [**Multiagent-Orchestrierungsmod
 Mindest-Gabelit für eine Mission `ultra`:
 
 ```text
-Tu interviens comme équipe de reviewers/agents sur une application legacy Scala.
+Du arbeitest als Team aus Reviewern und Agenten an einer Scala-Legacy-Anwendung.
 
-Rôles à simuler :
-- architecte legacy ;
-- tech lead Scala ;
-- reviewer sécurité défensive ;
-- QA / test engineer ;
-- maintainer sceptique.
+Zu simulierende Rollen:
+- Architekt für Altsysteme;
+- Scala Tech Lead;
+- Reviewer für defensive Sicherheit;
+- QA / Test Engineer;
+- skeptischer Maintainer.
 
-Objectif :
-[objectif précis]
+Ziel:
+[konkretes Ziel]
 
-Contraintes :
-- aucun changement de comportement observable sans validation ;
-- pas de modification build.sbt / migrations DB / contrats JSON publics sans stop ;
-- micro-PRs de moins de 300 lignes modifiées ;
-- tests de caractérisation avant refactoring ;
-- chaque conclusion doit citer les fichiers observés ;
-- distinguer faits, hypothèses et recommandations.
+Vorgaben:
+- keine Änderung des beobachtbaren Verhaltens ohne Validierung;
+- für Änderungen an build.sbt, DB-Migrationen oder öffentlichen JSON-Verträgen zunächst stoppen;
+- kleine PRs mit weniger als 300 geänderten Zeilen;
+- Charakterisierungstests vor dem Refactoring;
+- jede Schlussfolgerung muss die geprüften Dateien nennen;
+- Fakten, Hypothesen und Empfehlungen unterscheiden.
 
-Sortie attendue :
-1. carte du périmètre ;
-2. risques ;
-3. registre de dette ;
-4. tests de caractérisation prioritaires ;
-5. plan en micro-PRs ;
-6. première PR proposée, sans l'appliquer tant que le plan n'est pas validé.
+Erwartete Ausgabe:
+1. Übersicht über den betroffenen Bereich;
+2. Risiken;
+3. Liste technischer Schulden;
+4. vorrangige Charakterisierungstests;
+5. Plan für kleine PRs;
+6. Vorschlag für den ersten PR, ohne ihn vor Freigabe des Plans umzusetzen.
 ```
 
 <!-- section: s-27 -->
 ## Schnelle Modellauswahl-Matrix
 
 ```text
-Micro-dev, humain garde le contrôle      → GPT‑6 Luna High / Sonnet 5.5 Medium
-Worker lecture / triage à faible risque  → Haiku 5.5 / Qwen local / GPT‑6 Luna
-Patch local au jugement intermédiaire    → GPT‑6.1 Terra Medium
-Issue standard end-to-end                → GPT‑6.2 Sol Medium
-Agent Claude end-to-end                  → Opus 5.5 Medium
-Feature / bug difficile                  → GPT‑6.2 Sol High ou Opus 5.5 High selon nature
-Architecture / root cause dominante      → Opus 5.5 High
-Review croisée                           → famille opposée à l'auteur, Medium par défaut
-Suivi post-PR Codex                       → GPT‑6.2 Sol Medium (Goal / Heartbeat / Cloud)
-Sol High insuffisant                     → GPT‑6.2 Astra Light
-Opus High insuffisant                    → Fable 5.2 Low
-Long-horizon séquentiel > 30 min         → Opus 5.5 Extra (`xhigh`)
-Codebase-scale parallélisable            → GPT‑6.2 Sol Ultra, surtout read-heavy
-Frontier absolu                          → Astra Medium+ / Fable Medium+ après preuve du besoin
+Kleine Entwicklungsaufgabe unter menschlicher Kontrolle → GPT‑6 Luna High / Sonnet 5.5 Medium
+Lesender Worker oder Triage mit geringem Risiko → Haiku 5.5 / Qwen lokal / GPT‑6 Luna
+Lokaler Patch mit mittlerem Beurteilungsaufwand → GPT‑6.1 Terra Medium
+Standard-Issue von Anfang bis Ende → GPT‑6.2 Sol Medium
+Durchgängige Bearbeitung durch Claude → Opus 5.5 Medium
+Schwieriges Feature / schwieriger Bug → GPT‑6.2 Sol High oder Opus 5.5 High je nach Aufgabe
+Schwerpunkt Architektur oder Ursachenanalyse → Opus 5.5 High
+Unabhängiges Review → andere Modellfamilie als der Autor, standardmäßig Medium
+Nachverfolgung eines PRs durch Codex → GPT‑6.2 Sol Medium (Goal / Heartbeat / Cloud)
+Sol High unzureichend → GPT‑6.2 Astra Light
+Opus High unzureichend → Fable 5.2 Low
+Lange sequenzielle Aufgabe > 30 min → Opus 5.5 Extra (`xhigh`)
+Parallelisierbare Arbeit über die ganze Codebasis → GPT‑6.2 Sol Ultra, besonders bei leseintensiven Aufgaben
+Höchste Frontier-Anforderungen → Astra Medium+ / Fable Medium+ bei nachgewiesenem Bedarf
 ```
 
 Praktische Regel:
 
 ```text
-Le senior garde la direction → modèle rapide et économique.
-L'agent possède la trajectoire → Sol 6.2 ou Opus 5.5.
-La compréhension domine le patch → privilégier Opus.
-L'exécution end-to-end domine → privilégier Sol 6.2.
-Une limite de capacité apparaît → Astra Light ou Fable Low avant l'effort extrême du tier inférieur.
-Ultra uniquement si le problème contient plusieurs axes réellement indépendants.
+Der Senior steuert die Arbeit → schnelles und kostengünstiges Modell.
+Der Agent steuert den gesamten Ablauf → Sol 6.2 oder Opus 5.5.
+Das Verständnis ist wichtiger als der eigentliche Patch → Opus bevorzugen.
+Die durchgängige Ausführung ist entscheidend → Sol 6.2 bevorzugen.
+Das Modell stößt an seine Leistungsgrenze → Astra Light oder Fable Low, bevor du den Aufwand beim schwächeren Modell maximierst.
+Ultra nur bei mehreren wirklich unabhängigen Teilproblemen.
 ```
 
 <!-- section: s-28 -->
@@ -864,28 +864,28 @@ Die Auswahlmatrix darf nicht nur manuell bleiben. Um zu vermeiden, dass Credits 
 Das Prinzip ist nicht, das intelligenteste Modell zu wählen, sondern das kleinste Modell, das mit einem akzeptablen Risiko ein messbares Ergebnis erzielen kann.
 
 ```text
-Demande / ticket / stack trace
-→ classification de tâche
-→ estimation difficulté + risque
-→ sélection du modèle minimal acceptable
-→ exécution avec permissions limitées
-→ tests déterministes
-→ escalade si échec
-→ log coût / qualité
+Anfrage / Ticket / Stacktrace
+→ Aufgabe klassifizieren
+→ Schwierigkeit + Risiko einschätzen
+→ kleinstes geeignetes Modell auswählen
+→ mit begrenzten Berechtigungen ausführen
+→ deterministische Tests ausführen
+→ bei Fehlschlag eskalieren
+→ Kosten / Qualität protokollieren
 ```
 
 <!-- section: s-29 -->
 ### Empfohlene Architektur
 
 ```text
-CLI / IDE / ticket
+CLI / IDE / Ticket
 → task-classifier
 → context-builder
 → model-router
 → agent-runner
 → test-runner
 → reviewer
-→ cost-quality log
+→ Kosten- und Qualitätsprotokoll
 ```
 
 | Komponente          | Rolle                                                         | Empfohlenes Modell / Werkzeug                                                                             |
@@ -921,27 +921,27 @@ Jev 1.14 Kosten **$0.042/M tokens input** Die Standardregelung akzeptiert **64K 
 In diesem Workflow sind die besten Kandidaten:
 
 ```text
-✅ task / risk / difficulty classification
-✅ model routing : Luna / Sol / Astra / Sonnet / Opus / Fable
-✅ sélection progressive de quelques skills parmi un gros catalogue
-✅ triage des résultats de subagents et pertinence d’un contexte
-✅ signal topic-shift / « faut-il envisager une compaction ? »
-✅ filtrage de notifications et décisions qui méritent l’attention humaine
+✅ Aufgaben, Risiken und Schwierigkeitsgrade klassifizieren
+✅ Modelle zuweisen: Luna / Sol / Astra / Sonnet / Opus / Fable
+✅ Schrittweise passende Skills aus einem großen Katalog auswählen
+✅ Ergebnisse von Subagenten sichten und die Relevanz von Kontext bewerten
+✅ Themenwechsel erkennen und signalisieren, ob eine Kontextkomprimierung sinnvoll wäre
+✅ Benachrichtigungen filtern und Entscheidungen markieren, die menschliche Aufmerksamkeit erfordern
 
-❌ écrire ou expliquer du Scala
-❌ architecture ou root-cause ouverts
-❌ calcul, comptage ou comparaison de dates
-❌ décider seul d’un push, déploiement, suppression, secret ou migration DB
+❌ Scala-Code schreiben oder erklären
+❌ Offene Architekturfragen und Ursachenanalysen
+❌ Berechnungen, Zählungen oder Vergleiche von Datumsangaben
+❌ Allein über Push, Deployment, Löschung, Secrets oder DB-Migration entscheiden
 ```
 
 Empfohlene Architektur:
 
 ```text
-règles déterministes
-→ Jev pour un jugement fermé et fréquent
-→ code combine probabilités + seuils
-→ LLM génératif si raisonnement ouvert ou confiance insuffisante
-→ humain si action critique ou irréversible
+Deterministische Regeln
+→ Jev für häufige Entscheidungen mit klar abgegrenzten Optionen
+→ Code kombiniert Wahrscheinlichkeiten + Schwellenwerte
+→ generatives LLM bei offener Analyse oder zu niedriger Konfidenz
+→ Mensch bei kritischen oder irreversiblen Aktionen
 ```
 
 **Typ-Safe  ✓ okay.** Das Argument "zero Halluzinationen" bedeutet vor allem, dass Jev nicht aus einer Struktur oder einer Reihe von deklarierten Optionen heraus; es kann immer die falsche Option auswählen. **346 009 Abfragen / 37 Datasets** die Wahrscheinlichkeit `Choice` • die Berücksichtigung der wirtschaftlichen, sozialen und wirtschaftlichen Auswirkungen der Umstrukturierung der Wirtschaft; `0.5` ist schlecht für einige Binäraufgaben: Schwellen müssen **nach Aufgaben und Risiken maßgeschneidert**.
@@ -1018,22 +1018,22 @@ Der Router muss eine strukturierte Entscheidung produzieren, keine freie Antwort
 Das automatische Routing muss wie ein kontrollierter Wasserfall funktionieren:
 
 ```text
-Micro-boucle vérifiable : Qwen / Haiku / GPT‑6 Luna High / Sonnet 5.5 Medium
-→ ownership agentique : GPT‑6.2 Sol Medium / Opus 5.5 Medium
-→ difficulté : Sol High / Opus High
-→ limite de capacité : Astra Light / Fable Low
-→ effort supérieur seulement si la capacité est suffisante mais le raisonnement manque
-→ Ultra seulement si parallélisable
-→ humain
+Überprüfbare Mikroschleife: Qwen / Haiku / GPT‑6 Luna High / Sonnet 5.5 Medium
+→ durchgängige Verantwortung beim Agenten: GPT‑6.2 Sol Medium / Opus 5.5 Medium
+→ anspruchsvolle Aufgabe: Sol High / Opus High
+→ Grenze der Leistungsfähigkeit: Astra Light / Fable Low
+→ höherer Aufwand nur, wenn das Modell leistungsfähig genug ist, aber die Analyse nicht ausreicht
+→ Ultra nur bei parallelisierbarer Arbeit
+→ Mensch
 ```
 
 **Ändere nicht einfach das Modell inmitten einer verwirrenden Unterhaltung.** Wenn das Scheitern von einer verschmutzten Bahn kommt Ÿ wiederholte falsche Annahme, Halluzinationen, die sich sammeln, Korrekturen, die andere Fehler erstellen › der Kontext ist selbst ein Teil des Problems. Sonnet 5.5 → Opus 5.5, Sol 6.2 → Astra oder Opus 5.5 → Fable 5.2 :
 
 ```text
-1. Stop write mode.
-2. Produire HANDOFF.md : objectif, état du diff, faits vérifiés, essais échoués, erreur actuelle, inconnues.
-3. Ouvrir une session fraîche avec seulement spec + AGENTS.md + HANDOFF.md + fichiers/diff pertinents.
-4. Escalader le modèle dans cette nouvelle session si la difficulté le justifie toujours.
+1. Schreibmodus stoppen.
+2. HANDOFF.md erstellen: Ziel, Stand des Diffs, überprüfte Fakten, fehlgeschlagene Versuche, aktueller Fehler und offene Fragen.
+3. Neue Sitzung nur mit Spezifikation + AGENTS.md + HANDOFF.md + relevanten Dateien/Diffs starten.
+4. Wenn die Schwierigkeit es weiter rechtfertigt, in der neuen Sitzung auf ein stärkeres Modell wechseln.
 ```
 
 Die Eskalation von **Kapazität** ist nützlich für ein eigentliches Problem; sie darf die Gesprächsschuld nicht von einer bereits verzerrten Sitzung tragen.
@@ -1041,40 +1041,40 @@ Die Eskalation von **Kapazität** ist nützlich für ein eigentliches Problem; s
 Steigen Sie automatisch, wenn:
 
 ```text
-- un signal déterministe critique est présent (touches_* sensible, diff hors gabarit) ;
-- auto-confidence LLM < 0.75, ou confidence Jev sous le seuil calibré pour cette décision ;
-- erreur de compilation identique 2 fois ;
-- test ciblé toujours rouge après 2 corrections ;
-- diff hors scope ;
-- plus de fichiers modifiés que prévu ;
-- plus de 300 lignes de diff inattendues ;
-- build.sbt, plugins.sbt, migration DB ou contrat JSON public est touché ;
-- API publique modifiée ;
-- le routeur détecte sécurité, concurrence, performance ou argent ;
-- le modèle déclare explicitement une incertitude forte ;
-- le coût estimé d'une erreur dépasse le coût du modèle supérieur.
+- ein kritisches deterministisches Signal liegt vor (sensible touches_*-Felder, Diff außerhalb der Vorgaben);
+- vom LLM selbst angegebene Konfidenz < 0.75 oder Jevs Konfidenz unter dem kalibrierten Grenzwert für diese Entscheidung;
+- derselbe Kompilierungsfehler tritt 2 Mal auf;
+- gezielter Test schlägt nach 2 Korrekturen weiterhin fehl;
+- Diff liegt außerhalb des Arbeitsumfangs;
+- mehr Dateien geändert als vorgesehen;
+- mehr als 300 unerwartete Diff-Zeilen;
+- build.sbt, plugins.sbt, eine DB-Migration oder ein öffentlicher JSON-Vertrag ist betroffen;
+- öffentliche API wurde geändert;
+- der Router erkennt Risiken bei Sicherheit, Nebenläufigkeit, Performance oder Geld;
+- das Modell meldet ausdrücklich hohe Unsicherheit;
+- die geschätzten Fehlerkosten übersteigen die Kosten eines stärkeren Modells.
 ```
 
 Unterbrechungen (ohne automatisch klettern) wenn:
 
 ```text
-- max_cost_usd est atteint (budget local) ;
-- max_duration_minutes est atteint (timeout wall-clock) :
-  une session agentique qui boucle est un mode de défaillance distinct d'une session qui échoue,
-  et l'escalade vers un modèle plus cher ne corrige pas une boucle.
+- max_cost_usd ist erreicht (lokales Budget);
+- max_duration_minutes ist erreicht (Zeitlimit nach verstrichener Echtzeit):
+  Eine agentenbasierte Sitzung, die in einer Schleife steckt, ist eine andere Fehlerart als eine gescheiterte Sitzung.
+  Der Wechsel zu einem teureren Modell löst die Schleife nicht auf.
 ```
 
 Automatisch deklicken, wenn:
 
 ```text
-- tâche purement textuelle ;
-- aucun write mode nécessaire ;
-- pas de risque métier ;
-- moins de 20 lignes attendues ;
-- fichier unique ;
-- objectif déterministe ;
-- test existant très ciblé ;
-- contexte stable et déjà connu du projet.
+- rein textliche Aufgabe;
+- kein Schreibmodus erforderlich;
+- kein fachliches Risiko;
+- weniger als 20 Zeilen erwartet;
+- nur eine Datei;
+- deterministisches Ziel;
+- vorhandener, sehr gezielter Test;
+- stabiler und im Projekt bereits bekannter Kontext.
 ```
 
 <!-- section: s-34 -->
@@ -1083,30 +1083,30 @@ Automatisch deklicken, wenn:
 Lassen Sie nie einen Router entscheiden, eine Schrift auf:
 
 ```text
-- build.sbt ;
-- plugins.sbt ;
-- resolvers ;
-- versions de dépendances ;
-- migrations DB ;
-- contrats JSON publics ;
-- sécurité ;
-- authentification ;
-- autorisation ;
-- concurrence ;
-- gestion d'argent ;
-- suppression de données ;
-- scripts de déploiement ou d'infrastructure.
+- build.sbt;
+- plugins.sbt;
+- resolvers;
+- Abhängigkeitsversionen;
+- DB-Migrationen;
+- öffentliche JSON-Verträge;
+- Sicherheit;
+- Authentifizierung;
+- Autorisierung;
+- Nebenläufigkeit;
+- Geldverwaltung;
+- Datenlöschung;
+- Deployment- oder Infrastrukturskripte.
 ```
 
 In diesen Fällen kann der Router nur Folgendes vorschlagen:
 
 ```text
-- modèle recommandé ;
-- plan ;
-- fichiers probables ;
-- tests à exécuter ;
-- risques ;
-- règle d'arrêt.
+- empfohlenes Modell;
+- Plan;
+- voraussichtlich betroffene Dateien;
+- auszuführende Tests;
+- Risiken;
+- Abbruchregel.
 ```
 
 <!-- section: s-35 -->
@@ -1118,36 +1118,36 @@ Claude Code ist der beste Ort, um dieses Routing auf den Alltag anzuwenden, da S
 
 ```text
 researcher
-- Modèle : Haiku / Qwen si externe
-- Mode : read-only
-- Rôle : trouver fichiers, usages, tests, documentation
+- Modell: Haiku / Qwen, wenn extern
+- Modus: nur lesend
+- Rolle: Dateien, Verwendungen, Tests und Dokumentation finden
 
 scala-implementer
-- Modèle : Sonnet 5.5 `medium`
-- Mode : write limité au repo
-- Rôle : implémenter les tâches bornées sous contrôle d’un plan clair
+- Modell: Sonnet 5.5 `medium`
+- Modus: Schreibzugriff auf das Repository begrenzt
+- Rolle: abgegrenzte Aufgaben nach einem klaren Plan umsetzen
 
 hard-debugger
-- Modèle : Opus 5.5 `high`
-- Mode : write limité, plan obligatoire
-- Rôle : bugs Scala subtils, implicits, effets, causes éloignées
+- Modell: Opus 5.5 `high`
+- Modus: begrenzter Schreibzugriff, Plan erforderlich
+- Rolle: subtile Scala-Fehler, Implicits, Effekte und schwer auffindbare Ursachen
 
 migration-planner
-- Modèle : Opus 5.5 `high` ; Fable 5.2 `low` (décision ponctuelle) ou `high` (mission longue) si Opus plafonne
-- Mode : plan-first, worktree dédié
-- Rôle : migrations multi-modules, refactors longs, stratégie de découpage
-- Note : évaluer Dynamic Workflows (Opus 5.5 + subagents parallèles massifs)
-  comme alternative à un Fable mono-agent sur les migrations codebase-scale
+- Modell: Opus 5.5 `high`; Fable 5.2 `low` (einzelne Entscheidung) oder `high` (langer Auftrag), wenn Opus an seine Grenzen stößt
+- Modus: erst planen, eigener Worktree
+- Rolle: modulübergreifende Migrationen, längere Refactorings und Strategie zur Aufteilung
+- Hinweis: Dynamic Workflows (Opus 5.5 + viele parallele Subagenten) prüfen
+  als Alternative zum Einsatz eines einzelnen Fable-Agenten bei Migrationen über die gesamte Codebasis
 
 reviewer
-- Modèle : Codex / GPT‑6.2 Sol `medium` ; Astra `light` si critique
-- Mode : no-write
-- Rôle : review indépendante, classement bloquant / important / optionnel
+- Modell: Codex / GPT‑6.2 Sol `medium`; Astra `light` bei kritischen Aufgaben
+- Modus: kein Schreibzugriff
+- Rolle: unabhängiges Review, Einstufung als blockierend / wichtig / optional
 
 pr-summarizer
-- Modèle : Qwen / GPT‑6 Luna
-- Mode : no-write
-- Rôle : résumé PR, release notes, checklist finale
+- Modell: Qwen / GPT‑6 Luna
+- Modus: kein Schreibzugriff
+- Rolle: PR-Zusammenfassungen, Release Notes, abschließende Checkliste
 ```
 
 <!-- section: s-36 -->
@@ -1158,65 +1158,65 @@ Der Gewinn der Subagenten ist nicht nur Parallelität. **Fenster mit frischer un
 Die empfohlene Aufteilung ist:
 
 ```text
-PARENT
-- objectif
-- contraintes et non-objectifs
-- plan validé
-- décisions prises
-- diff courant
-- preuves essentielles
-- risques ouverts
+HAUPTAGENT
+- Ziel
+- Vorgaben und Nicht-Ziele
+- validierter Plan
+- getroffene Entscheidungen
+- aktueller Diff
+- wesentliche Belege
+- offene Risiken
 
-SUBAGENTS
-- exploration de nombreux fichiers
-- recherche Sourcebot / rg
-- call paths, hiérarchies, usages et chaînes de givens via ScalaSemantic
-- graphe structurel cross-language via Codebase-Memory si Java/Kotlin/Scala cohabitent
-- investigation live des types / givens / diagnostics via Metals
-- documentation externe
-- logs et suites de tests volumineuses
-- cartographie d'un module legacy
+SUBAGENTEN
+- zahlreiche Dateien erkunden
+- Suche mit Sourcebot / rg
+- Aufrufpfade, Hierarchien, Verwendungen und Given-Ketten über ScalaSemantic
+- sprachübergreifendes Strukturdiagramm über Codebase-Memory, wenn Java/Kotlin/Scala gemeinsam vorkommen
+- Typen / Givens / Diagnosen live über Metals untersuchen
+- externe Dokumentation
+- umfangreiche Logs und Testsuiten
+- Übersicht über ein Legacy-Modul
 ```
 
 Entscheidungsregel:
 
 ```text
-Les détails de cette sous-tâche seront-ils encore utiles au parent après sa fin ?
+Sind die Details dieser Teilaufgabe nach ihrem Abschluss noch für den Hauptagenten relevant?
 
-NON → subagent isolé
-OUI → garder dans le contexte parent
+NEIN → isolierter Subagent
+JA → im Kontext des Hauptagenten behalten
 ```
 
 Die Übertragungsnachricht muss ein **Vertrag** sein, da der Subagent nicht von der gesamten Geschichte des Elterngesprächs abhängig sein darf:
 
 ```text
-Mission :
-[périmètre précis]
+Auftrag:
+[genauer Umfang]
 
-Mode :
-read-only / write borné
+Modus:
+nur lesend / begrenzter Schreibzugriff
 
-Cherche :
-[questions précises]
+Untersuche:
+[genaue Fragen]
 
-Ne fais pas :
-[hors scope]
+Nicht bearbeiten:
+[außerhalb des Umfangs]
 
-Retourne uniquement :
-1. conclusion ;
-2. preuves file:line ;
-3. tests ou commandes pertinents ;
-4. incertitudes restantes.
+Gib nur Folgendes zurück:
+1. Schlussfolgerung;
+2. Belege im Format file:line;
+3. relevante Tests oder Befehle;
+4. verbleibende Unsicherheiten.
 
-Réponse cible : < 1–2K tokens.
+Zielumfang: < 1–2K Tokens.
 ```
 
 Die Rücksendung ist eine Schnittstelle, keine Transkription. Wenn ein Subagent 80K tokens liest und zurückgibt [1,5]K, ist die Isolierung nützlich; wenn er 10K liest und 8K zurückgibt, hat er vor allem das Geräusch verschoben. Eine einfache Metrik für lange Aufgaben ist:
 
 ```text
 isolation_ratio
-= tokens consommés par le subagent
-/ tokens retournés au parent
+= vom Subagenten verbrauchte Tokens
+/ an den Hauptagenten zurückgegebene Tokens
 ```
 
 Der richtige Pattern ist also **map → reduce** : plusieurs workers spécialisés dépensent du contexte localement, puis le parent synthétise quelques résultats courts. Évite l'anti-pattern inverse — sept agents qui lisent chacun le repo et renvoient des rapports de dix pages — qui recrée le *Kontext rot* im Wurzelkontext.
@@ -1224,11 +1224,11 @@ Der richtige Pattern ist also **map → reduce** : plusieurs workers spécialis�
 Für **ton workflow solo Scala** behandelt das Fan-out auch als Budget für Tokens/Quoten:
 
 ```text
-défaut                              → 1 agent actif
-2 investigations indépendantes     → 2 subagents read-only
-2 User Stories indépendantes        → 2 writers maximum pour commencer (WIP inclut les PR en review)
-3+ sessions parallèles              → uniquement si le gain et la capacité de review sont mesurés
-writer                              → toujours 1 par branche / PR / worktree
+Standard                          → 1 aktiver Agent
+2 unabhängige Untersuchungen      → 2 rein lesende Subagenten
+2 unabhängige User Stories        → anfangs höchstens 2 implementierende Agenten (WIP zählt PRs im Review mit)
+3+ parallele Sitzungen            → nur bei gemessenem Vorteil und nachgewiesener Review-Kapazität
+Implementierung                   → stets nur 1 Agent pro Branch / PR / Worktree
 ```
 
 Logge mindestens `parallel_sessions_peak`, `subagent_count` und `subagent_tokens`. Ein Subagent schützt den Kontext des Elternteils, lädt aber seinen eigenen Kontext auf: Er ist also niemals kostenlos        ✓. Wenn er keine nützliche Isolierung oder wirklich parallele Arbeit bringt, startet er ihn nicht.
@@ -1280,26 +1280,26 @@ Für die Koordination bevorzugt ** Sterntopologie[**: Der Elternteil überträgt
 In **dieses Solo-Workflow** braucht das Haupt-Routing keinen Gateway API. Die fünf täglichen Pfade haben bereits ihre eigene Oberfläche und ihr eigenes Budget:
 
 ```text
-Claude Code        → abonnement Claude Max
-Codex              → abonnement ChatGPT
-Qwen local         → MLX / llama.cpp / endpoint local
-GitHub Copilot     → abonnement GitHub Copilot
-JetBrains AI       → abonnement JetBrains AI
+Claude Code        → Claude-Max-Abonnement
+Codex              → ChatGPT-Abonnement
+Qwen lokal         → MLX / llama.cpp / lokaler Endpunkt
+GitHub Copilot     → GitHub-Copilot-Abonnement
+JetBrains AI       → JetBrains-AI-Abonnement
 ```
 
 Notwendigkeit API Rest ist **Ausnahme** : wenn Claude Code und Codex bleiben blockiert und wollen eine Meinung aus einer anderen Familie von Modellen, zum Beispiel **GLM, Kimi, Gemini, Grok oder ein neues Modell zu bewerten**. In diesem Fall **OpenRouter ist der beste Fehler** : nur ein Schlüssel, kein Server zu halten, schneller Zugriff auf viele Modelle und Vorseher, zentrale Rechnungsstellung und Verfügbarkeit Fallback.
 
 ```text
-Blocage persistant
-→ extraire le contexte minimal utile
+Anhaltende Blockade
+→ den mindestens nötigen Kontext extrahieren
 → OpenRouter
    ├── GLM
    ├── Kimi
    ├── Gemini
    ├── Grok
-   └── nouveau modèle à tester
-→ comparer l'analyse avec Claude / Codex
-→ humain arbitre
+   └── neues Modell für einen Test
+→ die Analyse mit Claude / Codex vergleichen
+→ der Mensch entscheidet
 ```
 
 **Fahren Sie nicht automatisch die tägliche Arbeit in Richtung OpenRouter.** Die Wahl des Rettungsmodells muss explizit bleiben: Ziel ist es, eine andere Perspektive zu erhalten, nicht, einen Router still wählen zu lassen, eine andere Familie zu wählen.
@@ -1310,15 +1310,15 @@ Blocage persistant
 OpenRouter kann automatisch zwischen den Vorgesetzten wechseln. Für diesen Leitfaden, unterscheidet zwei Ebenen:
 
 ```text
-Même modèle, provider A indisponible
-→ même modèle, provider B
-→ OUI : résilience sans changer la nature du reviewer
+Gleiches Modell, Anbieter A nicht verfügbar
+→ gleiches Modell, Anbieter B
+→ JA: ausfallsicher, ohne die Art des Reviews zu ändern
 
-GLM indisponible
+GLM nicht verfügbar
 → Gemini
 → Kimi
 → Grok
-→ NON par défaut : le changement de modèle doit rester visible et intentionnel
+→ standardmäßig NEIN: Ein Modellwechsel muss sichtbar und beabsichtigt bleiben
 ```
 
 Für eine technische Untersuchung, also logge immer **das tatsächlich verwendete Modell**. Ein Fallback zwischen Modellen kann den Grund für die Abweichung einer Schlussfolgerung von Claude oder Codex.
@@ -1329,9 +1329,9 @@ Für eine technische Untersuchung, also logge immer **das tatsächlich verwendet
 Nicht hinzufügen OpenRouter nur zur Vereinheitlichung Qwen. `llama.cpp`, MLX oder das lokale Harness können bereits ein Endpoint OpenAISolange es nur ein oder zwei lokale Modelle gibt, bringt die zusätzliche Schicht nicht genügend Wert:
 
 ```text
-Qwen local
+Qwen lokal
 → llama-server / MLX
-→ Qwen Code / OpenCode / script local
+→ Qwen Code / OpenCode / lokales Skript
 ```
 
 <!-- section: s-40 -->
@@ -1340,11 +1340,11 @@ Qwen local
 Über OpenRouter zugängliche Vorseher können unterschiedliche Haltungsrichtlinien haben. Für sensiblen Berufscode:
 
 ```text
-- ne jamais envoyer le repository entier par défaut ;
-- préférer un reproducer minimal, quelques types/méthodes, la stack trace et le test ciblé ;
-- anonymiser le contexte métier si possible ;
-- choisir explicitement les providers compatibles avec les exigences de rétention du projet ;
-- garder le code le plus sensible en local ou chez les fournisseurs directs déjà approuvés.
+- standardmäßig nie das gesamte Repository senden;
+- einen minimalen reproduzierbaren Fall, einige Typen oder Methoden, den Stacktrace und den gezielten Test bevorzugen;
+- den fachlichen Kontext nach Möglichkeit anonymisieren;
+- gezielt Anbieter wählen, die die Vorgaben des Projekts zur Datenaufbewahrung erfüllen;
+- besonders sensiblen Code lokal oder bei bereits genehmigten Direktanbietern behalten.
 ```
 
 <!-- section: s-41 -->
@@ -1352,7 +1352,7 @@ Qwen local
 
 Der Router muss auf reale Daten eingestellt werden, nicht auf Intuition. Für jede agentielle Aufgabe, Blog:
 
-```text
+```plaintext
 task_type
 risk
 difficulty
@@ -1391,12 +1391,12 @@ rollback_or_hotfix
 Nach zwei Wochen werden die Schwellenwerte angepasst:
 
 ```text
-- si Qwen échoue souvent sur un type de tâche, route directement vers Sonnet ;
-- si Sonnet réussit sans retours review sur un type de tâche, évite Opus ;
-- si Opus réduit fortement les boucles de correction, garde-le pour cette classe ;
-- si Opus `xhigh/max` suffit là où tu envoyais Fable, redescends ;
-- si Fable ne produit pas moins de reprises humaines, réserve-le aux vraies sessions longues ;
-- si `max` ne trouve que des remarques optionnelles, redescends vers `high` ou `medium`.
+- wenn Qwen bei einer Aufgabenart oft scheitert, weise sie direkt Sonnet zu;
+- wenn Sonnet eine Aufgabenart ohne Review-Rückmeldungen bewältigt, vermeide Opus;
+- wenn Opus die Korrekturschleifen stark verkürzt, behalte es für diese Aufgabenart bei;
+- wenn Opus `xhigh/max` dort ausreicht, wo du bisher Fable eingesetzt hast, gehe auf Opus zurück;
+- wenn Fable die menschliche Nacharbeit nicht verringert, setze es nur für wirklich lange Sitzungen ein;
+- wenn `max` nur optionale Anmerkungen findet, gehe auf `high` oder `medium` zurück.
 ```
 
 <!-- section: s-42 -->
@@ -1405,43 +1405,43 @@ Nach zwei Wochen werden die Schwellenwerte angepasst:
 Doch. Jev ist verfügbar und dass die Ausgänge geschlossen sind, bevorzugt `Choice` / `Score` / `Noul` Die folgenden Quittungen sind nützlich, wenn eine offene Argumentation erforderlich ist oder als Vergleichsbasis verwendet wird.
 
 ```text
-Tu es un routeur de tâches de développement logiciel pour un projet Scala/Java/Play/Spark.
+Du weist Softwareentwicklungsaufgaben für ein Scala/Java/Play/Spark-Projekt geeigneten Modellen zu.
 
-Analyse la demande ci-dessous et retourne uniquement du JSON valide.
+Analysiere die folgende Anfrage und gib ausschließlich gültiges JSON aus.
 
-Objectif : choisir le plus petit modèle capable de produire un résultat mergeable avec un risque acceptable.
+Ziel: Wähle das kleinste Modell, das bei vertretbarem Risiko ein merge-fähiges Ergebnis liefert.
 
-Prends en compte :
-- type de tâche ;
-- difficulté ;
-- risque métier ;
-- taille probable du diff ;
-- nombre probable de fichiers ;
-- besoin d'écriture ;
-- besoin de docs externes ;
-- risque Scala spécifique : implicits, givens, effets, sérialisation JSON ;
-- fichiers critiques : build.sbt, migrations DB, auth, sécurité, concurrence, argent ;
-- modèle, effort et, si nécessaire, mode `pro` ou multi-agent (`ultra` côté produit) ;
-- plafond de coût et de durée ;
-- règle d'escalade ;
-- conditions d'arrêt.
+Berücksichtige:
+- Aufgabenart;
+- Schwierigkeit;
+- fachliches Risiko;
+- wahrscheinliche Größe des Diffs;
+- wahrscheinliche Anzahl betroffener Dateien;
+- Bedarf an Schreibzugriff;
+- Bedarf an externer Dokumentation;
+- Scala-spezifische Risiken: Implicits, Givens, Effekte, JSON-Serialisierung;
+- kritische Dateien und Themen: build.sbt, DB-Migrationen, Authentifizierung, Sicherheit, Nebenläufigkeit und Geld;
+- Modell, Reasoning-Aufwand und bei Bedarf Modus `pro` oder mehrere Agenten (`ultra` in der Produktoberfläche);
+- Kosten- und Laufzeitgrenze;
+- Eskalationsregel;
+- Abbruchbedingungen.
 
-Les signaux déterministes (fichiers critiques, taille de diff) priment sur ta propre confidence.
+Deterministische Signale (kritische Dateien, Diff-Größe) haben Vorrang vor deiner eigenen Konfidenz.
 
-Demande :
-[COLLER LA DEMANDE]
+Anfrage:
+[ANFRAGE EINFÜGEN]
 
-Contexte disponible :
-[COLLER FICHIERS, STACK TRACE, DIFF STAT OU RÉSUMÉ]
+Verfügbarer Kontext:
+[DATEIEN, STACKTRACE, DIFF-STATISTIK ODER ZUSAMMENFASSUNG EINFÜGEN]
 ```
 
 <!-- section: s-43 -->
 ### Leitprinzip des Routing
 
 ```text
-Le routeur ne choisit pas le modèle le plus intelligent.
-Il choisit le modèle le moins cher capable de produire un diff mergeable,
-avec une règle d'escalade explicite dès que le risque ou l'incertitude augmente.
+Der Router sucht nicht nach dem intelligentesten Modell.
+Er wählt das kostengünstigste Modell, das einen merge-fähigen Diff liefern kann.
+Bei steigendem Risiko oder wachsender Unsicherheit greift eine explizite Eskalationsregel.
 ```
 
 <!-- section: s-44 -->
@@ -1473,15 +1473,15 @@ avec une règle d'escalade explicite dès que le risque ou l'incertitude augment
 Werfen Sie nicht. Fable 5.2, GPT‑6.2 Astra, Opus 5.5 `Extra/Max` oder einen Modus `Ultra` teuer nur, wenn Sie liefern können:
 
 ```text
-- objectif précis ;
-- contraintes ;
-- fichiers ou modules probables ;
-- critères d'acceptation ;
-- tests à exécuter ;
-- non-objectifs ;
-- limite explicite de diff ;
-- plafond de coût et de durée ;
-- règle d'arrêt.
+- konkretes Ziel;
+- Vorgaben;
+- voraussichtlich betroffene Dateien oder Module;
+- Akzeptanzkriterien;
+- auszuführende Tests;
+- Nicht-Ziele;
+- ausdrückliche Grenze für den Diff;
+- Kosten- und Laufzeitgrenze;
+- Abbruchregel.
 ```
 
 Ein sehr starkes Modell auf einer schnellen Unschärfe produziert kein gutes Ergebnis: es erzeugt eine teurere Drift.

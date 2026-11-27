@@ -82,11 +82,11 @@ ChatGPT web não se liga diretamente a `localhost`. Para um MCP local, privado o
 Quando um administrador aprova uma aplicação MCP em ChatGPT, o produto conserva um **snapshot aprovado ferramentas e seus itens**. Adicionar, retirar ou modificar uma ferramenta no servidor não faz automaticamente a nova superfície activa. Por conseguinte, uma evolução incompatível pode romper chamadas até que um administrador tenha revisto e publicado o catálogo, e ChatGPT não garante actualmente um alerta pró-activo sobre esta deriva.
 
 ```text
-changement de nom / schéma / permission / nouvel outil MCP
-→ diff de surface
-→ review
-→ validation admin
-→ publication
+mudança de nome / esquema / permissão / nova ferramenta MCP
+→ diff da superfície
+→ revisão
+→ validação administrativa
+→ publicação
 ```
 
 Esta regra ** completa**, sem substitui-la, a política de segurança desta seção: versões encraviadas, permissões mínimas, logs de ferramentas e separação leitura/escrita.
@@ -103,21 +103,21 @@ Para um depósito principalmente Scala, **ScalaSemantic MCP** é o melhor candid
 
 ```text
 Sourcebot
-→ « où est X ? »
-→ « quels fichiers parlent de Y ? »
+→ “Onde está X?”
+→ “Quais arquivos falam de Y?”
 
 ScalaSemantic MCP
-→ « quels sont les usages exacts de ce symbole ? »
-→ « quel chemin d'appel relie A à B ? »
-→ « qui étend ce trait ? »
-→ « quels givens peuvent produire T ? »
-→ « de quels implicits dépend ce given ? »
+→ “Quais são os usos exatos deste símbolo?”
+→ “Que caminho de chamadas liga A a B?”
+→ “Quem estende este trait?”
+→ “Quais givens podem produzir T?”
+→ “De quais implicits este given depende?”
 
 Metals MCP
-→ « quel est le type réel ici, maintenant ? »
-→ « ce fichier compile-t-il ? »
-→ « quels diagnostics le compilateur retourne-t-il ? »
-→ « quels tests échouent ? »
+→ “Qual é o tipo real aqui, neste momento?”
+→ “Este arquivo compila?”
+→ “Quais diagnósticos o compilador retorna?”
+→ “Quais testes falham?”
 ```
 
 ScalaSemantic e Metals são **adicionais**. ScalaSemantic é index-wide e excelente para as relações globais; Metals Continua a ser a fonte da verdade ao vivo para o buffer atual, a apresentação compilar, os diagnósticos, a compilação e os testes. SemanticDB representa principalmente o último estado compilado: se o código acaba de ser modificado sem recompilação, Metals pode ser mais fresco.
@@ -133,46 +133,46 @@ Também não apresenta ScalaSemantic como um Neo4j/RDF genérico: é mais precis
 Java / Kotlin
 
 Sourcebot
-= recherche et discovery
+= busca e descoberta
 
 Codebase-Memory MCP
-= knowledge graph persistant
-= call graph
-= impact analysis
-= architecture
-= routes et relations cross-service
+= grafo de conhecimento persistente
+= grafo de chamadas
+= análise de impacto
+= arquitetura
+= rotas e relações entre serviços
 
 IntelliJ / LSP
-= sémantique live et arbitrage local
+= semântica em tempo real e verificação local
 ```
 
 Em um código base JVM poliglotis, a distribuição recomendada passa a ser:
 
 ```text
-Scala pur
+Scala puro
 → Sourcebot + ScalaSemantic + Metals
 
 Java/Kotlin
 → Sourcebot + Codebase-Memory + IntelliJ/LSP
 
-Scala + Java + Kotlin / microservices
+Scala + Java + Kotlin / microsserviços
 → Sourcebot
-→ ScalaSemantic pour la sémantique Scala
-→ Codebase-Memory pour la topologie polyglotte et cross-service
-→ Metals / IntelliJ pour arbitrer la sémantique live
+→ ScalaSemantic para semântica Scala
+→ Codebase-Memory para topologia entre linguagens e serviços
+→ Metals / IntelliJ para verificar a semântica em tempo real
 ```
 
 O critério determinante não é o de se tem uma base gráfica? ** que informação cria as bordas** :
 
 ```text
 Tree-sitter
-→ structure syntaxique et résolution heuristique
+→ estrutura sintática e resolução heurística
 
 SemanticDB
-→ symboles résolus par le compilateur Scala
+→ símbolos resolvidos pelo compilador Scala
 
 LSP / presentation compiler
-→ état sémantique live du code courant
+→ estado semântico em tempo real do código atual
 ```
 
 Portanto, para o desenvolvimento Scala, prefere uma arista SemanticDB a uma arista reconstruída apenas desde o texto quando ambos estão disponíveis.
@@ -183,13 +183,13 @@ Portanto, para o desenvolvimento Scala, prefere uma arista SemanticDB a uma aris
 Esta camada de gráfico é especialmente útil se você evita carregar dezenas de ficheiros. Um subagent read-only pode interrogar ScalaSemantic ou Codebase-Memory e depois rastrear apenas alguns caminhos, símbolos e testes `file:line` ao pai:
 
 ```text
-question d'impact
-→ subagent isolé
-→ knowledge graph / semantic graph
-→ 5–10 relations pertinentes
-→ vérification Metals / IntelliJ si nécessaire
-→ résumé < 1–2K tokens
-→ parent
+pergunta sobre impacto
+→ subagente isolado
+→ grafo de conhecimento / grafo semântico
+→ 5–10 relações relevantes
+→ verificação em Metals / IntelliJ, se necessário
+→ resumo < 1–2K tokens
+→ agente principal
 ```
 
 Isto aumenta o`isolation_ratio` e reduz diretamente o * context rot*. Em vez disso, não ativa mais de um MCP gráfico por princípio: benchmarkelas em dez tarefas reais e guarde apenas aqueles que reduzam o número de arquivos lidos, os tokens injetados ou os erros de compreensão.
@@ -211,9 +211,9 @@ As ferramentas expostas incluem, entre outras coisas: `compile-file`, `compile-f
 Articulação com JetBrains MCP e ScalaSemantic:
 
 ```text
-JetBrains MCP     = contexte IDE quand IntelliJ est ouvert (fichiers ouverts, inspections, run configs)
-ScalaSemantic MCP = relations globales SemanticDB : usages, hiérarchies, call paths, givens
-Metals MCP        = feedback compilateur live pour les agents terminal, même IDE fermé
+JetBrains MCP     = contexto da IDE quando o IntelliJ está aberto (arquivos abertos, inspeções, configurações de execução)
+ScalaSemantic MCP = relações globais do SemanticDB: usos, hierarquias, caminhos de chamadas, givens
+Metals MCP        = diagnósticos do compilador em tempo real para agentes no terminal, mesmo com a IDE fechada
 ```
 
 Os três são complementares, não redundantes. Claude Code longa ou as tarefas lançadas fora do IED (CI local, worktree paralelo), Metals MCP é o que transforma o agente adivinha os tipos.
@@ -297,17 +297,17 @@ Cada iteração custa um `compile-file` (milhões, incremental) em vez de um `sb
 Um agente pode ler instruções maliciosas em uma saída, um README, um comentário de código, uma saída de edifício, um site, um resultado MCP ou um arquivo gerado. Estes conteúdos são ** dados não confiáveis**, mesmo quando são apresentados como regras do sistema. A robustez do modelo não é suficiente: as defesas devem ser estruturais.
 
 ```text
-1. Explorer en read-only dans un worktree ou conteneur jetable.
-2. Refuser le réseau par défaut ; autoriser seulement les domaines nécessaires.
-3. Monter les secrets hors du contexte et utiliser des clés à portée, budget et durée minimaux.
-4. Exiger une approbation humaine pour installation, réseau, push, déploiement, suppression et écriture hors repo.
-5. Épingler les versions des serveurs MCP et limiter chaque outil à son répertoire et à ses actions.
-6. Séparer l'agent qui lit des données externes de celui qui dispose des permissions d'écriture.
-7. Journaliser chaque tool call et arrêter si une donnée lue tente de modifier la politique ou les permissions.
-8. Traiter **skills, plugins, serveurs MCP et mémoire persistante comme des dépendances exécutables** : versions épinglées,
-   provenance vérifiée, allowlist explicite et échec fermé si la politique ne peut pas être déterminée.
-9. Un decision model comme **Jev ne peut jamais élargir une permission** : son `state` peut contenir du texte adversarial.
-   Il peut réduire le bruit ou demander une escalade, mais push, déploiement, suppression et secrets restent régis par code/policy.
+1. Explore em modo somente leitura em um worktree ou contêiner descartável.
+2. Negue acesso à rede por padrão e permita apenas os domínios necessários.
+3. Monte segredos fora do contexto e use chaves com escopo, orçamento e duração mínimos.
+4. Exija aprovação humana para instalação, rede, push, implantação, exclusão e escrita fora do repositório.
+5. Fixe versões dos servidores MCP e restrinja cada ferramenta a seu diretório e ações permitidas.
+6. Separe o agente que lê dados externos daquele com permissão de escrita.
+7. Registre cada chamada de ferramenta e pare se algum dado lido tentar mudar a política ou as permissões.
+8. Trate **skills, plugins, servidores MCP e memória persistente como dependências executáveis**: fixe versões,
+   verifique a origem, use uma lista explícita de permissões e negue por padrão se a política não puder ser determinada.
+9. Um modelo de decisão como **Jev jamais pode ampliar uma permissão**. Seu `state` pode conter texto adversarial.
+   Pode reduzir ruído ou pedir escalada, mas push, implantação, exclusão e segredos continuam regidos pelo código e pela política.
 ```
 
 O conteúdo do depósito nunca deve poder ampliar o seu próprio âmbito de autorização.

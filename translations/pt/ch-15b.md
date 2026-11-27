@@ -4,13 +4,13 @@
 A merge não é o fim do teste. Para um código de negócio em produção, usa uma cadeia de validação proporcionada ao risco; não transforma os agentes em operadores de produção.
 
 ```text
-spec + REQ/acceptance evidence
-→ implementation gate (scope, compilation, tests)
-→ review gate (independent findings, final PR head)
-→ integration gate (CI on the actual merge candidate)
-→ release gate (immutable artifact, staging, security)
-→ production gate (authorized deployment, progressive rollout)
-→ runtime verification (SLO, regressions, rollback)
+especificação + REQ/evidência de aceitação
+→ gate de implementação (escopo, compilação, testes)
+→ gate de revisão (achados independentes, ponta final da PR)
+→ gate de integração (CI no candidato real ao merge)
+→ gate de lançamento (artefato imutável, staging, segurança)
+→ gate de produção (implantação autorizada, rollout progressivo)
+→ verificação em execução (SLO, regressões, rollback)
 ```
 
 **Release gate.** Construído uma vez que o artefato do commit entregue, teste este artefato, identifíquelo por digest imutável (imagem OCI, JAR, distribuição) e promeúselo sem reconstruir o staging e a produção. Conserva o SHA source, o digest, as versões de edifício/dependências, os resultados CI e, segundo o projeto, SBOM, scanners e certificados de procedência. A identidade de implantação é diferente do writer e da CI que executa código não confiável. Não há segredos de produção nos agentes; licenças temporárias e ambiente protegido por gate humano ou política de libertação.
@@ -33,11 +33,11 @@ Instrumento de logs estruturados, métricas e traços (OpenTelemetry se for adeq
 ### Definição de done da produção
 
 ```text
-- PR et candidat d'intégration validés.
-- Artefact immuable identifié, testé et promu par le pipeline autorisé.
-- Staging et smoke tests passants ; rollback / récupération testés selon risque.
-- Canary ou rollout approuvé ; aucune alerte ou régression au-delà des seuils.
-- Fenêtre d'observation terminée ; métriques et exceptions documentées.
+- PR e candidato à integração validados.
+- Artefato imutável identificado, testado e promovido pelo pipeline autorizado.
+- Staging e smoke tests aprovados. Rollback ou recuperação testados conforme o risco.
+- Canary ou rollout aprovado, sem alertas ou regressões acima dos limites.
+- Janela de observação concluída, com métricas e exceções documentadas.
 ```
 
 O primeiro estado é ?merge-ready ?, o segundo destacamento ?, o último estável ? ?. Medir esses estados separadamente em vez de atribuir o sucesso a um commit ou a uma revisão verde.

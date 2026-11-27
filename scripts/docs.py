@@ -181,22 +181,27 @@ def signature(text):
     """Compare literal code, links, numeric tokens and Markdown block structure."""
     blocks, code, urls, numbers = [], [], Counter(), Counter()
     for fence, chunk in prose_blocks(text):
-        if fence is not None:
+        if fence == "text":
+            lines = chunk.splitlines(keepends=True)
+            blocks.append(("text-fence", lines[0], lines[-1]))
+            chunk = "".join(lines[1:-1])
+        elif fence is not None:
             blocks.append(("fence", fence))
             code.append(chunk)
             continue
-        for line in chunk.splitlines():
-            heading = HEADING.fullmatch(line)
-            if heading:
-                blocks.append(("heading", len(heading[1])))
-                continue
-            prefix = re.match(r"^( *)(?:(> *)+|([-+*]|\d+[.)]) +)", line)
-            if prefix:
-                blocks.append(("prefix", prefix[0].strip(), len(prefix[1])))
-            if line.lstrip().startswith("|"):
-                blocks.append(("table", len(re.findall(r"(?<!\\)\|", line))))
-            if re.fullmatch(r" {0,3}(?:-{3,}|\*{3,}|_{3,})\s*", line):
-                blocks.append(("rule", line.strip()))
+        else:
+            for line in chunk.splitlines():
+                heading = HEADING.fullmatch(line)
+                if heading:
+                    blocks.append(("heading", len(heading[1])))
+                    continue
+                prefix = re.match(r"^( *)(?:(> *)+|([-+*]|\d+[.)]) +)", line)
+                if prefix:
+                    blocks.append(("prefix", prefix[0].strip(), len(prefix[1])))
+                if line.lstrip().startswith("|"):
+                    blocks.append(("table", len(re.findall(r"(?<!\\)\|", line))))
+                if re.fullmatch(r" {0,3}(?:-{3,}|\*{3,}|_{3,})\s*", line):
+                    blocks.append(("rule", line.strip()))
         for literal, span in inline_parts(chunk):
             if literal:
                 code.append(span.replace("\n", " "))

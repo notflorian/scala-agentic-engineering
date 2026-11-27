@@ -7,10 +7,10 @@ La CI es el juez final determinista del principio rector  la condición de adapt
 ## Las cuatro gatas específicas de los PRs agenticos
 
 ```text
-1. Gate de gabarit et scope : diff base → candidat, fichiers protégés, taille et nombre de fichiers
-2. Gate de qualité de test : suites réellement exécutées + mutation score et mutants importants selon risque
-3. Gate de review : findings BLOCKING / REGRESSION_RISK vérifiés traités ou arbitrés humainement
-4. Gate de budget : tout job appelant un LLM a un timeout ET un plafond de coût
+1. Control de límites y alcance: diff base → candidato, archivos protegidos, tamaño y número de archivos
+2. Control de calidad de pruebas: conjuntos realmente ejecutados + puntuación de mutación y mutantes importantes según el riesgo
+3. Control de revisión: hallazgos BLOCKING / REGRESSION_RISK verificados y corregidos, o resueltos por una persona
+4. Control de presupuesto: todo job que invoque un LLM tiene un límite de tiempo Y un tope de coste
 ```
 
 Dos ejes complementarios a considerar una vez que se haya establecido la base de las cuatro gatas:

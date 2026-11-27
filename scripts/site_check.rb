@@ -28,6 +28,12 @@ def leaf_keys(value)
   end.sort
 end
 
+def rendered_code(container)
+  container.css("pre code").map do |node|
+    node.ancestors(".language-text").empty? ? node.text : nil
+  end
+end
+
 def html_file(root, route)
   relative = route.delete_prefix("/")
   root.join(route.end_with?("/") ? relative + "index.html" : relative)
@@ -165,8 +171,7 @@ chapters.each do |lang, items|
     errors << "#{route}: incorrect table of contents anchors" unless
       document.css(".guide-toc a").map { |link| link["href"] } == expected_ids.drop(1).map { |id| "##{id}" }
     french = documents.fetch(route.sub(%r{^/[^/]+/}, "/fr/")).at_css("#guide-text, .chapter-index")
-    code = container.css("pre code").map(&:text)
-    errors << "#{route}: rendered code differs from French" unless code == french.css("pre code").map(&:text)
+    errors << "#{route}: rendered code differs from French" unless rendered_code(container) == rendered_code(french)
     errors << "#{route}: rendered table structure differs from French" unless
       container.css("table").map { |table| table.css("tr").map { |row| row.css("th, td").size } } ==
       french.css("table").map { |table| table.css("tr").map { |row| row.css("th, td").size } }

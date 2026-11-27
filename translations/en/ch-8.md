@@ -4,13 +4,13 @@
 Add these files or folders to the root, keeping ** one place of truth**:
 
 ```text
-AGENTS.md                       # Source commune, courte, versionnée
-CLAUDE.md                       # Optionnel :Importe @AGENTS.md + règles Claude spécifiques
-GEMINI.md                       # Pointeur vers AGENTS.md ou symlink selon ton outil
-.github/copilot-instructions.md # Règles de review / coding agent GitHub Copilot, si utilisé
-.github/instructions/           # Règles Copilot path-specific si nécessaire
-.aiignore                       # Exclusions IA : secrets, gros artefacts, generated
-.claude/rules/scala.md          # Règles Claude path/scopes si utiles
+AGENTS.md                       # Shared, short, version-controlled source
+CLAUDE.md                       # Optional: imports @AGENTS.md + Claude-specific rules
+GEMINI.md                       # Pointer to AGENTS.md or a symlink, depending on your tool
+.github/copilot-instructions.md # GitHub Copilot review / coding agent rules, if used
+.github/instructions/           # Path-specific Copilot rules where needed
+.aiignore                       # AI exclusions: secrets, large artifacts, generated files
+.claude/rules/scala.md          # Claude rules for specific paths/scopes where useful
 .claude/rules/testing.md
 .claude/rules/security.md
 stryker4s.conf                  # Mutation testing
@@ -71,7 +71,7 @@ Keeps the matrix of section 3 in a routing document or user profiles Codex/Claud
 <!-- section: s-3 -->
 ## Minimum content of `CLAUDE.md`
 
-```markdown
+```text
 @AGENTS.md
 
 ## Claude Code
@@ -143,13 +143,13 @@ The rules for agents are deliberately specific — paths, commands, modules, for
 Add `scripts/ai-rules-drift` and execute it after any architecture/build changes, then at least once a week if the repository moves a lot:
 
 ```text
-Vérifier :
-- chaque chemin cité dans AGENTS.md / CLAUDE.md existe encore ;
-- chaque module sbt cité existe encore ;
-- chaque commande de compile/test/format est encore valide ;
-- aucun nom de DB, service, dossier ou script supprimé n'est encore référencé ;
-- les fichiers « interdits » correspondent encore aux vraies surfaces critiques ;
-- si CLAUDE.md existe, il importe ou complète toujours la source commune attendue.
+Verify that:
+- every path mentioned in AGENTS.md / CLAUDE.md still exists
+- each referenced sbt module still exists
+- every compile/test/format command is still valid
+- deleted DBs, services, directories, and scripts are no longer referenced
+- files marked off-limits still correspond to actual critical surfaces
+- CLAUDE.md, if present, still imports or supplements the expected shared source.
 ```
 
 The script can remain deterministic for simple checks (`test -e`, grep modules, controls `--help`/dry-run) and do only **report** Ambiguous cases. Never allow the agent who detects drift to rewrite and then self-approve its own persistent rules: the rule diff reviews itself as code.

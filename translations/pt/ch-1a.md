@@ -16,14 +16,14 @@ Dois detalhes sobre a origem do termo ajudam a entender o debate em 2026. Karpat
 Para um idoso ScalaO objetivo não é “mais de vibe coding”, mas uma **Engenharia Agente Controlada ** :
 
 ```text
-spécification vérifiable
-→ contexte minimal mais suffisant
-→ plan
-→ permissions proportionnées
-→ exécution instrumentée
-→ compile et tests déterministes
-→ review indépendante
-→ validation humaine
+especificação verificável
+→ contexto mínimo, mas suficiente
+→ plano
+→ permissões proporcionais
+→ execução instrumentada
+→ compilação e testes determinísticos
+→ revisão independente
+→ validação humana
 ```
 
 **Prova-drivida de Engenharia Agente** • O SDD fixa o contrato, a engenharia harness torna suas limitações executáveis, e as provas determinam se a mudança pode avançar. Para cada exigência, combina uma prova independente (teste de comportamento, inspeção, referência ou medida de tempo), o SHA realmente validado e os riscos não cobertos. Uma afirmação do agente, uma revisão sem provas ou um simples estatuto verde não constituem um oráculo. O ciclo termina após a validação do artefato implementado, não simplesmente para a fusão (segmento 15B).
@@ -68,8 +68,8 @@ Conclusão: o nível de fronteira aumenta a superfície de tarefas possíveis, m
 Para uma tarefa de código, medir o **Custo por mudança aceite** Para o controle da entrega, o **Custo por mudança implementada e estável** (a seção 15b) Não a taxa de sucesso bruto:
 
 ```text
-coût par changement accepté
-= tokens + latence + minutes humaines + CI + reprises + défauts échappés
+custo por alteração aceita
+= tokens + latência + minutos de trabalho humano + CI + retrabalho + defeitos não detectados
 ```
 
 Use uma unidade comum para cobrir esses custos (por exemplo, euros com um custo horário explícito), ou mantenha os componentes separados. Os tokens e minutos não se adicionam diretamente. Para o custo até a produção, adicione implementação, validação de tempo de execução, rollback/hotfix e defeitos observados durante uma janela fixada antes da medida. Não se considera estável apenas uma mudança terminando esta janela.
@@ -84,10 +84,10 @@ A avaliação do METR em 296 PRs gerados por agentes descobriu que o grau SWE-be
 Em tarefas longas, a SlopCodeBench também observa uma acumulação de duplação, verbosidade e erosão estrutural à medida que os pontos de verificação se encaixam. Uma rápida demanda de qualidade reduz alguns defeitos no início sem eliminar o seu crescimento. O bom regime de prova, portanto, cumula quatro barreiras independentes:
 
 ```text
-contrat métier explicite
-→ reproduction qui échoue avant le patch
-→ tests déterministes, propriétés et mutation testing
-→ review du diff, de son scope et de sa maintenabilité par un humain responsable
+contrato de negócio explícito
+→ reprodução que falha antes da correção
+→ testes determinísticos, propriedades e testes de mutação
+→ revisão humana responsável do diff, do escopo e da facilidade de manutenção
 ```
 
 Os pontos de referência servem para roteamento e experimentos; nunca devem se tornar uma autorização de autonomia ou de fusão.
@@ -113,12 +113,12 @@ Estudos empíricos de 2026 em aplicativos realmente “vibe codificados” encon
 > interromper, uma vez que nenhum remoto os corrigirá de forma duradoura.
 
 ```text
-Prototype vibe coding
-→ aucune donnée ou clé de production
-→ tests fonctionnels + sécurité + performance + maintenabilité
-→ lecture humaine du diff et des dépendances
-→ migration vers le workflow agentique contrôlé
-→ seulement ensuite : déploiement
+Protótipo por vibe coding
+→ sem dados nem chaves de produção
+→ testes funcionais + segurança + desempenho + facilidade de manutenção
+→ revisão humana do diff e das dependências
+→ migração para o fluxo agêntico controlado
+→ só então: implantação
 ```
 
 Uma sessão de codificação vibe nunca deve impulsionar diretamente na produção, mesmo quando a demonstração parece funcional. **Mudança do regime de prova**Não é apenas um passo para o gato.

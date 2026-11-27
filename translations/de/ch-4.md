@@ -4,8 +4,8 @@
 Das Budget sollte als ein Ingenieurbudget, nicht als abstrakte  ✓IA-Ausgaben gesteuert werden. Die richtige Metrik ist nicht die Kosten pro Nachricht, aber:
 
 ```text
-coût total d'une tâche mergeable
-= coût modèle + temps humain + temps CI + retours review + reprises de bugs
+Gesamtkosten einer merge-fähigen Aufgabe
+= Modellkosten + menschlicher Zeitaufwand + CI-Zeit + Review-Rückmeldungen + Nacharbeit bei Bugs
 ```
 
 <!-- section: s-1 -->
@@ -58,14 +58,14 @@ Ein erfolgreicher Hit-Cache kann die Kosten für **Lesen** von Eintrittstoken be
 ## Regeln für die Kreditverringerung
 
 ```text
-- Ne donne jamais toute la repo par défaut.
-- Donne des chemins de fichiers et une hypothèse de zone concernée.
-- Coupe les logs à la première erreur utile.
-- Après 2 échecs identiques, stop : repasse en diagnostic humain/IDE.
-- Après 3 fichiers modifiés hors plan, stop : demande un nouveau plan.
-- Après 300 lignes de diff inattendues, stop : review manuelle avant suite.
-- Quand le contexte n'aide plus : `HANDOFF.md` explicite + session fraîche ; `/compact` n'est qu'un dernier recours.
-- Préfère rg, Sourcebot, IntelliJ, Metals ou scripts locaux aux longs dumps MCP.
+- Gib standardmäßig nie das gesamte Repository weiter.
+- Nenne Dateipfade und formuliere eine Hypothese zur betroffenen Stelle.
+- Kürze Logs bis zum ersten relevanten Fehler.
+- Nach 2 identischen Fehlschlägen stoppen und mit menschlicher Diagnose im IDE weiterarbeiten.
+- Sind 3 Dateien außerhalb des Plans geändert, stoppen und einen neuen Plan anfordern.
+- Nach 300 unerwarteten Diff-Zeilen stoppen und vor der Fortsetzung ein manuelles Review durchführen.
+- Wenn der Kontext nicht mehr hilft: klares `HANDOFF.md` und neue Sitzung; `/compact` ist das letzte Mittel.
+- Bevorzuge rg, Sourcebot, IntelliJ, Metals oder lokale Skripte gegenüber umfangreichen MCP-Ausgaben.
 ```
 
 **Einsparen auf dem Doppel-Abonnement.[** Stabilisiert das Writer und seine Bemühungen während einer Flugbahn; Modelländerungen können den Cache stören und rework hinzufügen. Ein frischer Kontext bleibt freiwillig, um es unabhängig oder eine kontaminierte Hypothese zu überprüfen. Legt weder eine systematische umfassende Überprüfung auf jedem Mikro-Patch noch zweiteward auf ein und demselben PR vor. Entzieht die Überwachung durch repo/PR/SHA/check/finding, bevorzugt eine ereignisbezogene Erholung oder ein beschränktes Heartbeat, wenn die CI wartet, und stoppt es am Checkpoint. Messen Sie die verbrauchten Zertifikate nach Rollen und Aufgaben (wenn vom Anbieter ausgestellt) ; unterscheidet zwischen enthaltenen Krediten, gebührenpflichtigen Überschreitungen und API. Eine verbleibende hohe Quote ist kein Grund, mehr Ticketickets zu öffnen.

@@ -4,8 +4,8 @@
 The budget must be managed as an engineering budget, not as an abstract expenditure. The correct metric is not the cost per message, but:
 
 ```text
-coût total d'une tâche mergeable
-= coût modèle + temps humain + temps CI + retours review + reprises de bugs
+total cost of a mergeable task
+= model cost + human time + CI time + review feedback + bug rework
 ```
 
 <!-- section: s-1 -->
@@ -58,14 +58,14 @@ A successful hit cache can reduce the cost of **reading** of tokens of entry to 
 ## Anti-credit rules burned
 
 ```text
-- Ne donne jamais toute la repo par défaut.
-- Donne des chemins de fichiers et une hypothèse de zone concernée.
-- Coupe les logs à la première erreur utile.
-- Après 2 échecs identiques, stop : repasse en diagnostic humain/IDE.
-- Après 3 fichiers modifiés hors plan, stop : demande un nouveau plan.
-- Après 300 lignes de diff inattendues, stop : review manuelle avant suite.
-- Quand le contexte n'aide plus : `HANDOFF.md` explicite + session fraîche ; `/compact` n'est qu'un dernier recours.
-- Préfère rg, Sourcebot, IntelliJ, Metals ou scripts locaux aux longs dumps MCP.
+- Never provide the entire repo by default.
+- Provide file paths and a hypothesis about the affected area.
+- Trim logs at the first useful error.
+- After 2 identical failures, stop and switch back to human or IDE diagnosis.
+- After 3 files are changed outside the plan, stop and ask for a new plan.
+- After 300 unexpected lines of diff, stop for manual review before continuing.
+- When context stops helping, write an explicit `HANDOFF.md` and start a fresh session. Use `/compact` only as a last resort.
+- Prefer rg, Sourcebot, IntelliJ, Metals, or local scripts to long MCP dumps.
 ```
 
 ** Savings on double subscription.** Stabilizes the writer and his effort during a trajectory; model changes can disrupt the cache and add rework. A fresh context remains voluntary for the independent reviewer or a contaminated hypothesis. Do not launch a systematic comprehensive review on each micro-patch or second stepward on the same PR. Deduces the follow-up by repo/PR/SHA/check/finding, prefers an event recovery or a limited Heartbeat when the CI waits, and stops it at the checkpoint. Measures the quotas consumed by role and task (when exposed by the supplier); distinguishes included credits, overruns and API. A still high quota is not a reason to open more tickets.

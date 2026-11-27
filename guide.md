@@ -1800,7 +1800,7 @@ professionnel sensible :
 
 Le routeur doit être ajusté sur données réelles, pas sur intuition. Pour chaque tâche agentique, logue :
 
-```text
+```plaintext
 task_type
 risk
 difficulty
@@ -2299,7 +2299,7 @@ adopteurs — l'effet est réel, mais il se matérialise dans des PRs *reviewabl
 Les agents LLM sont connus pour écrire des tests "happy path" (des tests qui passent mais ne vérifient pas les cas
 d'erreur ou les limites). Ordre recommandé pour Scala/SBT :
 
-```text
+```plaintext
 scalafmtCheckAll
 compile
 Test / compile
@@ -2309,7 +2309,7 @@ IntegrationTest / testOnly <TestCiblé>
 
 Puis seulement si le risque le justifie :
 
-```text
+```plaintext
 test
 IntegrationTest / test
 ```
@@ -2338,7 +2338,7 @@ La vitesse de la boucle compile-test est le premier levier de productivité agen
 
 # .sbtopts — optimisé pour les boucles agentiques
 
-```text
+```plaintext
 -J-Xms2g
 -J-Xmx8g
 -J-XX:+UseZGC
@@ -2387,7 +2387,7 @@ présente pas une économie chiffrée sur un autre projet comme une garantie.
 
 Pour Play Framework ou projets multi-modules :
 
-```text
+```plaintext
 sbt "project api" compile
 sbt "project api" "testOnly *DiscountServiceSpec"
 sbt "project integration" "testOnly *OrderFlowSpec"
@@ -2440,7 +2440,7 @@ correctif.
 **L'étape de durcissement (Mutation Testing) :**
 Une fois que l'IA a écrit les tests et qu'ils sont verts, valide leur robustesse avec Stryker4s :
 
-```text
+```plaintext
 sbt "project api" stryker
 ```
 
@@ -2510,20 +2510,20 @@ Prompt reviewer : **Opus 5.5 Medium** si Codex a écrit ; **GPT‑6.2 Sol Medium
 PR risquée et vers Astra Light/Fable Low seulement si la capacité supplémentaire est justifiée :
 
 ```text
-Act as an independent senior Scala/JVM code reviewer.
+Interviens comme relecteur indépendant senior de code Scala/JVM.
 
-Review the exact PR head SHA against its merge base, approved specification, acceptance criteria and AGENTS.md.
-Work in a fresh read-only session; do not modify the implementation. Do not rely on the writer's reasoning
-until you have formed your own assessment.
+Relis le SHA exact de la tête de la PR par rapport à sa base de fusion, à la spécification approuvée, aux critères d’acceptation et à AGENTS.md.
+Travaille dans une nouvelle session en lecture seule. Ne modifie pas l’implémentation. Forme ton propre jugement
+avant de consulter le raisonnement de l’agent qui a écrit le code.
 
-Prioritize functional correctness, preserved invariants, regressions, compatibility, test oracle quality,
-error handling, resource safety, concurrency, performance, security and scope violations.
+Donne la priorité à la correction fonctionnelle, aux invariants à préserver, aux régressions, à la compatibilité, à la qualité des oracles de test,
+à la gestion des erreurs et des ressources, à la concurrence, aux performances, à la sécurité et au respect du périmètre.
 
-For every actionable finding, provide severity, file/line, reviewed SHA, violated requirement or invariant,
-a concrete failure scenario or reproduction, the smallest plausible correction, and remaining uncertainty.
-Distinguish verified defects from hypotheses. Ignore stylistic preferences and unrelated refactoring.
-Do not invent findings. Return a concise verdict and evidence-backed findings only.
-Never approve or merge the PR yourself.
+Pour chaque constat qui appelle une action, indique la gravité, le fichier et la ligne, le SHA relu, l’exigence ou l’invariant enfreint,
+un scénario concret de défaillance ou de reproduction, le plus petit correctif plausible et les incertitudes restantes.
+Distingue les défauts vérifiés des hypothèses. Écarte les préférences stylistiques et les refactorings sans rapport avec la tâche.
+Rends uniquement un verdict concis et des constats étayés. N’invente aucun constat.
+N’approuve et ne fusionne jamais la PR toi-même.
 ```
 
 Variante avec classification de sévérité machine-exploitable — préférable pour le triage et un gate alimenté
@@ -2903,15 +2903,15 @@ indépendante inspecte les cas limites du SHA final. Pour les micro-correctifs, 
 Prompt test engineer indépendant :
 
 ```text
-Act as an independent test engineer. Read the approved specification, AGENTS.md and existing contracts.
-Work from the base commit without inspecting any proposed implementation.
-Design the smallest tests covering acceptance criteria, boundaries, failures and preserved invariants.
-Map each test to a requirement; prefer observable behavior and property-based tests where meaningful.
-For a bugfix, demonstrate the reproduction fails on the base commit for the expected reason.
-Do not modify production code, existing assertions, build configuration or CI.
-Do not derive expected results from the implementation under test.
-Report uncovered requirements, ambiguous contracts, exact commands and execution results.
-Stop for human approval of the oracle before handing the tests to the implementation agent.
+Interviens comme ingénieur de test indépendant. Lis la spécification approuvée, AGENTS.md et les contrats existants.
+Pars du commit de base sans examiner d’implémentation proposée.
+Conçois les tests minimaux couvrant les critères d’acceptation, les cas limites, les défaillances et les invariants à préserver.
+Associe chaque test à une exigence. Privilégie les comportements observables et les tests par propriétés lorsque c’est pertinent.
+Pour un correctif, démontre que le test de reproduction échoue sur le commit de base pour la raison attendue.
+Ne modifie ni le code de production, ni les assertions existantes, ni la configuration du build ou de la CI.
+Ne déduis pas les résultats attendus de l’implémentation testée.
+Indique les exigences non couvertes, les contrats ambigus, les commandes exactes et les résultats d’exécution.
+Attends la validation humaine de l’oracle avant de transmettre les tests à l’agent chargé de l’implémentation.
 ```
 
 
@@ -3332,13 +3332,13 @@ d'architecture non revues, et pas comme substitut à la documentation versionné
 ## Contenu minimal de `AGENTS.md`
 
 ```text
-Build, test and formatting commands (exact commands)
-Non-obvious architecture boundaries and business invariants
-Public API / JSON / migration constraints
-Protected files and permitted write scope
-Scala conventions absent from existing documentation
-Stop conditions and definition of done
-Pointers to relevant docs and spec
+Commandes exactes de build, de test et de formatage
+Frontières architecturales et invariants métier peu évidents
+Contraintes d’API publique, de JSON et de migration
+Fichiers protégés et périmètre d’écriture autorisé
+Conventions Scala absentes de la documentation existante
+Conditions d’arrêt et critères de fin de tâche
+Références vers la documentation et la spécification pertinentes
 ```
 
 Écris ces règles **pour l'agent, pas comme une documentation humaine** : préfère des chemins, commandes, nombres
@@ -3353,11 +3353,11 @@ matrice, ajoute seulement un pointeur vers elle. Les contraintes métier et de s
 
 ## Contenu minimal de `CLAUDE.md`
 
-```markdown
+```text
 @AGENTS.md
 
 ## Claude Code
-Use plan mode for risky multi-file changes.
+Utilise le mode plan pour les modifications risquées qui touchent plusieurs fichiers.
 ```
 
 Déplace les règles communes de l'ancien `CLAUDE.md` vers `AGENTS.md` (pas de duplication). Le mode plan Claude
@@ -4777,7 +4777,7 @@ dans les deux cas, impose budget, durée, preuves attendues et espace de travail
 
 Et le pendant dans un document de routage utilisateur (`docs/llm-routing.md` si la politique est partagée), référencé à la demande :
 
-```markdown
+```text
 ## Sélection de modèle
 
 - GPT-6 Luna High pour micro-dev, tests simples et transformations mécaniques sous contrôle humain
@@ -5012,27 +5012,27 @@ les retours publiés sur GitHub avec les outils réellement disponibles.
 Gabarit pour une PR existante, après autorisation du push sur sa branche (GPT‑6.2 Sol Medium) :
 
 ```text
-/goal Bring the current pull request to a verified, merge-ready state.
+/goal Amène la pull request en cours à un état vérifié et prêt à fusionner.
 
-Use the approved spec and AGENTS.md. Confirm the PR URL, base branch, head branch and initial SHA.
-Monitor GitHub required CI checks, mergeability and published review feedback. Before each action,
-refresh the PR state and verify its head SHA. Stop on unexpected changes or concurrent writers.
+Appuie-toi sur la spécification approuvée et AGENTS.md. Confirme l’URL de la PR, la branche de base, la branche source et le SHA initial.
+Surveille les contrôles CI requis sur GitHub, la possibilité de fusionner et les retours de revue publiés. Avant chaque action,
+actualise l’état de la PR et vérifie son SHA de tête. Arrête-toi en cas de changement inattendu ou d’écritures concurrentes.
 
-Fix only verified branch-related failures and actionable findings within the approved scope.
-Resolve conflicts only when the intended behavior is unambiguous. Keep diffs minimal.
-Never weaken tests, assertions, security checks or CI requirements. Do not change public contracts,
-dependencies, build configuration, workflows or database schemas without explicit approval.
-Retry clearly transient failures at most three times; never patch unrelated flaky tests or infrastructure.
-After each fix, run the required targeted checks, commit and push only to the authorized PR branch.
-Reassess required checks and review feedback on the new SHA; require independent review of the final diff.
-Never approve, merge, force-push, or reply to human reviewers or resolve their threads without authorization.
+Corrige uniquement les défaillances vérifiées liées à la branche et les constats qui appellent une action dans le périmètre approuvé.
+Résous les conflits uniquement si le comportement attendu est sans ambiguïté. Garde des diffs minimaux.
+N’affaiblis jamais les tests, les assertions, les contrôles de sécurité ou les exigences CI. Ne modifie aucun contrat public,
+aucune dépendance, configuration de build, workflow ou schéma de base de données sans approbation explicite.
+Réessaie au plus trois fois les opérations dont l’échec est clairement transitoire. Ne corrige pas de tests instables ni d’infrastructure sans rapport.
+Après chaque correction, lance les contrôles ciblés requis, puis committe et pousse uniquement sur la branche autorisée de la PR.
+Réévalue les contrôles requis et les retours de revue sur le nouveau SHA. Exige une revue indépendante du diff final.
+N’approuve pas, ne fusionne pas, ne fais pas de force push et ne réponds pas aux relecteurs humains ni ne résous leurs fils sans autorisation.
 
-Stop when required checks pass on the latest SHA, no actionable findings or conflicts remain,
-and independent review or human approval is the only remaining gate. Stop also if the PR closes,
-permissions are missing, the scope must expand, the same root cause fails twice, or 60 minutes elapse.
-If checks are still pending or unavailable, report them as such; do not claim the PR is ready.
-Finish with a concise report in French containing the PR URL, final SHA, CI status, fixes pushed,
-independent review status, unresolved findings and blockers.
+Arrête-toi quand les contrôles requis passent sur le dernier SHA, que les conflits et les constats qui appellent une action sont résolus,
+et qu’il ne reste qu’une revue indépendante ou une approbation humaine. Arrête-toi aussi si la PR ferme,
+si des permissions manquent, si le périmètre doit s’étendre, si la même cause échoue deux fois ou après 60 minutes.
+Indique les contrôles encore en cours ou indisponibles. Ne présente pas la PR comme prête.
+Termine par un rapport concis en français avec l’URL de la PR, le SHA final, l’état de la CI, les correctifs poussés,
+l’état de la revue indépendante, les constats non résolus et les blocages.
 ```
 
 La durée de 60 minutes et les compteurs sont des limites de mission proposées, pas des timeouts garantis par le
@@ -5051,26 +5051,26 @@ les autorisations et les conditions d'arrêt. Ne suppose pas que le prompt peut 
 Gabarit à envoyer dans le chat Codex de la PR (sans Goal mode actif) :
 
 ```text
-Create a recurring follow-up in this conversation every 10 minutes for the current GitHub pull request.
-Use GPT-6.2 Sol Medium if selectable. Keep the same approved spec and AGENTS.md constraints.
-Confirm the PR URL, authorized branch, initial SHA, available GitHub tools and schedule before writing.
+Mets en place dans cette conversation un suivi récurrent de la pull request GitHub actuelle toutes les 10 minutes.
+Utilise GPT-6.2 Sol Medium si ce choix est disponible. Garde la spécification approuvée et les contraintes d’AGENTS.md.
+Confirme l’URL de la PR, la branche autorisée, le SHA initial, les outils GitHub disponibles et la planification avant toute écriture.
 
-At each run:
-- Refresh the head SHA, required checks, mergeability and published review feedback.
-- Deduplicate by repository, PR, SHA and finding/check ID. If nothing actionable changed, return briefly.
-- Stop on unexpected branch changes, concurrent writers, unavailable permissions or out-of-scope findings.
-- Fix only verified branch-related failures and actionable authorized findings. Run targeted tests,
-  commit and push only to the PR branch. Recheck the new SHA.
-- Preserve all validation requirements and public contracts. No unrelated refactors, CI or dependency changes.
-- Retry transient failures at most three times in total; stop after two failed fixes for the same root cause.
-- Never approve, merge, force-push or interact with human review threads without authorization.
+À chaque exécution :
+- Actualise le SHA de tête, les contrôles requis, la possibilité de fusionner et les retours de revue publiés.
+- Déduplique par dépôt, PR, SHA et identifiant de constat ou de contrôle. Réponds brièvement si rien n’appelle d’action.
+- Arrête-toi si la branche change de manière inattendue, si des écritures sont concurrentes, si des permissions manquent ou si un constat est hors périmètre.
+- Corrige uniquement les défaillances vérifiées liées à la branche et les constats dont le traitement est autorisé. Exécute les tests ciblés,
+  committe et pousse uniquement sur la branche de la PR. Contrôle à nouveau le nouveau SHA.
+- Préserve les exigences de validation et les contrats publics. Écarte les refactorings et les changements de CI ou de dépendances sans rapport.
+- Réessaie au maximum trois fois les opérations qui échouent de manière transitoire. Arrête-toi après deux corrections infructueuses pour une même cause.
+- N’approuve pas, ne fusionne pas, ne fais pas de force push et n’interviens pas dans les fils des relecteurs humains sans autorisation.
 
-Keep a record of the run count, latest SHA, handled findings and retry counts across runs.
-Stop and disable the follow-up when required checks pass on the latest SHA, there are no conflicts or
-remaining actionable findings, and only independent review or human approval remains; also stop if the PR
-closes, human help is needed, six runs have completed, or 60 minutes have elapsed.
-If automatic disabling is unavailable, report that the schedule must be disabled manually and perform no more edits.
-Report meaningful changes only, in French; include the final PR URL, SHA, checks, fixes and blockers.
+Conserve entre les exécutions leur nombre, le dernier SHA, les constats traités et les compteurs de tentatives.
+Arrête et désactive le suivi quand les contrôles requis passent sur le dernier SHA, sans conflit ni
+constat appelant une action, et qu’il ne reste qu’une revue indépendante ou une approbation humaine. Arrête-toi aussi si la PR
+ferme, si une intervention humaine est nécessaire, après six exécutions ou après 60 minutes.
+Si la désactivation automatique est indisponible, signale qu’il faut désactiver la planification manuellement et cesse les modifications.
+Rapporte uniquement les changements significatifs, en français, avec l’URL de la PR, le SHA final, les contrôles, les correctifs et les blocages.
 ```
 
 #### Codex Cloud : même contrat, exécution hébergée
@@ -5087,12 +5087,12 @@ Pour une PR existante, sélectionne GPT‑6.2 Sol Medium et reprends intégralem
 avant cette surveillance, ajoute ce préambule (dans Cloud ou dans le chat local avant de lancer le goal) :
 
 ```text
-Finalize the current implementation against the approved spec and AGENTS.md.
-Run the required build, formatting and targeted tests. Review the diff for correctness, regressions and scope.
-Check staged, unstaged and untracked files, secrets and the remote before committing.
-Commit, push and create or update the PR only if authorized. Report the URL and head SHA.
-Then apply the bounded PR stewardship objective below in the same authorized environment.
-If direct push or PR creation is unavailable, report the exact blocker and the validated patch; do not claim success.
+Termine l’implémentation en cours conformément à la spécification approuvée et à AGENTS.md.
+Lance le build, le formatage et les tests ciblés requis. Relis le diff pour vérifier sa correction, les régressions et le périmètre.
+Avant de committer, vérifie les fichiers indexés, non indexés et non suivis, les secrets et le dépôt distant.
+Committe, pousse et crée ou mets à jour la PR uniquement avec autorisation. Indique son URL et le SHA de tête.
+Applique ensuite l’objectif de suivi borné de la PR ci-dessous dans le même environnement autorisé.
+Si le push direct ou la création de PR est indisponible, indique le blocage exact et fournis le patch validé.
 ```
 
 Si la tâche Cloud atteint sa limite avant la CI verte, reprends le même chat avec le SHA et l'état des checks ;
@@ -5152,16 +5152,16 @@ le prompt ne sont pas un coupe-circuit système garanti ; vérifie la désactiva
 Prompt pour la session Claude Cloud :
 
 ```text
-Enable Auto-fix for [PR_URL] only after verifying branch ownership and the approved specification.
-Monitor published review feedback and CI failures. Fix only verified, in-scope, branch-related defects.
-Never weaken tests, assertions, CI or security controls. Do not change protected files or public contracts.
-Before each fix, verify the current head SHA, ensure no other writer is active, and run targeted validation.
-Commit and push authorized minimal fixes only. Never force-push, approve or merge.
-Do not post or resolve human review threads without explicit authorization.
-Stop and report ambiguous findings, conflicts, permission problems, two failed correction cycles
-for one root cause, or exhaustion of the agreed time budget.
-When the final SHA has green required checks and no actionable findings, disable Auto-fix and verify it stopped.
-Report in French the final SHA, CI evidence, changes and blockers.
+Active Auto-fix pour [PR_URL] uniquement après avoir vérifié qui contrôle la branche et quelle spécification est approuvée.
+Surveille les retours de revue publiés et les échecs de CI. Corrige uniquement les défauts vérifiés, liés à la branche et dans le périmètre.
+N’affaiblis jamais les tests, les assertions, la CI ou les contrôles de sécurité. Ne modifie ni les fichiers protégés ni les contrats publics.
+Avant chaque correction, vérifie le SHA de tête, assure-toi qu’aucun autre agent n’écrit et lance la validation ciblée.
+Committe et pousse uniquement les corrections minimales autorisées. Ne fais jamais de force push, n’approuve pas et ne fusionne pas.
+Ne publie rien dans les fils de revue humaine et ne les résous pas sans autorisation explicite.
+Arrête-toi et signale les constats ambigus, les conflits, les problèmes de permissions, deux cycles de correction infructueux
+pour la même cause ou l’épuisement du budget de temps convenu.
+Quand le SHA final passe les contrôles requis et qu’il ne reste aucun constat appelant une action, désactive Auto-fix et vérifie son arrêt.
+Indique en français le SHA final, les preuves de CI, les modifications et les blocages.
 ```
 
 ### Transfert d'ownership et routage des stewards

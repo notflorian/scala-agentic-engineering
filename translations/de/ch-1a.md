@@ -16,14 +16,14 @@ Es sind drei Arbeitsformen zu unterscheiden:
 Für einen Senioren Scala, ist das Ziel also nicht mehr als vibe coding, sondern eine **kontrolliertes agentielles Engineering ** :
 
 ```text
-spécification vérifiable
-→ contexte minimal mais suffisant
-→ plan
-→ permissions proportionnées
-→ exécution instrumentée
-→ compile et tests déterministes
-→ review indépendante
-→ validation humaine
+Überprüfbare Spezifikation
+→ möglichst kleiner, aber ausreichender Kontext
+→ Plan
+→ angemessene Berechtigungen
+→ instrumentierte Ausführung
+→ Kompilierung und deterministische Tests
+→ unabhängiges Review
+→ menschliche Validierung
 ```
 
 **Evidence-driven agentic engineering** : le SDD der Vertrag fest, das Harness engineering macht seine Einschränkungen ausführbar, und die Beweise bestimmen, ob die Änderung vorankommen kann. Für jede Anforderung, verbindet einen unabhängigen Nachweis (Verhaltenstest, Inspektion, Benchmark oder Runtime-Messung), den tatsächlich validierten SHA und die nicht gedeckten Risiken. Eine Aussage des Agenten, eine Bewertung ohne Beweise oder einen einfachen grünen Status bilden kein Orakel. Der Zyklus endet nach Validierung des eingesetzten Artefakts, nicht nur auf dem merge (Abschnitt 15B).
@@ -68,8 +68,8 @@ Fazit: Die Grenzebene erhöht die Oberfläche der möglichen Aufgaben, aber die 
 Für eine Code-Aufgabe wird der [**Kosten pro akzeptierter Änderung** , um die Lieferung zu steuern, der [**Kosten pro durchgeführter und stabiler Änderung[** (Abschnitt 15B) und nicht die Brutto-Erfolgsquote berechnet:
 
 ```text
-coût par changement accepté
-= tokens + latence + minutes humaines + CI + reprises + défauts échappés
+Kosten pro akzeptierter Änderung
+= Tokens + Latenz + menschliche Arbeitsminuten + CI + Nacharbeit + unentdeckte Fehler
 ```
 
 Benutzt eine gemeinsame Einheit, um diese Kosten (z. B. Euro mit expliziten Stundenkosten) zu aggregieren, oder hält die einzelnen Komponenten getrennt. Tokens und Minuten werden nicht direkt addiert. Für Kosten bis zur Produktion, fügt Einführung, Validierung runtime, Rollback/hotfix und Fehler, die während eines vor der Messung festgelegten Fensters beobachtet werden. Zählt nur eine Änderung, die dieses Fenster beendet hat, als stabil.
@@ -84,10 +84,10 @@ Eine Metr-Bewertung 296 PRs pro Agenten festgestellt, dass der Grader SWE-bench 
 Bei langen Aufgaben stellt SlopCodeBench außerdem eine Anhäufung von Vervielfachung, Verbigkeit und struktureller Erosion fest, wenn die Checkpoints sich verstricken. Ein schneller Qualitätsanspruch reduziert einige Mängel anfangs, ohne ihr Wachstum zu beseitigen. Das gute Beweissystem vereint daher vier unabhängige Barrieren:
 
 ```text
-contrat métier explicite
-→ reproduction qui échoue avant le patch
-→ tests déterministes, propriétés et mutation testing
-→ review du diff, de son scope et de sa maintenabilité par un humain responsable
+Expliziter Fachvertrag
+→ Reproduktion, die vor dem Patch fehlschlägt
+→ deterministische Tests, Eigenschaftstests und Mutation Testing
+→ Review des Diffs, seines Umfangs und seiner Wartbarkeit durch einen verantwortlichen Menschen
 ```
 
 Die Benchmark-Scores werden zum Routing und Experimentieren verwendet; sie dürfen nie zu einer Autorisierung der Autonomie oder des Merges werden.
@@ -113,12 +113,12 @@ Die empirischen Studien von 2026 über tatsächlich verschlüsselte Anwendungen 
 > Unterbrechung, da sie nicht dauerhaft korrigiert werden.
 
 ```text
-Prototype vibe coding
-→ aucune donnée ou clé de production
-→ tests fonctionnels + sécurité + performance + maintenabilité
-→ lecture humaine du diff et des dépendances
-→ migration vers le workflow agentique contrôlé
-→ seulement ensuite : déploiement
+Vibe-Coding-Prototyp
+→ keine Produktionsdaten oder -schlüssel
+→ funktionale Tests + Sicherheit + Performance + Wartbarkeit
+→ menschliches Review des Diffs und der Abhängigkeiten
+→ Übergang zu einem kontrollierten agentenbasierten Workflow
+→ erst dann ausliefern
 ```
 
 Eine vibe coding-Sitzung darf niemals direkt in die Produktion schieben, auch nicht wenn die Demonstration funktional erscheint. Die Produktionsgrenze ist ein **Ändern der Beweisregelung**, kein einfacher nächster Schritt der Katze.

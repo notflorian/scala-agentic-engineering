@@ -4,7 +4,7 @@
 For an important business rule, reverse workflow:
 
 ```text
-Spec → tests générés → tests validés humainement → implémentation → tests verts → review
+Spec → generated tests → human-approved tests → implementation → passing tests → review
 ```
 
 For critical tasks, also separate the authors: Claude (or Codex]) prepares the tests from the basic commit and spec, the human validates the oracle, then the other agent implements. The writer does not weaken these assertions; if an oracle is wrong, correction explicitly arbitrated before resuming. A new independent review session inspects the limit cases of the final SHA. For micro-corrective, keep a shorter loop.
@@ -27,20 +27,20 @@ Stop for human approval of the oracle before handing the tests to the implementa
 Prompt:
 
 ```text
-À partir de cette règle métier, écris d'abord les tests.
-Ne modifie pas encore le code de production.
-Les tests doivent couvrir :
-- cas nominal
-- cas limite
-- non-régression
-- comportement existant à préserver
+Start by writing tests for this business rule.
+Leave production code untouched for now.
+The tests must cover:
+- normal case
+- edge case
+- regression prevention
+- existing behavior to preserve
 ```
 
 You're rereading the tests.
 
 ```text
-Implémente le minimum de code pour faire passer ces tests.
-Ne modifie pas les contrats publics.
+Implement the minimum code needed to pass these tests.
+Keep public contracts intact.
 ```
 
 This pattern is one of the most reliable to have a controlled loop agent work, provided that the local validation is doubled by a CI independent. **bugfix**, requests in addition one *bug-reproduction test* : it must fail on the original commit, reproduce the observed defect, then pass with the patch. A test added after the patch without proof that it failed before brings much less information.
@@ -48,8 +48,8 @@ This pattern is one of the most reliable to have a controlled loop agent work, p
 For Scala, requires **Property-Based Testing** for complex logic:
 
 ```text
-À partir de cette règle métier, écris d'abord les tests en utilisant ScalaCheck (Property-based testing).
-Ne te contente pas de tests unitaires classiques. Définis les générateurs (Gen) pour éprouver toutes les limites du domaine.
+Start by writing tests for this business rule using ScalaCheck (property-based testing).
+Go beyond conventional unit tests. Define generators (Gen) to exercise the full range of domain boundaries.
 ```
 
 ---

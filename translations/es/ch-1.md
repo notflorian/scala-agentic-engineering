@@ -4,28 +4,28 @@
 Para un desarrollador sénior de Scala, el objetivo principal es maximizar la siguiente relación. Escribir código más rápido es secundario.
 
 ```text
-Changements utiles déployés et stables
+Cambios útiles desplegados y estables
 ÷
-(diffs inutiles + retours review + bugs + crédits brûlés + temps humain)
+(diffs innecesarios + observaciones en la revisión + errores + créditos consumidos + tiempo humano)
 ```
 
 El modelo mental correcto:
 
 ```text
-Toi = tech lead et arbitre final
-IntelliJ = vérité structurelle Scala/JVM et poste de contrôle
-JetBrains AI = assistance inline et actions IDE à faible friction
-Codex = agent principal d'exécution pour les issues standard + reviewer indépendant quand Claude écrit
-Claude Code = agent principal de raisonnement/debug/architecture + reviewer indépendant quand Codex écrit
-Qwen local = assistant économique
-GitHub Copilot = couche GitHub-native pour issues, PR et review automatique
-Aider = petit diff propre orienté Git
-MCP + Sourcebot + Context7 = contexte ciblé
-RTK + Headroom = réduction du bruit
-Jev = decision layer probabiliste pour classifier, scorer et router — jamais un coding model ni un gate critique seul
-GPT‑6 Luna / GPT‑6.2 Sol / GPT‑6.2 Astra = route Codex selon micro-boucle, agentique et frontier
-Haiku 5.5 / Sonnet 5.5 / Opus 5.5 / Fable 5.2 = route Claude selon volume, contrôle humain et autonomie
-Tests + Stryker4s + CI = juges finaux (déterministes)
+Tú = líder técnico y responsable de la decisión final
+IntelliJ = referencia estructural de Scala/JVM y centro de control
+JetBrains AI = asistencia en línea y acciones en el IDE con poca fricción
+Codex = agente principal de ejecución para incidencias habituales + revisor independiente cuando escribe Claude
+Claude Code = agente principal de razonamiento, depuración y arquitectura + revisor independiente cuando escribe Codex
+Qwen local = asistente económico
+GitHub Copilot = capa nativa de GitHub para incidencias, PR y revisión automática
+Aider = diffs pequeños y limpios con un flujo centrado en Git
+MCP + Sourcebot + Context7 = contexto específico
+RTK + Headroom = reducción del ruido
+Jev = capa de decisión probabilística para clasificar, puntuar y enrutar, nunca como modelo de programación ni como único control crítico
+GPT‑6 Luna / GPT‑6.2 Sol / GPT‑6.2 Astra = ruta de Codex según se trate de ciclos breves, trabajo agéntico o casos de máxima exigencia
+Haiku 5.5 / Sonnet 5.5 / Opus 5.5 / Fable 5.2 = ruta de Claude según el volumen, el control humano y la autonomía
+Pruebas + Stryker4s + CI = árbitros finales (deterministas)
 ```
 
 ---
