@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+ruby "~> 3.3.0"
+
+gem "jekyll", "4.4.1"
+gem "just-the-docs", "0.12.0"
+gem "webrick", "1.9.2"
+gem "nokogiri", "1.19.3"

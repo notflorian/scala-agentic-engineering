@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+site_url=${PAGES_URL:-https://notflorian.github.io}
+baseurl=${PAGES_BASEURL-/scala-agentic-engineering}
+
+python3 -m unittest discover -s tests
+node --test tests/search.test.js
+
+# Stage each build from scratch so renamed or removed files cannot survive it.
+source_dir="$(mktemp -d "${TMPDIR:-/tmp}/scala-docs.XXXXXXXX")"
+trap 'rm -rf "$source_dir"' EXIT
+python3 scripts/docs.py generate --destination "$source_dir" --baseurl "$baseurl"
+python3 - "$site_url" "$baseurl" > "$source_dir/_deployment.yml" <<'PYTHON'
+import json
+import sys
+
+print(json.dumps(dict(url=sys.argv[1], baseurl=sys.argv[2])))
+PYTHON
+export JEKYLL_ENV=production
+bundle exec jekyll build --source "$source_dir" --destination "$PWD/_site" \
+  --config "$source_dir/_config.yml,$source_dir/_deployment.yml" --strict_front_matter --trace
+bundle exec ruby scripts/site_check.rb _site "$source_dir/_data/chapters.json" "$site_url" "$baseurl"

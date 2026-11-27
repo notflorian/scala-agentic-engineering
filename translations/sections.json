@@ -1,0 +1,315 @@
+{
+  "home": {
+    "next": 1,
+    "headings": {
+      "1:Guide ultime du développeur senior Scala utilisant les LLMs": "guide"
+    }
+  },
+  "ch-1": {
+    "next": 1,
+    "headings": {
+      "1:1. Principe directeur": "chapter"
+    }
+  },
+  "ch-1a": {
+    "next": 5,
+    "headings": {
+      "1:1A. Vibe coding, AI-assisted coding et agentic coding": "chapter",
+      "2:Ce que montre l'état de l'art en 2026": "s-1",
+      "3:Complément méthodologique": "s-2",
+      "3:Un benchmark vert n'est pas encore un diff mergeable": "s-3",
+      "3:Garde-fou de production pour le vibe coding": "s-4"
+    }
+  },
+  "ch-2": {
+    "next": 2,
+    "headings": {
+      "1:2. Stack recommandée": "chapter",
+      "3:Architecture IntelliJ 2026.2 recommandée": "s-1"
+    }
+  },
+  "ch-3": {
+    "next": 47,
+    "headings": {
+      "1:3. Répartition optimale des modèles": "chapter",
+      "2:Règle simple": "s-1",
+      "2:Matrice de routage": "s-2",
+      "3:Côté Anthropic": "s-3",
+      "3:Côté OpenAI / Codex": "s-4",
+      "4:Cinq dimensions à ne pas confondre": "s-5",
+      "4:Astra : contrôles pour missions longues": "s-6",
+      "4:Disponibilité et surfaces ChatGPT / Codex": "s-7",
+      "4:Caching, sécurité et garde-fous": "s-8",
+      "4:Benchmarks et prudence": "s-9",
+      "3:GPT‑6 Astra vs Claude Fable 5.2 : repère historique de deux frontiers": "s-10",
+      "3:Côté modèles open-weight chinois (Kimi K3, GLM‑5.2, et le reste du cluster)": "s-11",
+      "4:Où ils entrent dans *ton* routage": "s-12",
+      "4:Accès occasionnel à GLM via OpenRouter": "s-13",
+      "4:Le reste du cluster (pour situer, pas pour tout adopter)": "s-14",
+      "4:Deux réserves à garder en tête": "s-15",
+      "4:Protocole de bake-off Scala : Kimi K3 contre GLM‑5.2": "s-16",
+      "2:Règle de décision par tâche": "s-17",
+      "3:Quand utiliser **Fable 5.2** (Mythos-class)": "s-18",
+      "3:Prompting Fable 5.2 : structurer une mission longue": "s-19",
+      "3:Quand utiliser **Opus 5.5**": "s-20",
+      "3:Quand utiliser **Sonnet 5.5**": "s-21",
+      "3:Quand utiliser **Haiku 5.5**": "s-22",
+      "3:Quand utiliser **GPT‑6 Luna**": "s-23",
+      "3:Quand utiliser **GPT‑6.2 Sol**": "s-24",
+      "3:Quand utiliser **GPT‑6.2 Astra**": "s-25",
+      "3:Quand utiliser **le mode `ultra` dans ChatGPT Work / Codex**": "s-26",
+      "2:Matrice de sélection modèle rapide": "s-27",
+      "2:Routage automatique des tâches de développement": "s-28",
+      "3:Architecture recommandée": "s-29",
+      "3:Jev : decision layer, pas coding model": "s-30",
+      "3:Classification minimale": "s-31",
+      "3:Matrice de routage automatique": "s-32",
+      "3:Politique d'escalade": "s-33",
+      "3:Règles de non-automatisation": "s-34",
+      "3:Subagents Claude Code recommandés": "s-35",
+      "4:Isolation de contexte : rôle principal des subagents sur les tâches longues": "s-36",
+      "3:OpenRouter pour le routage API occasionnel": "s-37",
+      "4:Fallbacks : provider oui, modèle non par défaut": "s-38",
+      "4:Qwen local : reste direct": "s-39",
+      "4:Confidentialité avec un agrégateur": "s-40",
+      "3:Métriques à logger": "s-41",
+      "3:Prompt routeur minimal (fallback génératif)": "s-42",
+      "3:Principe directeur du routage": "s-43",
+      "2:Impact sur le budget mensuel": "s-44",
+      "2:Règle anti-crédits brûlés": "s-45",
+      "4:Checklist pré-flight avant toute tâche > $2 de coût estimé": "s-46"
+    }
+  },
+  "ch-4": {
+    "next": 5,
+    "headings": {
+      "1:4. Budget mensuel raisonnable et stratégie de caching": "chapter",
+      "2:Budget de départ réaliste": "s-1",
+      "2:Points de prix et quotas à ne pas figer dans le guide": "s-2",
+      "2:Prompt caching : levier majeur, mais à formuler précisément": "s-3",
+      "2:Règles anti-crédits brûlés": "s-4"
+    }
+  },
+  "ch-5": {
+    "next": 29,
+    "headings": {
+      "1:5. Workflow standard pour une tâche métier Scala": "chapter",
+      "2:Étape 0 : cadrage humain": "s-1",
+      "4:Template de spec opérationnel (copier-coller)": "s-2",
+      "1:SPEC : [TICKET-123] — [Titre court]": "s-3",
+      "2:1. Objectif (1 phrase, verbe d'action)": "s-4",
+      "2:2. Non-objectifs (explicite, anti-dérive)": "s-5",
+      "2:3. Comportement attendu (règles métier, numérotées)": "s-6",
+      "2:4. Contraintes techniques": "s-7",
+      "2:5. Fichiers probablement concernés": "s-8",
+      "2:6. Tests d'acceptation (critères de \"done\")": "s-9",
+      "2:7. Risques et mitigations": "s-10",
+      "2:8. Définition de done (checklist finale)": "s-11",
+      "2:Étape 1 : recherche ciblée": "s-12",
+      "2:Étape 2 : plan par l’agent writer, sans modification": "s-13",
+      "2:Étape 3 : implémentation par petits diffs": "s-14",
+      "2:Étape 4 : validation IntelliJ + tests": "s-15",
+      "4:Optimisations sbt pour les boucles agentiques": "s-16",
+      "1:.sbtopts — optimisé pour les boucles agentiques": "s-17",
+      "1:Premier lancement (démarre le serveur)": "s-18",
+      "1:Appels suivants depuis l'agent (démarrage quasi-instantané)": "s-19",
+      "3:Valeur probante des tests générés": "s-20",
+      "4:Étape 5 : Forcer la vérification avant déclaration de complétion": "s-21",
+      "2:Étape 6 : self-review par le writer": "s-22",
+      "2:Étape 7 : review indépendante par l’autre famille de modèles": "s-23",
+      "2:Étape 8 : correction ciblée": "s-24",
+      "2:Étape 9 : garde-fous anti-dérive agentique": "s-25",
+      "4:Claude Mods : quand dépasser les hooks classiques": "s-26",
+      "4:Configuration commune des hooks Claude Code / Codex": "s-27",
+      "4:Protocole de récupération quand l'agent boucle": "s-28"
+    }
+  },
+  "ch-6": {
+    "next": 2,
+    "headings": {
+      "1:6. Workflow TDD agentique pour code métier sensible": "chapter",
+      "2:Exemple : à quoi doivent ressembler les propriétés générées": "s-1"
+    }
+  },
+  "ch-7": {
+    "next": 7,
+    "headings": {
+      "1:7. Règles spécifiques Scala": "chapter",
+      "2:Ne jamais laisser l'agent faire automatiquement": "s-1",
+      "2:À demander explicitement": "s-2",
+      "2:Checklist Scala post-diff": "s-3",
+      "2:Refactors mécaniques : scalafix avant le LLM": "s-4",
+      "2:Spécificités Scala 3 vs Scala 2": "s-5",
+      "2:Hallucination de dépendances : le risque « slopsquatting »": "s-6"
+    }
+  },
+  "ch-7a": {
+    "next": 3,
+    "headings": {
+      "1:7A. Intégration LLM en Scala fonctionnel": "chapter",
+      "2:Panorama des approches (juin 2026)": "s-1",
+      "2:Structurer un `LlmClient[F[_]]` générique": "s-2"
+    }
+  },
+  "ch-7b": {
+    "next": 3,
+    "headings": {
+      "1:7B. Typage fort des entrées/sorties LLM": "chapter",
+      "2:Le pattern ADT + Circe": "s-1",
+      "2:Forcer le schéma côté modèle : tool_use et Structured Outputs": "s-2"
+    }
+  },
+  "ch-8": {
+    "next": 8,
+    "headings": {
+      "1:8. Organisation repo recommandée": "chapter",
+      "2:Contenu minimal de `AGENTS.md`": "s-1",
+      "3:Routage dans la configuration utilisateur": "s-2",
+      "2:Contenu minimal de `CLAUDE.md`": "s-3",
+      "2:Pourquoi garder `AGENTS.md`": "s-4",
+      "4:Protocole de validation : mesurer l'efficacité d'AGENTS.md": "s-5",
+      "4:Audit de *rule drift* : vérifier que les instructions décrivent encore le repo réel": "s-6",
+      "3:Instructions GitHub Copilot sans dupliquer `AGENTS.md`": "s-7"
+    }
+  },
+  "ch-9": {
+    "next": 13,
+    "headings": {
+      "1:9. MCP prioritaires": "chapter",
+      "2:Indispensables": "s-1",
+      "2:ChatGPT et Codex : rôles MCP à ne pas confondre": "s-2",
+      "3:Gouverner un catalogue MCP comme une API versionnée": "s-3",
+      "2:Knowledge graph MCP pour Scala, Java et Kotlin": "s-4",
+      "3:Scala : privilégier ScalaSemantic, compléter avec Metals": "s-5",
+      "3:Java et Kotlin : Codebase-Memory devient beaucoup plus intéressant": "s-6",
+      "3:Effet sur le context engineering": "s-7",
+      "3:Alternatives à connaître sans les standardiser": "s-8",
+      "2:Metals MCP : l'outil Scala manquant dans la plupart des stacks": "s-9",
+      "2:Exemple : boucle test-correction agentique sur `compile-file`": "s-10",
+      "2:Règle de sécurité": "s-11",
+      "3:Modèle zéro-trust contre l'injection indirecte": "s-12"
+    }
+  },
+  "ch-10": {
+    "next": 7,
+    "headings": {
+      "1:10. Gestion du contexte et des coûts": "chapter",
+      "2:Pipeline recommandé": "s-1",
+      "2:À compresser avec RTK / Headroom": "s-2",
+      "2:À ne pas compresser agressivement": "s-3",
+      "2:Les quatre stratégies canoniques du context engineering": "s-4",
+      "4:Arbre de décision : continuer vs handoff + session fraîche vs `/compact`": "s-5",
+      "2:Exemple : structurer une requête cachable en Scala 3": "s-6"
+    }
+  },
+  "ch-10a": {
+    "next": 3,
+    "headings": {
+      "1:10A. Observabilité des appels LLM": "chapter",
+      "2:Tracing avec otel4s": "s-1",
+      "2:Choisir sa couche d'observabilité": "s-2"
+    }
+  },
+  "ch-10b": {
+    "next": 5,
+    "headings": {
+      "1:10B. OpenRouter comme porte de sortie ponctuelle": "chapter",
+      "2:Configuration minimale": "s-1",
+      "2:Règles de fallback": "s-2",
+      "2:Règles de confidentialité": "s-3",
+      "2:Ce qu'OpenRouter ne doit pas remplacer": "s-4"
+    }
+  },
+  "ch-11": {
+    "next": 4,
+    "headings": {
+      "1:11. Quand utiliser Aider — et où placer OpenCode/Qwen Code": "chapter",
+      "2:Quand utiliser Aider": "s-1",
+      "2:Comparatif synthétique des trois harness": "s-2",
+      "2:Exemple : la commande de test que tout harness doit recevoir": "s-3"
+    }
+  },
+  "ch-12": {
+    "next": 28,
+    "headings": {
+      "1:12. Quand utiliser Codex / OpenAI en plus de Claude Code": "chapter",
+      "4:Commandes worktree concrètes pour le workflow multi-agent": "s-1",
+      "1:1. Créer un worktree pour une tâche spécifique": "s-2",
+      "1:2. Créer un worktree pour la review (lecture seule)": "s-3",
+      "1:3. Lister les worktrees actifs": "s-4",
+      "1:4. Travailler dans le worktree (sandbox séparée à configurer)": "s-5",
+      "1:Claude Code travaille ici avec ses permissions limitées à ce dossier": "s-6",
+      "1:5. Vérifier l'état depuis le repo principal": "s-7",
+      "1:6. Merger le résultat (après review humaine)": "s-8",
+      "1:7. Nettoyer le worktree après merge": "s-9",
+      "1:Script utilitaire : scripts/ai-worktree.sh": "s-10",
+      "3:Parallélisme inter-issues et WIP": "s-11",
+      "2:Exploiter la review Codex en machine : décodage typé": "s-12",
+      "2:GitHub Copilot : couche GitHub-native, pas troisième reviewer profond": "s-13",
+      "2:Claude Ship : automatiser l'après-PR, pas la responsabilité du merge": "s-14",
+      "3:Workflow solo : `/ship` ou `/steward` avec Codex et Claude Code": "s-15",
+      "3:Workflow équipe : adoption progressive, pas trois agents obligatoires": "s-16",
+      "2:Équivalent Codex de Claude Ship : review, correction et surveillance": "s-17",
+      "3:Codex Code Review : privilégier les retours à fort signal": "s-18",
+      "3:Goal mode, Heartbeats et Codex Cloud : équivalent fonctionnel de `/steward`": "s-19",
+      "4:Goal mode : objectif persistant et vérifiable": "s-20",
+      "4:Heartbeats : suivi récurrent sans session de raisonnement en continu": "s-21",
+      "4:Codex Cloud : même contrat, exécution hébergée": "s-22",
+      "4:Routage et arrêt de la boucle": "s-23",
+      "3:Automations et GitHub Action : ne pas confondre les surfaces": "s-24",
+      "3:Claude Code Cloud Auto-fix : stewardship événementiel en solo": "s-25",
+      "3:Transfert d'ownership et routage des stewards": "s-26",
+      "2:Note de positionnement : A2A face à MCP": "s-27"
+    }
+  },
+  "ch-13": {
+    "next": 1,
+    "headings": {
+      "1:13. Paquet de review minimal pour réduire les retours": "chapter"
+    }
+  },
+  "ch-14": {
+    "next": 4,
+    "headings": {
+      "1:14. Planning hebdomadaire optimal": "chapter",
+      "2:Lundi : planification": "s-1",
+      "2:Mardi à jeudi : production": "s-2",
+      "2:Vendredi : durcissement": "s-3"
+    }
+  },
+  "ch-15": {
+    "next": 1,
+    "headings": {
+      "1:15. Définition de done pour une tâche agentique Scala": "chapter"
+    }
+  },
+  "ch-15a": {
+    "next": 4,
+    "headings": {
+      "1:15A. CI/CD pour workflows agentiques": "chapter",
+      "2:Les quatre gates spécifiques aux PRs agentiques": "s-1",
+      "3:GitHub Rulesets et indépendance du gate": "s-2",
+      "2:Exemple : `.github/workflows/ai-review.yml`": "s-3"
+    }
+  },
+  "ch-15b": {
+    "next": 2,
+    "headings": {
+      "1:15B. Release engineering : de la PR mergeable au logiciel déployable": "chapter",
+      "3:Définition de done côté production": "s-1"
+    }
+  },
+  "ch-16": {
+    "next": 1,
+    "headings": {
+      "1:16. Anti-patterns à éviter": "chapter"
+    }
+  },
+  "ch-17": {
+    "next": 2,
+    "headings": {
+      "1:17. Version finale du workflow": "chapter",
+      "2:Sources principales consultées": "s-1"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for locale in site.data.locales -%}
+  {% assign code = locale | first -%}
+  {% assign chapters = site.data.chapters[code] -%}
+  {% for chapter in chapters -%}
+  <url>
+    <loc>{{ chapter.url | absolute_url | xml_escape }}</loc>
+    {% for alternate in site.data.locales -%}
+    {% assign alternate_code = alternate | first -%}
+    {% assign peer = site.data.chapters[alternate_code] | where: "id", chapter.id | first -%}
+    <xhtml:link rel="alternate" hreflang="{{ alternate_code }}" href="{{ peer.url | absolute_url | xml_escape }}" />
+    {% if alternate_code == "en" -%}<xhtml:link rel="alternate" hreflang="x-default" href="{{ peer.url | absolute_url | xml_escape }}" />{% endif -%}
+    {% endfor -%}
+  </url>
+  {% endfor -%}
+{% endfor -%}
+</urlset>

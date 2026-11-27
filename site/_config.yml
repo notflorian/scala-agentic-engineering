@@ -1,0 +1,27 @@
+title: Scala Agentic Engineering
+description: Documentation for senior Scala developers using LLMs.
+url: https://notflorian.github.io
+baseurl: /scala-agentic-engineering
+repository_url: https://github.com/notflorian/scala-agentic-engineering
+source_url: https://github.com/notflorian/scala-agentic-engineering/blob/main/guide.md
+theme: just-the-docs
+lang: en
+markdown: kramdown
+highlighter: rouge
+search_enabled: false
+enable_copy_code_button: false
+heading_anchors: false
+strict_front_matter: true
+liquid:
+  error_mode: strict
+  strict_filters: true
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+sass:
+  quiet_deps: true
+  silence_deprecations: [import]
+compress_html:
+  ignore:
+    envs: all
