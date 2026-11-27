@@ -11,11 +11,21 @@ abort "usage: ruby scripts/site_check.rb SITE CATALOG URL BASEURL" unless ARGV.l
 
 root = Pathname(directory).expand_path
 chapters = JSON.parse(File.read(catalog))
+locales = JSON.parse(File.read("site/_data/locales.json"))
+navigation = JSON.parse(File.read("site/_data/navigation.json"))
+groups = navigation.fetch("groups")
+topics = navigation.fetch("topics")
 errors = []
 documents = {}
 
 def normalize(text)
   text.gsub(/\s+/, " ").strip
+end
+
+def leaf_keys(value)
+  value.flat_map do |key, child|
+    child.is_a?(Hash) ? leaf_keys(child).map { |part| "#{key}.#{part}" } : key
+  end.sort
 end
 
 def html_file(root, route)
@@ -78,6 +88,17 @@ end
 reference = File.binread("guide.md")
 errors << "French download differs from guide.md" unless root.join("fr/guide.md").binread == reference
 
+required_keys = leaf_keys(locales.fetch("en"))
+locales.each do |lang, labels|
+  valid_groups = labels.fetch("groups", {}).keys.sort == groups.keys.sort
+  valid_topics = labels.fetch("topics", {}).keys.sort == topics.keys.sort
+  errors << "#{lang}: missing UI translations" unless leaf_keys(labels) == required_keys && valid_groups && valid_topics
+end
+
+recovery = documents.fetch("/404.html").css(".recovery-links a").to_h { |node| [node["hreflang"], node["href"]] }
+errors << "/404.html: missing language home links" unless
+  recovery == chapters.transform_values { |items| baseurl + items.first.fetch("url") }
+
 search_indexes = {}
 expected_sitemap = {}
 chapters.each do |lang, items|
@@ -85,7 +106,13 @@ chapters.each do |lang, items|
   errors << "#{lang}: missing Markdown download" if root.join(lang, "guide.md").size.zero?
   nav = items.map { |item| baseurl + item.fetch("url") }
 
-  items.each do |item|
+  chapter_urls = nav.drop(1)
+  by_id = items.to_h { |item| [item.fetch("id"), baseurl + item.fetch("url")] }
+  errors << "#{lang}: navigation groups must include every chapter in order once" unless
+    groups.values.flatten.map { |id| by_id[id] } == chapter_urls
+  expected_topics = topics.transform_values { |topic| by_id.fetch(topic.fetch("chapter")) }
+
+  items.each_with_index do |item, order|
     route = item.fetch("url")
     document = documents.fetch(route)
     canonical = origin + baseurl + route
@@ -104,6 +131,29 @@ chapters.each do |lang, items|
     nav_nodes = document.css("#chapter-nav a")
     errors << "#{route}: invalid navigation locale" unless nav_nodes.map { |node| node["href"] } == nav &&
       nav_nodes.select { |node| node["aria-current"] == "page" }.map { |node| node["href"] } == [baseurl + route]
+    rendered_groups = document.css("#chapter-nav details[data-group]")
+    errors << "#{route}: incorrect navigation groups" unless rendered_groups.map { |node| node["data-group"] } == groups.keys &&
+      rendered_groups.all? do |node|
+        node.css("a").map { |link| link["href"] } == groups.fetch(node["data-group"]).map { |id| by_id[id] } &&
+          (!node.at_css('a[aria-current="page"]') || node.key?("open"))
+      end
+
+    if order.zero?
+      cards = document.css(".topic-grid a[data-topic]")
+      errors << "#{route}: incorrect homepage topics" unless cards.size == expected_topics.size &&
+        cards.to_h { |link| [link["data-topic"], link["href"]] } == expected_topics
+      errors << "#{route}: incorrect homepage chapter index" unless document.css(".home-index a").map { |link| link["href"] } == chapter_urls
+    end
+
+    expected_pagination = {}
+    expected_pagination["prev"] = nav[order - 1] if order.positive?
+    expected_pagination["next"] = nav[order + 1] if order + 1 < nav.size
+    pagination = document.css(".chapter-pagination a")
+    errors << "#{route}: incorrect chapter pagination" unless pagination.size == expected_pagination.size &&
+      pagination.to_h { |link| [link["rel"], link["href"]] } == expected_pagination
+    errors << "#{route}: invalid Markdown download link" unless
+      document.css("a[download]").map { |link| link["href"] } == ["#{baseurl}/#{lang}/guide.md"]
+
     search = document.at_css("#local-search")
     errors << "#{route}: search index points to a different locale" unless search["data-index"] == "#{baseurl}/#{lang}/search.json"
 
@@ -112,6 +162,8 @@ chapters.each do |lang, items|
     headings = container.css("h1,h2,h3,h4,h5,h6").reject { |node| node["id"] == "chapter-index" }
     errors << "#{route}: headings or stable anchors lost" unless headings.map { |node| node["id"] } == expected_ids &&
       headings.count { |heading| heading.name == "h1" } == 1
+    errors << "#{route}: incorrect table of contents anchors" unless
+      document.css(".guide-toc a").map { |link| link["href"] } == expected_ids.drop(1).map { |id| "##{id}" }
     french = documents.fetch(route.sub(%r{^/[^/]+/}, "/fr/")).at_css("#guide-text, .chapter-index")
     code = container.css("pre code").map(&:text)
     errors << "#{route}: rendered code differs from French" unless code == french.css("pre code").map(&:text)

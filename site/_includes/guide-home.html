@@ -1,0 +1,45 @@
+<section class="home-hero" aria-labelledby="guide">
+  <p class="home-title">{{ site.title | escape }}</p>
+  <div class="chapter-index">{{ content }}</div>
+  <p class="home-description">{{ labels.description | escape }}</p>
+  <div class="home-actions">
+    <a class="action-primary" href="{{ chapters[1].url | relative_url }}">
+      {{ labels.start | escape }}{% include guide-icon.html name="arrow" %}
+    </a>
+    <a class="action-secondary" href="{{ site.repository_url }}">
+      {% include guide-icon.html name="github" %}GitHub
+    </a>
+  </div>
+  {% assign chapter_count = chapters.size | minus: 1 | append: '' -%}
+  {% assign language_count = site.data.locales.size | append: '' -%}
+  <p class="home-stats">{{ labels.guide_stats | replace: '%chapters%', chapter_count | replace: '%languages%', language_count | escape }}</p>
+</section>
+<section class="home-topics" aria-labelledby="topic-heading">
+  <h2 id="topic-heading">{{ labels.topics_label | escape }}</h2>
+  <ul class="topic-grid">
+    {% for topic in site.data.navigation.topics -%}
+      {% assign topic_id = topic | first -%}
+      {% assign target = topic | last -%}
+      {% assign topic_labels = labels.topics[topic_id] -%}
+      {% assign peer = chapters | where: "id", target.chapter | first -%}
+      <li>
+        <a class="topic-card" data-topic="{{ topic_id }}" href="{{ peer.url | relative_url }}">
+          <span class="topic-card-icons">
+            {% include guide-icon.html name=target.icon %}
+            {% include guide-icon.html name="arrow" %}
+          </span>
+          <h3>{{ topic_labels.title | escape }}</h3>
+          <p>{{ topic_labels.description | escape }}</p>
+        </a>
+      </li>
+    {% endfor -%}
+  </ul>
+</section>
+<section class="home-index" aria-labelledby="chapter-index">
+  <h2 id="chapter-index">{{ labels.chapters | escape }}</h2>
+  <ul>
+    {% for item in chapters offset:1 -%}
+      <li><a href="{{ item.url | relative_url }}">{{ item.title | remove: '`' | escape }}</a></li>
+    {% endfor -%}
+  </ul>
+</section>

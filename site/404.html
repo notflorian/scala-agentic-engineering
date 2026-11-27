@@ -1,0 +1,37 @@
+---
+permalink: /404.html
+---
+{% assign labels = site.data.locales.en -%}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>{{ labels.not_found | escape }} · {{ site.title | escape }}</title>
+  {% include guide-styles.html %}
+  <script src="{{ '/assets/js/guide.js' | relative_url }}" defer></script>
+</head>
+<body class="docs-site">
+  <main class="not-found" id="not-found" data-baseurl="{{ site.baseurl | escape }}">
+    <img src="{{ '/assets/images/mark.svg' | relative_url }}" alt="" width="40" height="40">
+    <div id="not-found-copy">
+      <h1>{{ labels.not_found | escape }}</h1>
+      <p>{{ labels.not_found_help | escape }}</p>
+    </div>
+    <ul class="recovery-links">
+      {% for locale in site.data.locales -%}
+        {% assign code = locale | first -%}
+        {% assign name = locale.last.name -%}
+        <li><a class="action-secondary" lang="{{ code }}" hreflang="{{ code }}" href="{{ site.data.chapters[code].first.url | relative_url }}">{{ name | escape }}</a></li>
+      {% endfor -%}
+    </ul>
+    {% for locale in site.data.locales -%}
+      <template id="not-found-{{ locale.first }}">
+        <h1>{{ locale.last.not_found | escape }}</h1>
+        <p>{{ locale.last.not_found_help | escape }}</p>
+      </template>
+    {% endfor -%}
+  </main>
+</body>
+</html>

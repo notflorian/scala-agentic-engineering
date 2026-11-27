@@ -7,7 +7,56 @@
     "search": "Search English documentation", "no_results": "No results", "search_error": "Search is unavailable.",
     "repository": "Repository", "source": "French source", "download": "Download Markdown", "skip": "Skip to content",
     "previous": "Previous chapter", "next": "Next chapter", "copy": "Copy code", "copied": "Copied", "copy_error": "Could not copy the code.",
-    "theme": "Appearance", "system": "System", "light": "Light", "dark": "Dark"
+    "pagination": "Chapter navigation",
+    "theme": "Appearance", "system": "System", "light": "Light", "dark": "Dark",
+    "search_short": "Search",
+    "start": "Start reading",
+    "topics_label": "Explore by topic",
+    "guide_stats": "%chapters% chapters · %languages% languages",
+    "search_loading": "Loading search…",
+    "search_count": "Results: {count}",
+    "search_close": "Close search",
+    "permalink": "Link to this section",
+    "top": "Back to top",
+    "code": "Code",
+    "text": "Text",
+    "scrollable_table": "Scrollable table",
+    "not_found": "Page not found",
+    "not_found_help": "Choose a language to return to the guide.",
+    "groups": {
+      "foundations": "Foundations",
+      "models": "Models and costs",
+      "workflows": "Workflows and Scala",
+      "tooling": "Tooling and context",
+      "quality": "Quality and delivery",
+      "summary": "Summary"
+    },
+    "topics": {
+      "routing": {
+        "title": "Model selection and routing",
+        "description": "Choose a model for the task using the routing matrices."
+      },
+      "workflow": {
+        "title": "Agentic workflows",
+        "description": "Follow a Scala task from specification to independent review."
+      },
+      "testing": {
+        "title": "Testing, review, and quality",
+        "description": "Use a test-driven workflow for sensitive business code."
+      },
+      "context": {
+        "title": "Context engineering and costs",
+        "description": "Control context size, caching, and model spend."
+      },
+      "scala": {
+        "title": "Scala engineering",
+        "description": "Apply Scala-specific rules to code written with agents."
+      },
+      "checklists": {
+        "title": "Prompts and operational checklists",
+        "description": "Use the completion checklist for an agentic Scala task."
+      }
+    }
   },
   "fr": {
     "name": "Français",
@@ -17,7 +66,56 @@
     "search": "Rechercher dans la documentation française", "no_results": "Aucun résultat", "search_error": "La recherche est indisponible.",
     "repository": "Dépôt", "source": "Source française", "download": "Télécharger le Markdown", "skip": "Aller au contenu",
     "previous": "Chapitre précédent", "next": "Chapitre suivant", "copy": "Copier le code", "copied": "Copié", "copy_error": "Impossible de copier le code.",
-    "theme": "Apparence", "system": "Système", "light": "Clair", "dark": "Sombre"
+    "pagination": "Navigation entre chapitres",
+    "theme": "Apparence", "system": "Système", "light": "Clair", "dark": "Sombre",
+    "search_short": "Rechercher",
+    "start": "Commencer la lecture",
+    "topics_label": "Explorer par thème",
+    "guide_stats": "%chapters% chapitres · %languages% langues",
+    "search_loading": "Chargement de la recherche…",
+    "search_count": "Résultats : {count}",
+    "search_close": "Fermer la recherche",
+    "permalink": "Lien vers cette section",
+    "top": "Haut de page",
+    "code": "Code",
+    "text": "Texte",
+    "scrollable_table": "Tableau défilant",
+    "not_found": "Page introuvable",
+    "not_found_help": "Choisissez une langue pour revenir au guide.",
+    "groups": {
+      "foundations": "Fondamentaux",
+      "models": "Modèles et coûts",
+      "workflows": "Workflows et Scala",
+      "tooling": "Outils et contexte",
+      "quality": "Qualité et livraison",
+      "summary": "Synthèse"
+    },
+    "topics": {
+      "routing": {
+        "title": "Choix et routage des modèles",
+        "description": "Choisissez un modèle adapté à la tâche à l’aide des matrices de routage."
+      },
+      "workflow": {
+        "title": "Workflows agentiques",
+        "description": "Suivez une tâche Scala du cadrage à la revue indépendante."
+      },
+      "testing": {
+        "title": "Tests, revue et qualité",
+        "description": "Appliquez un workflow piloté par les tests au code métier sensible."
+      },
+      "context": {
+        "title": "Ingénierie du contexte et coûts",
+        "description": "Maîtrisez la taille du contexte, le cache et les dépenses liées aux modèles."
+      },
+      "scala": {
+        "title": "Ingénierie Scala",
+        "description": "Appliquez les règles propres à Scala au code écrit avec des agents."
+      },
+      "checklists": {
+        "title": "Prompts et checklists opérationnelles",
+        "description": "Utilisez la checklist de fin de tâche pour un travail agentique en Scala."
+      }
+    }
   },
   "es": {
     "name": "Español",
@@ -27,7 +125,56 @@
     "search": "Buscar en la documentación en español", "no_results": "No hay resultados", "search_error": "La búsqueda no está disponible.",
     "repository": "Repositorio", "source": "Fuente en francés", "download": "Descargar Markdown", "skip": "Saltar al contenido",
     "previous": "Capítulo anterior", "next": "Capítulo siguiente", "copy": "Copiar código", "copied": "Copiado", "copy_error": "No se pudo copiar el código.",
-    "theme": "Apariencia", "system": "Sistema", "light": "Claro", "dark": "Oscuro"
+    "pagination": "Navegación entre capítulos",
+    "theme": "Apariencia", "system": "Sistema", "light": "Claro", "dark": "Oscuro",
+    "search_short": "Buscar",
+    "start": "Empezar a leer",
+    "topics_label": "Explorar por tema",
+    "guide_stats": "%chapters% capítulos · %languages% idiomas",
+    "search_loading": "Cargando la búsqueda…",
+    "search_count": "Resultados: {count}",
+    "search_close": "Cerrar la búsqueda",
+    "permalink": "Enlace a esta sección",
+    "top": "Volver arriba",
+    "code": "Código",
+    "text": "Texto",
+    "scrollable_table": "Tabla desplazable",
+    "not_found": "Página no encontrada",
+    "not_found_help": "Elige un idioma para volver a la guía.",
+    "groups": {
+      "foundations": "Fundamentos",
+      "models": "Modelos y costes",
+      "workflows": "Flujos de trabajo y Scala",
+      "tooling": "Herramientas y contexto",
+      "quality": "Calidad y entrega",
+      "summary": "Resumen"
+    },
+    "topics": {
+      "routing": {
+        "title": "Selección y enrutamiento de modelos",
+        "description": "Elige un modelo adecuado para la tarea con las matrices de enrutamiento."
+      },
+      "workflow": {
+        "title": "Flujos de trabajo agénticos",
+        "description": "Sigue una tarea de Scala desde la especificación hasta la revisión independiente."
+      },
+      "testing": {
+        "title": "Pruebas, revisión y calidad",
+        "description": "Aplica un flujo guiado por pruebas al código de negocio crítico."
+      },
+      "context": {
+        "title": "Ingeniería de contexto y costes",
+        "description": "Controla el tamaño del contexto, la caché y el gasto en modelos."
+      },
+      "scala": {
+        "title": "Ingeniería de Scala",
+        "description": "Aplica las reglas de Scala al código escrito con agentes."
+      },
+      "checklists": {
+        "title": "Prompts y listas de comprobación",
+        "description": "Usa la lista de comprobación para dar por terminada una tarea agéntica en Scala."
+      }
+    }
   },
   "pt": {
     "name": "Português",
@@ -37,7 +184,56 @@
     "search": "Pesquisar na documentação em português", "no_results": "Não foram encontrados resultados", "search_error": "A pesquisa está indisponível.",
     "repository": "Repositório", "source": "Fonte em francês", "download": "Baixar Markdown", "skip": "Ir para o conteúdo",
     "previous": "Capítulo anterior", "next": "Próximo capítulo", "copy": "Copiar código", "copied": "Copiado", "copy_error": "Não foi possível copiar o código.",
-    "theme": "Aparência", "system": "Sistema", "light": "Claro", "dark": "Escuro"
+    "pagination": "Navegação entre capítulos",
+    "theme": "Aparência", "system": "Sistema", "light": "Claro", "dark": "Escuro",
+    "search_short": "Pesquisar",
+    "start": "Começar a leitura",
+    "topics_label": "Explorar por tema",
+    "guide_stats": "%chapters% capítulos · %languages% idiomas",
+    "search_loading": "Carregando a pesquisa…",
+    "search_count": "Resultados: {count}",
+    "search_close": "Fechar pesquisa",
+    "permalink": "Link para esta seção",
+    "top": "Voltar ao topo",
+    "code": "Código",
+    "text": "Texto",
+    "scrollable_table": "Tabela com rolagem",
+    "not_found": "Página não encontrada",
+    "not_found_help": "Escolha um idioma para voltar ao guia.",
+    "groups": {
+      "foundations": "Fundamentos",
+      "models": "Modelos e custos",
+      "workflows": "Fluxos de trabalho e Scala",
+      "tooling": "Ferramentas e contexto",
+      "quality": "Qualidade e entrega",
+      "summary": "Resumo"
+    },
+    "topics": {
+      "routing": {
+        "title": "Seleção e roteamento de modelos",
+        "description": "Escolha um modelo adequado à tarefa com as matrizes de roteamento."
+      },
+      "workflow": {
+        "title": "Fluxos de trabalho agênticos",
+        "description": "Acompanhe uma tarefa Scala da especificação à revisão independente."
+      },
+      "testing": {
+        "title": "Testes, revisão e qualidade",
+        "description": "Use um fluxo guiado por testes para código de negócio sensível."
+      },
+      "context": {
+        "title": "Engenharia de contexto e custos",
+        "description": "Controle o tamanho do contexto, o cache e os gastos com modelos."
+      },
+      "scala": {
+        "title": "Engenharia Scala",
+        "description": "Aplique as regras de Scala ao código escrito com agentes."
+      },
+      "checklists": {
+        "title": "Prompts e listas de verificação",
+        "description": "Use a lista de verificação para concluir uma tarefa agêntica em Scala."
+      }
+    }
   },
   "it": {
     "name": "Italiano",
@@ -47,7 +243,56 @@
     "search": "Cerca nella documentazione in italiano", "no_results": "Nessun risultato", "search_error": "La ricerca non è disponibile.",
     "repository": "Repository", "source": "Fonte in francese", "download": "Scarica Markdown", "skip": "Vai al contenuto",
     "previous": "Capitolo precedente", "next": "Capitolo successivo", "copy": "Copia codice", "copied": "Copiato", "copy_error": "Impossibile copiare il codice.",
-    "theme": "Aspetto", "system": "Sistema", "light": "Chiaro", "dark": "Scuro"
+    "pagination": "Navigazione tra capitoli",
+    "theme": "Aspetto", "system": "Sistema", "light": "Chiaro", "dark": "Scuro",
+    "search_short": "Cerca",
+    "start": "Inizia a leggere",
+    "topics_label": "Esplora per argomento",
+    "guide_stats": "%chapters% capitoli · %languages% lingue",
+    "search_loading": "Caricamento della ricerca…",
+    "search_count": "Risultati: {count}",
+    "search_close": "Chiudi la ricerca",
+    "permalink": "Link a questa sezione",
+    "top": "Torna in alto",
+    "code": "Codice",
+    "text": "Testo",
+    "scrollable_table": "Tabella scorrevole",
+    "not_found": "Pagina non trovata",
+    "not_found_help": "Scegli una lingua per tornare alla guida.",
+    "groups": {
+      "foundations": "Fondamenti",
+      "models": "Modelli e costi",
+      "workflows": "Flussi di lavoro e Scala",
+      "tooling": "Strumenti e contesto",
+      "quality": "Qualità e rilascio",
+      "summary": "Sintesi"
+    },
+    "topics": {
+      "routing": {
+        "title": "Scelta e instradamento dei modelli",
+        "description": "Scegli un modello adatto al compito con le matrici di instradamento."
+      },
+      "workflow": {
+        "title": "Flussi di lavoro agentici",
+        "description": "Segui un compito Scala dalla specifica alla revisione indipendente."
+      },
+      "testing": {
+        "title": "Test, revisione e qualità",
+        "description": "Usa un flusso guidato dai test per il codice di business sensibile."
+      },
+      "context": {
+        "title": "Ingegneria del contesto e costi",
+        "description": "Controlla le dimensioni del contesto, la cache e la spesa per i modelli."
+      },
+      "scala": {
+        "title": "Ingegneria Scala",
+        "description": "Applica le regole di Scala al codice scritto con gli agenti."
+      },
+      "checklists": {
+        "title": "Prompt e checklist operative",
+        "description": "Consulta la checklist per completare un compito agentico in Scala."
+      }
+    }
   },
   "de": {
     "name": "Deutsch",
@@ -57,6 +302,55 @@
     "search": "Deutschsprachige Dokumentation durchsuchen", "no_results": "Keine Ergebnisse", "search_error": "Die Suche ist nicht verfügbar.",
     "repository": "Repository", "source": "Französische Quelle", "download": "Markdown herunterladen", "skip": "Zum Inhalt springen",
     "previous": "Vorheriges Kapitel", "next": "Nächstes Kapitel", "copy": "Code kopieren", "copied": "Kopiert", "copy_error": "Der Code konnte nicht kopiert werden.",
-    "theme": "Darstellung", "system": "System", "light": "Hell", "dark": "Dunkel"
+    "pagination": "Kapitelnavigation",
+    "theme": "Darstellung", "system": "System", "light": "Hell", "dark": "Dunkel",
+    "search_short": "Suchen",
+    "start": "Mit dem Lesen beginnen",
+    "topics_label": "Nach Thema stöbern",
+    "guide_stats": "%chapters% Kapitel · %languages% Sprachen",
+    "search_loading": "Suche wird geladen…",
+    "search_count": "Ergebnisse: {count}",
+    "search_close": "Suche schließen",
+    "permalink": "Link zu diesem Abschnitt",
+    "top": "Nach oben",
+    "code": "Code",
+    "text": "Text",
+    "scrollable_table": "Scrollbare Tabelle",
+    "not_found": "Seite nicht gefunden",
+    "not_found_help": "Wählen Sie eine Sprache, um zum Leitfaden zurückzukehren.",
+    "groups": {
+      "foundations": "Grundlagen",
+      "models": "Modelle und Kosten",
+      "workflows": "Arbeitsabläufe und Scala",
+      "tooling": "Werkzeuge und Kontext",
+      "quality": "Qualität und Auslieferung",
+      "summary": "Zusammenfassung"
+    },
+    "topics": {
+      "routing": {
+        "title": "Modellauswahl und Routing",
+        "description": "Wählen Sie mit den Routing-Tabellen das passende Modell für die Aufgabe."
+      },
+      "workflow": {
+        "title": "Agentenbasierte Arbeitsabläufe",
+        "description": "Verfolgen Sie eine Scala-Aufgabe von der Spezifikation bis zum unabhängigen Review."
+      },
+      "testing": {
+        "title": "Tests, Review und Qualität",
+        "description": "Nutzen Sie testgetriebene Abläufe für kritische Geschäftslogik."
+      },
+      "context": {
+        "title": "Kontext und Kosten",
+        "description": "Steuern Sie Kontextgröße, Caching und Modellkosten."
+      },
+      "scala": {
+        "title": "Scala-Entwicklung",
+        "description": "Wenden Sie Scala-spezifische Regeln auf agentengenerierten Code an."
+      },
+      "checklists": {
+        "title": "Prompts und praktische Checklisten",
+        "description": "Nutzen Sie die Checkliste zum Abschluss einer Scala-Aufgabe mit Agenten."
+      }
+    }
   }
 }

@@ -1,0 +1,10 @@
+<link rel="icon" href="{{ '/assets/images/mark.svg' | relative_url }}" type="image/svg+xml">
+<script>
+  try {
+    const choice = localStorage.getItem("guide-theme");
+    if (choice === "light" || choice === "dark") document.documentElement.dataset.theme = choice;
+  } catch {}
+</script>
+<link rel="stylesheet" href="{{ '/assets/css/guide-base.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/guide.css' | relative_url }}">
+<script src="{{ '/assets/js/theme.js' | relative_url }}" defer></script>

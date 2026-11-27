@@ -1,0 +1,18 @@
+{
+  "groups": {
+    "foundations": ["ch-1", "ch-1a", "ch-2"],
+    "models": ["ch-3", "ch-4"],
+    "workflows": ["ch-5", "ch-6", "ch-7", "ch-7a", "ch-7b"],
+    "tooling": ["ch-8", "ch-9", "ch-10", "ch-10a", "ch-10b", "ch-11", "ch-12"],
+    "quality": ["ch-13", "ch-14", "ch-15", "ch-15a", "ch-15b"],
+    "summary": ["ch-16", "ch-17"]
+  },
+  "topics": {
+    "routing": {"chapter": "ch-3", "icon": "route"},
+    "workflow": {"chapter": "ch-5", "icon": "flow"},
+    "testing": {"chapter": "ch-6", "icon": "check"},
+    "context": {"chapter": "ch-10", "icon": "layers"},
+    "scala": {"chapter": "ch-7", "icon": "code"},
+    "checklists": {"chapter": "ch-15", "icon": "list"}
+  }
+}

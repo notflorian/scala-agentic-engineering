@@ -1,0 +1,23 @@
+{% assign search_path = '/' | append: page.lang | append: '/search.json' -%}
+<dialog id="local-search" aria-labelledby="search-label"
+  data-index="{{ search_path | relative_url }}"
+  data-prefix="{{ site.baseurl | append: '/' | append: page.lang | append: '/' | escape }}"
+  data-loading="{{ labels.search_loading | escape }}"
+  data-count="{{ labels.search_count | escape }}"
+  data-no-results="{{ labels.no_results | escape }}"
+  data-error="{{ labels.search_error | escape }}">
+  <div class="search-bar">
+    <div class="search-field">
+      <label id="search-label" class="sr-only" for="search-query">{{ labels.search | escape }}</label>
+      {% include guide-icon.html name="search" %}
+      <input id="search-query" type="search" placeholder="{{ labels.search | escape }}" autocomplete="off" aria-controls="search-results" autofocus>
+    </div>
+    <form method="dialog">
+      <button type="submit" class="toolbar-control" aria-label="{{ labels.search_close | escape }}" title="{{ labels.search_close | escape }}">
+        {% include guide-icon.html name="close" %}
+      </button>
+    </form>
+  </div>
+  <p id="search-status" role="status"></p>
+  <ol id="search-results"></ol>
+</dialog>

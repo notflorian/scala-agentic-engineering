@@ -13,109 +13,80 @@ layout: table_wrappers
   <meta name="description" content="{{ page.description | escape }}">
   <link rel="canonical" href="{{ page.url | absolute_url }}">
   {% for locale in site.data.locales -%}
-  {% assign code = locale | first -%}
+    {% assign code = locale | first -%}
     {% assign peer = site.data.chapters[code] | where: "id", page.translation_key | first -%}
     <link rel="alternate" hreflang="{{ code }}" href="{{ peer.url | absolute_url }}">
     {% if code == "en" -%}<link rel="alternate" hreflang="x-default" href="{{ peer.url | absolute_url }}">{% endif -%}
   {% endfor -%}
-  <link id="light-theme" rel="stylesheet" href="{{ '/assets/css/just-the-docs-default.css' | relative_url }}">
-  <link id="dark-theme" rel="stylesheet" href="{{ '/assets/css/just-the-docs-dark.css' | relative_url }}" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="{{ '/assets/css/guide.css' | relative_url }}">
-  <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+  {% include guide-styles.html %}
   <script src="{{ '/assets/js/search.js' | relative_url }}" defer></script>
   <script src="{{ '/assets/js/guide.js' | relative_url }}" defer></script>
 </head>
-<body>
+<body class="docs-site" id="top">
   <a class="skip-to-content" href="#main-content">{{ labels.skip | escape }}</a>
-  <aside class="side-bar">
-    <div class="site-header">
-      <a class="site-title lh-tight" href="{{ chapters.first.url | relative_url }}">{{ site.title | escape }}</a>
-      <button type="button" class="site-button" id="chapter-toggle" aria-expanded="false" aria-controls="chapter-nav" hidden>{{ labels.chapters | escape }}</button>
-    </div>
-    <nav id="chapter-nav" class="site-nav" aria-label="{{ labels.chapters | escape }}">
-      <ul class="nav-list">
-        {% for item in chapters -%}
-          <li class="nav-list-item{% if item.id == chapter.id %} active{% endif %}">
-            <a class="nav-list-link{% if item.id == chapter.id %} active{% endif %}" href="{{ item.url | relative_url }}"{% if item.id == chapter.id %} aria-current="page"{% endif %}>{% if item.id == "home" %}{{ labels.home | escape }}{% else %}{{ item.title | escape }}{% endif %}</a>
-          </li>
-        {% endfor -%}
-      </ul>
-    </nav>
-  </aside>
-  <div class="main">
-    <header class="main-header" id="main-header">
-      <div class="site-toolbar">
-        <label for="theme">{{ labels.theme | escape }}</label>
-        <select id="theme">
-          <option value="system">{{ labels.system | escape }}</option>
-          <option value="light">{{ labels.light | escape }}</option>
-          <option value="dark">{{ labels.dark | escape }}</option>
-        </select>
-        <a href="{{ site.repository_url }}">{{ labels.repository | escape }}</a>
-        <a href="{{ site.source_url }}">{{ labels.source | escape }}</a>
-      </div>
-      <nav class="locale-nav" aria-label="{{ labels.language | escape }}">
-        {% for locale in site.data.locales -%}
-  {% assign code = locale | first -%}
-          {% assign peer = site.data.chapters[code] | where: "id", page.translation_key | first -%}
-          <a lang="{{ code }}" hreflang="{{ code }}" href="{{ peer.url | relative_url }}"{% if code == page.lang %} aria-current="page"{% endif %}>{{ locale.last.name | escape }}</a>
-        {% endfor -%}
-      </nav>
-    </header>
-    <div class="main-content-wrap">
-      {% assign search_path = '/' | append: page.lang | append: '/search.json' -%}
-      <section id="local-search" hidden
-        data-index="{{ search_path | relative_url }}"
-        data-baseurl="{{ site.baseurl | escape }}"
-        data-no-results="{{ labels.no_results | escape }}"
-        data-error="{{ labels.search_error | escape }}">
-        <label for="search-query">{{ labels.search | escape }}</label>
-        <input id="search-query" type="search" autocomplete="off" aria-controls="search-results">
-        <p id="search-status" role="status"></p>
-        <ol id="search-results"></ol>
-      </section>
-      <main id="main-content" class="main-content" tabindex="-1">
-        {% assign download = '/' | append: page.lang | append: '/guide.md' -%}
-        <p class="guide-download"><a href="{{ download | relative_url }}" download>{{ labels.download | escape }}</a></p>
-        {% if chapter.toc.size > 1 -%}
-        <details class="guide-toc">
-          <summary>{{ labels.contents | escape }}</summary>
-          <ul>
-            {% for entry in chapter.toc offset:1 -%}
-              <li class="toc-level-{{ entry.level }}"><a href="#{{ entry.id }}">{{ entry.title | markdownify | remove: '<p>' | remove: '</p>' | strip }}</a></li>
-            {% endfor -%}
-          </ul>
-        </details>
-        {% endif -%}
-        {% if page.translation_key == "home" -%}
-        <div class="chapter-index">
-          {{ content }}
-          <h2 id="chapter-index">{{ labels.chapters | escape }}</h2>
-          <ul>
-            {% for item in chapters offset:1 -%}
-              <li><a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>
-            {% endfor -%}
-          </ul>
-        </div>
+  {% include guide-icons.html %}
+  {% include guide-header.html %}
+  <div class="docs-shell">
+    {% include guide-navigation.html %}
+    <main id="main-content" class="docs-main{% if chapter.toc.size > 1 %} with-toc{% endif %}" tabindex="-1">
+      {% if chapter.toc.size > 1 -%}
+        <aside class="toc-sidebar">
+          <details class="guide-toc" id="toc-disclosure" data-wide="(min-width: 80rem)">
+            <summary>{{ labels.contents | escape }}{% include guide-icon.html name="chevron" class="small-icon" %}</summary>
+            <script>document.currentScript.parentElement.open = matchMedia(document.currentScript.parentElement.dataset.wide).matches;</script>
+            <nav aria-label="{{ labels.contents | escape }}">
+              <p class="toc-title">{{ labels.contents | escape }}</p>
+              <ul>
+                {% for entry in chapter.toc offset:1 -%}
+                  <li class="toc-level-{{ entry.level }}"><a href="#{{ entry.id }}">{{ entry.title | markdownify | remove: '<p>' | remove: '</p>' | strip }}</a></li>
+                {% endfor -%}
+              </ul>
+            </nav>
+          </details>
+        </aside>
+      {% endif -%}
+      <div class="reading-column">
+        {% if chapter.id == "home" -%}
+          {% include guide-home.html %}
         {% else -%}
-        <article id="guide-text"
-          data-copy="{{ labels.copy | escape }}" data-copied="{{ labels.copied | escape }}"
-          data-copy-error="{{ labels.copy_error | escape }}">
-          {{ content }}
-        </article>
+          <article id="guide-text" class="prose"
+            data-copy="{{ labels.copy | escape }}" data-copied="{{ labels.copied | escape }}"
+            data-copy-error="{{ labels.copy_error | escape }}" data-code="{{ labels.code | escape }}"
+            data-text="{{ labels.text | escape }}" data-table="{{ labels.scrollable_table | escape }}"
+            data-permalink="{{ labels.permalink | escape }}">
+            {{ content }}
+          </article>
+          <template id="permalink-icon">{% include guide-icon.html name="link" %}</template>
         {% endif -%}
-        <nav class="chapter-pagination" aria-label="{{ labels.chapters | escape }}">
+        <nav class="chapter-pagination" aria-label="{{ labels.pagination | escape }}">
           {% if page.nav_order > 0 -%}
             {% assign previous = page.nav_order | minus: 1 -%}
-            <a href="{{ chapters[previous].url | relative_url }}" rel="prev">{{ labels.previous | escape }} · {{ chapters[previous].title | escape }}</a>
+            <a href="{{ chapters[previous].url | relative_url }}" rel="prev">
+              <span>{% include guide-icon.html name="arrow" class="arrow-back" %}{{ labels.previous | escape }}</span>
+              <strong>{{ chapters[previous].title | remove: '`' | escape }}</strong>
+            </a>
           {% endif -%}
           {% assign next = page.nav_order | plus: 1 -%}
           {% if next < chapters.size -%}
-            <a href="{{ chapters[next].url | relative_url }}" rel="next">{{ labels.next | escape }} · {{ chapters[next].title | escape }}</a>
+            <a href="{{ chapters[next].url | relative_url }}" rel="next">
+              <span>{{ labels.next | escape }}{% include guide-icon.html name="arrow" %}</span>
+              <strong>{{ chapters[next].title | remove: '`' | escape }}</strong>
+            </a>
           {% endif -%}
         </nav>
-      </main>
-    </div>
+        <footer class="docs-footer" role="contentinfo">
+          {% assign download = '/' | append: page.lang | append: '/guide.md' -%}
+          <ul class="footer-links">
+            <li><a href="{{ download | relative_url }}" download>{{ labels.download | escape }}</a></li>
+            <li><a href="{{ site.source_url }}">{{ labels.source | escape }}</a></li>
+            <li><a href="{{ site.repository_url }}">{{ labels.repository | escape }}</a></li>
+            {% if chapter.toc.size > 1 -%}<li class="footer-top"><a href="#top">{{ labels.top | escape }}</a></li>{% endif -%}
+          </ul>
+          <p>{{ site.title | escape }} <span aria-hidden="true">·</span> <a href="{{ '/LICENSE' | relative_url }}">Apache-2.0</a></p>
+        </footer>
+      </div>
+    </main>
   </div>
+  {% include guide-search.html %}
 </body>
 </html>

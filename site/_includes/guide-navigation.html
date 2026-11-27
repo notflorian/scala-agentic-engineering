@@ -1,0 +1,29 @@
+<aside class="chapter-sidebar">
+  <details class="chapter-disclosure" id="chapter-disclosure" data-wide="(min-width: 64rem)">
+    <summary class="sidebar-toggle">
+      {% include guide-icon.html name="menu" %}
+      {{ labels.chapters | escape }}
+      {% include guide-icon.html name="chevron" class="small-icon" %}
+    </summary>
+    <script>document.currentScript.parentElement.open = matchMedia(document.currentScript.parentElement.dataset.wide).matches;</script>
+    <nav id="chapter-nav" aria-label="{{ labels.chapters | escape }}">
+      <a class="sidebar-home" href="{{ chapters.first.url | relative_url }}"{% if chapter.id == "home" %} aria-current="page"{% endif %}>{{ labels.home | escape }}</a>
+      {% for group in site.data.navigation.groups -%}
+        {% assign group_id = group | first -%}
+        {% assign member_ids = group | last -%}
+        <details class="chapter-group" data-group="{{ group_id }}"{% if member_ids contains chapter.id %} open{% elsif chapter.id == "home" and forloop.first %} open{% endif %}>
+          <summary>
+            {{ labels.groups[group_id] | escape }}
+            {% include guide-icon.html name="chevron" class="small-icon" %}
+          </summary>
+          <ul>
+            {% for member_id in member_ids -%}
+              {% assign member = chapters | where: "id", member_id | first -%}
+              <li><a href="{{ member.url | relative_url }}"{% if member.id == chapter.id %} aria-current="page"{% endif %}>{{ member.title | remove: '`' | escape }}</a></li>
+            {% endfor -%}
+          </ul>
+        </details>
+      {% endfor -%}
+    </nav>
+  </details>
+</aside>
